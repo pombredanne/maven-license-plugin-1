@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -16,10 +16,11 @@
 
 package com.mathieucarbou.mojo.license;
 
-import static com.mathieucarbou.mojo.license.Header.*;
 import com.mathieucarbou.mojo.license.document.Document;
 import static com.mathieucarbou.mojo.license.document.DocumentFactory.*;
-import static com.mathieucarbou.mojo.license.document.DocumentMapping.*;
+import static com.mathieucarbou.mojo.license.document.DocumentType.*;
+import com.mathieucarbou.mojo.license.document.Header;
+import static com.mathieucarbou.mojo.license.document.Header.*;
 import com.mathieucarbou.mojo.license.util.Selection;
 import static com.mathieucarbou.mojo.license.util.Selection.*;
 import org.apache.maven.plugin.AbstractMojo;
@@ -35,7 +36,7 @@ import java.util.Map;
  * <b>Date:</b> 13-Feb-2008<br>
  * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
  *
- * @goal document
+ * @goal check
  * @phase verify
  */
 public class LicenseCheckMojo extends AbstractMojo
@@ -89,7 +90,7 @@ public class LicenseCheckMojo extends AbstractMojo
      *
      * @parameter
      */
-    protected Map<String, String> mapping = defaultDocumentMapping();
+    protected Map<String, String> mapping = defaultMapping();
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
@@ -105,15 +106,27 @@ public class LicenseCheckMojo extends AbstractMojo
         info("Excluding: %s", deepToString(selection.getExcluded()));
 
         String[] selected = selection.getSelectedFiles();
-        for(String file : selected)
-        {
-            debug("Checking document: %s", file);
-        }
-
         Document[] documents = newDocumentFactory(mapping).wrap(selected);
+
         for(Document document : documents)
         {
-            debug(document.toString());
+            debug("Selected file: %s [type=%s]", document.getFile(), document.getType());
+        }
+
+        for(Document document : documents)
+        {
+            if(document.getType() == UNKNOWN)
+            {
+                warn("Unknown extension for file: %s", document.getFile());
+            }
+            else if(document.hasHeader(header))
+            {
+                debug("Header OK in file: %s", document.getFile());
+            }
+            else
+            {
+                info("Missing header in file: %s", document.getFile());
+            }
         }
     }
 
@@ -125,5 +138,10 @@ public class LicenseCheckMojo extends AbstractMojo
     protected void debug(String format, Object... params)
     {
         getLog().debug(format(format, params));
+    }
+
+    protected void warn(String format, Object... params)
+    {
+        getLog().warn(format(format, params));
     }
 }

@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -16,8 +16,7 @@
 
 package com.mathieucarbou.mojo.license.document;
 
-import static com.mathieucarbou.mojo.license.document.DocumentMapping.*;
-import org.apache.maven.plugin.MojoExecutionException;
+import static com.mathieucarbou.mojo.license.document.DocumentType.*;
 import static org.codehaus.plexus.util.FileUtils.*;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public final class DocumentFactory
         this.mapping = mapping;
     }
 
-    public Document[] wrap(String[] files) throws MojoExecutionException
+    public Document[] wrap(String[] files)
     {
         List<Document> wrappers = new ArrayList<Document>(files.length);
         for(String file : files)
@@ -47,18 +46,19 @@ public final class DocumentFactory
         return wrappers.toArray(new Document[wrappers.size()]);
     }
 
-    private Document getWrapper(String file) throws MojoExecutionException
+    private Document getWrapper(String file)
     {
         String extension = extension(file);
-        String fallbackType = mapping.get(extension);
-        Class<? extends Document> wrapper = getExtensionWrapper(fallbackType);
+        String fallbackExtension = mapping.get(extension);
+        DocumentType type = fromExtension(fallbackExtension);
+        Class<? extends Document> wrapperClass = type.getWrapperClass();
         try
         {
-            return wrapper.getConstructor(String.class).newInstance(file);
+            return wrapperClass.getConstructor(String.class).newInstance(file);
         }
         catch(Exception e)
         {
-            throw new MojoExecutionException("Internal error: cannot create new instance of class " + wrapper + " with a String parameter (as file path)", e);
+            throw new AssertionError("Internal error: cannot create new instance of class " + wrapperClass + " with a String parameter (as file path)");
         }
     }
 

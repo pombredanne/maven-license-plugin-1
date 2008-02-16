@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -17,9 +17,10 @@
 package com.mathieucarbou.mojo.license.document.impl;
 
 import com.mathieucarbou.mojo.license.document.AbstractDocument;
-import com.mathieucarbou.mojo.license.Header;
+import com.mathieucarbou.mojo.license.document.Header;
+import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 
-import java.io.File;
+import java.io.IOException;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -27,6 +28,8 @@ import java.io.File;
  */
 public class JavaDocument extends AbstractDocument
 {
+    private static final String[] toRemove = {" ", "\t", "\r", "\n", "/**", "*/", "*"};
+
     public JavaDocument(String file)
     {
         super(file);
@@ -34,6 +37,24 @@ public class JavaDocument extends AbstractDocument
 
     public boolean hasHeader(Header header)
     {
-        return false;
+        try
+        {
+            String fileHeader = readFirstLines(getFile(), header.getLineCount() + 10);
+            String fileHeaderOneLine = remove(fileHeader, toRemove);
+            return fileHeaderOneLine.contains(header.asOneLineString());
+        }
+        catch(IOException e)
+        {
+            throw new IllegalStateException("Cannot read file " + getFile(), e);
+        }
+    }
+
+    public void setHeader(Header header)
+    {
+    }
+
+    public static String extension()
+    {
+        return "java";
     }
 }

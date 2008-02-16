@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mathieucarbou.mojo.license;
+package com.mathieucarbou.mojo.license.document;
 
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -29,17 +29,32 @@ public final class Header
 {
     private final File headerFile;
     private final String headerContent;
+    private final String headerContentOneLine;
+    private final int lineCount;
 
-    private Header(File headerFile) throws MojoExecutionException
+    private Header(File headerFile)
     {
         this.headerFile = headerFile;
         try
         {
+            // read header
             this.headerContent = read(headerFile);
+
+            // get line count
+            int pos = 0;
+            int line = 1;
+            while((pos = headerContent.indexOf("\n", pos + 1)) != -1)
+            {
+                line++;
+            }
+            lineCount = line;
+
+            // get header on one line
+            headerContentOneLine = remove(headerContent, " ", "\t", "\r", "\n");
         }
         catch(Exception e)
         {
-            throw new MojoExecutionException("Cannot read header document " + headerFile, e);
+            throw new IllegalArgumentException("Cannot read header document " + headerFile, e);
         }
     }
 
@@ -53,17 +68,23 @@ public final class Header
         return headerFile;
     }
 
+    public String asOneLineString()
+    {
+        return headerContentOneLine;
+    }
+
+    public int getLineCount()
+    {
+        return lineCount;
+    }
+
     @Override
     public boolean equals(Object o)
     {
         if(this == o) return true;
         if(o == null || getClass() != o.getClass()) return false;
-
         Header header = (Header) o;
-
-        if(headerFile != null ? !headerFile.equals(header.headerFile) : header.headerFile != null) return false;
-
-        return true;
+        return !(headerFile != null ? !headerFile.equals(header.headerFile) : header.headerFile != null);
     }
 
     @Override

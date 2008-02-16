@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -16,10 +16,8 @@
 
 package com.mathieucarbou.mojo.license.document.impl;
 
-import com.mathieucarbou.mojo.license.Header;
 import com.mathieucarbou.mojo.license.document.AbstractDocument;
-
-import java.io.File;
+import com.mathieucarbou.mojo.license.document.Header;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -37,9 +35,12 @@ public class UnknownDocument extends AbstractDocument
         return true;
     }
 
-    @Override
-    public boolean isUnknown()
+    public void setHeader(Header header)
     {
-        return true;
+    }
+
+    public static String extension()
+    {
+        return "unknown";
     }
 }

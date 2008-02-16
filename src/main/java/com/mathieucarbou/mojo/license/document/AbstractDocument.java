@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -16,7 +16,8 @@
 
 package com.mathieucarbou.mojo.license.document;
 
-import java.io.File;
+import static com.mathieucarbou.mojo.license.document.DocumentType.*;
+import static org.codehaus.plexus.util.FileUtils.*;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -25,20 +26,22 @@ import java.io.File;
 public abstract class AbstractDocument implements Document
 {
     private final String file;
+    private final DocumentType type;
 
     protected AbstractDocument(String file)
     {
         this.file = file;
+        this.type = fromExtension(extension(file));
     }
 
-    public boolean isUnknown()
-    {
-        return false;
-    }
-
-    protected final String file()
+    public String getFile()
     {
         return file;
+    }
+
+    public DocumentType getType()
+    {
+        return type;
     }
 
     @Override
@@ -47,7 +50,7 @@ public abstract class AbstractDocument implements Document
         final StringBuilder sb = new StringBuilder();
         sb.append("Document");
         sb.append("{file=").append(file);
-        sb.append(",unknown=").append(isUnknown());
+        sb.append(",type=").append(getType());
         sb.append('}');
         return sb.toString();
     }

@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -36,5 +36,33 @@ public final class FileUtils
         String content = IOUtil.toString(reader);
         reader.close();
         return content;
+    }
+
+    public static String read(String file) throws IOException
+    {
+        return read(new File(file));
+    }
+
+    public static String readFirstLines(String file, int lineCount) throws IOException
+    {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line = null;
+        StringBuilder sb = new StringBuilder();
+        while(lineCount > 0 && (line = reader.readLine()) != null)
+        {
+            lineCount--;
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        return sb.toString();
+    }
+
+    public static String remove(String str, String... chars)
+    {
+        for(String s : chars)
+        {
+            str = str.replace(s, "");
+        }
+        return str;
     }
 }

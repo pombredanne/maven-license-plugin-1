@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -16,8 +16,8 @@
 
 package com.mathieucarbou.mojo.license.test;
 
-import org.testng.annotations.Test;
 import com.mathieucarbou.mojo.license.LicenseCheckMojo;
+import org.testng.annotations.Test;
 
 import java.io.File;
 

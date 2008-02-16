@@ -2,7 +2,7 @@
  * Copyright (C) 2008 Mathieu Carbou
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this document except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -16,8 +16,6 @@
 
 package com.mathieucarbou.mojo.license.document;
 
-import com.mathieucarbou.mojo.license.Header;
-
 /**
  * <b>Date:</b> 14-Feb-2008<br>
  * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
@@ -26,5 +24,9 @@ public interface Document
 {
     boolean hasHeader(Header header);
 
-    boolean isUnknown();
+    void setHeader(Header header);
+
+    DocumentType getType();
+
+    String getFile();
 }
