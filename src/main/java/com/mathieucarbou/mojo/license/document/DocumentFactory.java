@@ -16,7 +16,8 @@
 
 package com.mathieucarbou.mojo.license.document;
 
-import static com.mathieucarbou.mojo.license.document.DocumentType.*;
+import static com.mathieucarbou.mojo.license.document.CommentType.*;
+import static com.mathieucarbou.mojo.license.document.Document.*;
 import static org.codehaus.plexus.util.FileUtils.*;
 
 import java.util.ArrayList;
@@ -49,17 +50,8 @@ public final class DocumentFactory
     private Document getWrapper(String file)
     {
         String extension = extension(file);
-        String fallbackExtension = mapping.get(extension);
-        DocumentType type = fromExtension(fallbackExtension);
-        Class<? extends Document> wrapperClass = type.getWrapperClass();
-        try
-        {
-            return wrapperClass.getConstructor(String.class).newInstance(file);
-        }
-        catch(Exception e)
-        {
-            throw new AssertionError("Internal error: cannot create new instance of class " + wrapperClass + " with a String parameter (as file path)");
-        }
+        CommentType commentType = fromName(mapping.get(extension));
+        return newDocument(file, commentType);
     }
 
     public static DocumentFactory newDocumentFactory(Map<String, String> mapping)

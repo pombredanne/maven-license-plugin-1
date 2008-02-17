@@ -16,17 +16,91 @@
 
 package com.mathieucarbou.mojo.license.document;
 
+import static com.mathieucarbou.mojo.license.document.DocumentType.*;
+import static com.mathieucarbou.mojo.license.util.FileUtils.*;
+import static org.codehaus.plexus.util.FileUtils.*;
+
+import java.io.IOException;
+
 /**
- * <b>Date:</b> 14-Feb-2008<br>
+ * <b>Date:</b> 16-Feb-2008<br>
  * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-public interface Document
+public final class Document
 {
-    boolean hasHeader(Header header);
+    private final String file;
+    private final DocumentType documentType;
+    private final CommentType commentType;
 
-    void setHeader(Header header);
+    private Document(String file, CommentType commentType)
+    {
+        this.file = file;
+        this.documentType = fromExtension(extension(file));
+        this.commentType = commentType == null ? documentType.getDefaultCommentType() : commentType;
+    }
 
-    DocumentType getType();
+    private Document(String file)
+    {
+        this(file, null);
+    }
 
-    String getFile();
+    public String getFile()
+    {
+        return file;
+    }
+
+    public DocumentType getDocumentType()
+    {
+        return documentType;
+    }
+
+    public boolean hasHeader(Header header)
+    {
+        try
+        {
+            String fileHeader = readFirstLines(getFile(), header.getLineCount() + 10);
+            String fileHeaderOneLine = remove(fileHeader, "\n", "\r", "\t", " ", commentType.getFirstLine(), commentType.getEndLine(), commentType.getEachLine());
+            return fileHeaderOneLine.contains(header.asOneLineString());
+        }
+        catch(IOException e)
+        {
+            throw new IllegalStateException("Cannot read file " + getFile(), e);
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Document");
+        sb.append("{file=").append(file);
+        sb.append(",documentType=").append(getDocumentType());
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        Document that = (Document) o;
+        return !(file != null ? !file.equals(that.file) : that.file != null);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return (file != null ? file.hashCode() : 0);
+    }
+
+    public static Document newDocument(String file)
+    {
+        return new Document(file);
+    }
+
+    public static Document newDocument(String file, CommentType commentType)
+    {
+        return new Document(file, commentType);
+    }
 }

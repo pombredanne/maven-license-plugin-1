@@ -16,9 +16,6 @@
 
 package com.mathieucarbou.mojo.license.document;
 
-import com.mathieucarbou.mojo.license.document.impl.JavaDocument;
-import com.mathieucarbou.mojo.license.document.impl.UnknownDocument;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,59 +26,62 @@ import java.util.Map;
  */
 public enum DocumentType
 {
-    UNKNOWN(UnknownDocument.extension(), UnknownDocument.class),
-    JAVA(JavaDocument.extension(), JavaDocument.class),
-    GROOVY("groovy", JavaDocument.class);
+    ////////// DOCUMENT TYPES //////////
 
-    private static final Map<String, String> mapping = new HashMap<String, String>(3);
+    UNKNOWN("unknown", CommentType.UNKNOWN),
+
+    JAVA("java", CommentType.JAVA),
+    GROOVY("groovy", CommentType.JAVA),
+
+    XML("xml", CommentType.XML),
+    FML("fml", CommentType.XML),
+
+    APT("apt", CommentType.APT),
+
+    PROPERTIES("properties", CommentType.PROPERTIES);
+
+    ////////////////////////////////////
+
+    private static final Map<String, String> mapping = new HashMap<String, String>(values().length);
 
     static
     {
         for(DocumentType type : values())
         {
-            Class<? extends Document> wrapperClass = type.getWrapperClass();
-            try
-            {
-                String extension = (String) wrapperClass.getMethod("extension").invoke(null);
-                mapping.put(type.getFileExtension(), extension);
-            }
-            catch(Exception e)
-            {
-                throw new AssertionError("Internal error: wrapper class implementing Document should have a static method extension()");
-            }
+            mapping.put(type.getExtension(), type.getDefaultCommentType().name());
         }
     }
 
-    private final String fileExtension;
-    private final Class<? extends Document> wrapperClass;
+    private final String extension;
+    private final CommentType defaultCommentType;
 
-    private DocumentType(String fileExtension, Class<? extends Document> wrapperClass)
+    private DocumentType(String extension, CommentType defaultCommentType)
     {
-        this.fileExtension = fileExtension;
-        this.wrapperClass = wrapperClass;
+        this.extension = extension;
+        this.defaultCommentType = defaultCommentType;
     }
 
-    public String getFileExtension()
+    public String getExtension()
     {
-        return fileExtension;
+        return extension;
     }
 
-    public Class<? extends Document> getWrapperClass()
+    public CommentType getDefaultCommentType()
     {
-        return wrapperClass;
+        return defaultCommentType;
     }
 
     @Override
     public String toString()
     {
-        return getFileExtension();
+        return extension;
     }
 
     public static DocumentType fromExtension(String extension)
     {
         for(DocumentType type : values())
         {
-            if(type.getFileExtension().equalsIgnoreCase(extension))
+            if(type.getExtension().equalsIgnoreCase(extension))
             {
                 return type;
             }

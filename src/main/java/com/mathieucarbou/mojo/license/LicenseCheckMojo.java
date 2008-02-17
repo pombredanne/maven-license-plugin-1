@@ -30,6 +30,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import java.io.File;
 import static java.lang.String.*;
 import static java.util.Arrays.*;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -105,29 +106,35 @@ public class LicenseCheckMojo extends AbstractMojo
         info("Including: %s", deepToString(selection.getIncluded()));
         info("Excluding: %s", deepToString(selection.getExcluded()));
 
-        String[] selected = selection.getSelectedFiles();
-        Document[] documents = newDocumentFactory(mapping).wrap(selected);
+        Document[] documents = newDocumentFactory(buildMapping()).wrap(selection.getSelectedFiles());
 
         for(Document document : documents)
         {
-            debug("Selected file: %s [type=%s]", document.getFile(), document.getType());
+            debug("Selected file: %s [type=%s]", document.getFile(), document.getDocumentType());
         }
 
         for(Document document : documents)
         {
-            if(document.getType() == UNKNOWN)
+            if(document.getDocumentType() == UNKNOWN)
             {
-                warn("Unknown extension for file: %s", document.getFile());
+                warn("Unknown file extension: %s", document.getFile());
             }
             else if(document.hasHeader(header))
             {
-                debug("Header OK in file: %s", document.getFile());
+                debug("Header OK: %s", document.getFile());
             }
             else
             {
-                info("Missing header in file: %s", document.getFile());
+                info("Missing header: %s", document.getFile());
             }
         }
+    }
+
+    protected Map<String, String> buildMapping()
+    {
+        Map<String, String> extensionMapping = new HashMap<String, String>(defaultMapping());
+        extensionMapping.putAll(mapping);
+        return extensionMapping;
     }
 
     protected void info(String format, Object... params)
