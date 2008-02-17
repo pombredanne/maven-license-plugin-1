@@ -28,17 +28,23 @@ public enum DocumentType
 {
     ////////// DOCUMENT TYPES //////////
 
-    UNKNOWN("unknown", CommentType.UNKNOWN),
+    UNKNOWN("unknown",      CommentType.UNKNOWN),
+    JAVA("java",            CommentType.JAVA),
+    GROOVY("groovy",        CommentType.JAVA),
+    JS("js",                CommentType.JAVA),
+    CSS("css",              CommentType.JAVA),
+    XML("xml",              CommentType.XML),
+    FML("fml",              CommentType.XML),
+    XSL("xsl",              CommentType.XML),
+    HTML("html",            CommentType.XML),
+    HTM("htm",              CommentType.XML),
+    APT("apt",              CommentType.APT),
+    PROPERTIES("properties", CommentType.PROPERTIES),
+    SH("sh",                CommentType.PROPERTIES),
+    TXT("txt",              CommentType.TXT),
+    BAT("bat",              CommentType.CMD),
+    CMD("cmd",              CommentType.CMD);
 
-    JAVA("java", CommentType.JAVA),
-    GROOVY("groovy", CommentType.JAVA),
-
-    XML("xml", CommentType.XML),
-    FML("fml", CommentType.XML),
-
-    APT("apt", CommentType.APT),
-
-    PROPERTIES("properties", CommentType.PROPERTIES);
 
     ////////////////////////////////////
 

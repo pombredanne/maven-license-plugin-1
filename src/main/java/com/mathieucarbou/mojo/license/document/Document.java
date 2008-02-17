@@ -54,12 +54,17 @@ public final class Document
         return documentType;
     }
 
+    public boolean isUnknownType()
+    {
+        return documentType == UNKNOWN;
+    }
+
     public boolean hasHeader(Header header)
     {
         try
         {
             String fileHeader = readFirstLines(getFile(), header.getLineCount() + 10);
-            String fileHeaderOneLine = remove(fileHeader, "\n", "\r", "\t", " ", commentType.getFirstLine(), commentType.getEndLine(), commentType.getEachLine());
+            String fileHeaderOneLine = remove(fileHeader, commentType.getFirstLine().trim(), commentType.getEndLine().trim(), commentType.getEachLine().trim(), "\n", "\r", "\t", " ");
             return fileHeaderOneLine.contains(header.asOneLineString());
         }
         catch(IOException e)

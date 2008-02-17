@@ -29,8 +29,10 @@ import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
 import static java.lang.String.*;
+import java.util.ArrayList;
 import static java.util.Arrays.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -113,9 +115,11 @@ public class LicenseCheckMojo extends AbstractMojo
             debug("Selected file: %s [type=%s]", document.getFile(), document.getDocumentType());
         }
 
+        List<Document> missingHeaders = new ArrayList<Document>();
+
         for(Document document : documents)
         {
-            if(document.getDocumentType() == UNKNOWN)
+            if(document.isUnknownType())
             {
                 warn("Unknown file extension: %s", document.getFile());
             }
@@ -126,6 +130,7 @@ public class LicenseCheckMojo extends AbstractMojo
             else
             {
                 info("Missing header: %s", document.getFile());
+                missingHeaders.add(document);
             }
         }
     }
