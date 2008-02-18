@@ -28,12 +28,13 @@ public enum DocumentType
 {
     ////////// DOCUMENT TYPES //////////
 
-    UNKNOWN("unknown",      CommentType.UNKNOWN),
     JAVA("java",            CommentType.JAVA),
     GROOVY("groovy",        CommentType.JAVA),
     JS("js",                CommentType.JAVA),
     CSS("css",              CommentType.JAVA),
     XML("xml",              CommentType.XML),
+    DTD("dtd",              CommentType.XML),
+    XSD("xsd",              CommentType.XML),
     FML("fml",              CommentType.XML),
     XSL("xsl",              CommentType.XML),
     HTML("html",            CommentType.XML),
@@ -43,8 +44,8 @@ public enum DocumentType
     SH("sh",                CommentType.PROPERTIES),
     TXT("txt",              CommentType.TXT),
     BAT("bat",              CommentType.CMD),
-    CMD("cmd",              CommentType.CMD);
-
+    CMD("cmd",              CommentType.CMD),
+    UNKNOWN("unknown",      CommentType.UNKNOWN);
 
     ////////////////////////////////////
 

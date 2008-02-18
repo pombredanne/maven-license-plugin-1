@@ -17,6 +17,9 @@
 package com.mathieucarbou.mojo.license.test;
 
 import com.mathieucarbou.mojo.license.LicenseCheckMojo;
+import com.mathieucarbou.mojo.license.util.Selection;
+import org.apache.maven.plugin.MojoFailureException;
+import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -27,14 +30,79 @@ import java.io.File;
  */
 public class LicenseCheckMojoTest
 {
-    @Test
+    @Test(expectedExceptions = MojoFailureException.class)
     public void test_execution() throws Exception
     {
         LicenseCheckMojo mojo = new LicenseCheckMojo()
-        {{
-            super.basedir = new File(".");
-            super.headerFile = new File("src/etc/header.txt");
-        }};
+        {
+            {
+                super.basedir = new File(".");
+                super.headerFile = new File("src/etc/header.txt");
+            }
+        };
         mojo.execute();
     }
+
+    @Test(expectedExceptions = MojoFailureException.class)
+    public void test_execution_quiet() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
+        {
+            {
+                super.basedir = new File(".");
+                super.headerFile = new File("src/etc/header.txt");
+                super.quiet = true;
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test
+    public void test_execution_no_mapping() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
+        {
+            {
+                super.basedir = new File(".");
+                super.headerFile = new File("src/etc/header.txt");
+                super.useDefaultMapping = false;
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void test_execution_bad_header() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
+        {
+            {
+                super.basedir = new File(".");
+                super.headerFile = new File("src/etc/header_bad.txt");
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test
+    public void test_selection() throws Exception
+    {
+        Selection sel = Selection.newSelection(new File("."), null, null, true);
+        assertEquals(sel.getBasedir(), new File("."));
+        assertEquals(sel.getExcluded(), new String[] {"**/*~", "**/#*#", "**/.#*", "**/%*%", "**/._*", "**/CVS", "**/CVS/**", "**/.cvsignore", "**/SCCS", "**/SCCS/**", "**/vssver.scc", "**/.svn", "**/.svn/**", "**/.arch-ids", "**/.arch-ids/**", "**/.bzr", "**/.bzr/**", "**/.MySCMServerInfo", "**/.DS_Store", "target/**", "test-output/**", "cobertura.ser", ".clover/**", ".classpath", ".project", ".settings/**", "*.iml", "*.ipr", "*.iws"});
+        assertEquals(sel.getIncluded(), new String[] {"**"});
+    }
+
+    @Test
+    public void test_selection_2() throws Exception
+    {
+        Selection sel = Selection.newSelection(new File("src/test/project"), new String[] {"*"}, new String[] {"documents/**", "target/*", ".svn/*"}, false);
+        assertEquals(sel.getBasedir(), new File("src/test/project"));
+        assertEquals(sel.getExcluded(), new String[] {"documents/**", "target/*", ".svn/*"});
+        assertEquals(sel.getIncluded(), new String[] {"*"});
+
+        assertEquals(sel.getSelectedFiles(), new String[] {"header.txt", "pom.xml"});
+        assertEquals(sel.getSelectedFiles(), new String[] {"header.txt", "pom.xml"});
+    }
+
 }

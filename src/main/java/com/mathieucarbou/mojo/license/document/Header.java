@@ -63,11 +63,6 @@ public final class Header
         return headerContent;
     }
 
-    public File asFile()
-    {
-        return headerFile;
-    }
-
     public String asOneLineString()
     {
         return headerContentOneLine;
@@ -78,29 +73,15 @@ public final class Header
         return lineCount;
     }
 
-    @Override
-    public boolean equals(Object o)
+    public File getFile()
     {
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
-        Header header = (Header) o;
-        return !(headerFile != null ? !headerFile.equals(header.headerFile) : header.headerFile != null);
+        return headerFile;
     }
-
-    @Override
-    public int hashCode()
-    {
-        return (headerFile != null ? headerFile.hashCode() : 0);
-    }
-
+    
     @Override
     public String toString()
     {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Header");
-        sb.append("{headerContent='").append(headerContent).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return asString();
     }
 
     public static Header headerFromFile(File header) throws MojoExecutionException

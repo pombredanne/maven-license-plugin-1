@@ -38,11 +38,6 @@ public final class FileUtils
         return content;
     }
 
-    public static String read(String file) throws IOException
-    {
-        return read(new File(file));
-    }
-
     public static String readFirstLines(String file, int lineCount) throws IOException
     {
         BufferedReader reader = new BufferedReader(new FileReader(file));

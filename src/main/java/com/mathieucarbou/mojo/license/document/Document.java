@@ -36,12 +36,7 @@ public final class Document
     {
         this.file = file;
         this.documentType = fromExtension(extension(file));
-        this.commentType = commentType == null ? documentType.getDefaultCommentType() : commentType;
-    }
-
-    private Document(String file)
-    {
-        this(file, null);
+        this.commentType = commentType;
     }
 
     public String getFile()
@@ -54,9 +49,9 @@ public final class Document
         return documentType;
     }
 
-    public boolean isUnknownType()
+    public boolean canCheck()
     {
-        return documentType == UNKNOWN;
+        return commentType != CommentType.UNKNOWN;
     }
 
     public boolean hasHeader(Header header)
@@ -71,37 +66,6 @@ public final class Document
         {
             throw new IllegalStateException("Cannot read file " + getFile(), e);
         }
-    }
-
-    @Override
-    public String toString()
-    {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Document");
-        sb.append("{file=").append(file);
-        sb.append(",documentType=").append(getDocumentType());
-        sb.append('}');
-        return sb.toString();
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
-        Document that = (Document) o;
-        return !(file != null ? !file.equals(that.file) : that.file != null);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return (file != null ? file.hashCode() : 0);
-    }
-
-    public static Document newDocument(String file)
-    {
-        return new Document(file);
     }
 
     public static Document newDocument(String file, CommentType commentType)

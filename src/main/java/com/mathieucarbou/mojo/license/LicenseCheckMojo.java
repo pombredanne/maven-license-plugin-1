@@ -36,11 +36,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <b>Date:</b> 13-Feb-2008<br>
- * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
+ * Check if the source files of the project have a valid license header 
  *
  * @goal check
  * @phase verify
+ *
+ * <b>Date:</b> 13-Feb-2008<br>
+ * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
  */
 public class LicenseCheckMojo extends AbstractMojo
 {
@@ -93,20 +95,27 @@ public class LicenseCheckMojo extends AbstractMojo
      *
      * @parameter
      */
-    protected Map<String, String> mapping = defaultMapping();
+    protected Map<String, String> mapping = new HashMap<String, String>();
+
+    /**
+     * Whether to use the default mapping between fiel extensions and comments to use, or only the one your provide
+     *
+     * @parameter expression="${license.useDefaultMapping}" default-value="true"
+     */
+    protected boolean useDefaultMapping = true;
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
-        info("Checking license on source files...");
+        getLog().info("Checking licenses...");
 
         Header header = headerFromFile(headerFile);
 
-        debug("Header:\n%s", header.asString());
+        debug("Header %s:\n%s", header.getFile(), header);
 
         Selection selection = newSelection(basedir, includes, excludes, useDefaultExcludes);
 
-        info("Including: %s", deepToString(selection.getIncluded()));
-        info("Excluding: %s", deepToString(selection.getExcluded()));
+        debug("Including: %s", deepToString(selection.getIncluded()));
+        debug("Excluding: %s", deepToString(selection.getExcluded()));
 
         Document[] documents = newDocumentFactory(buildMapping()).wrap(selection.getSelectedFiles());
 
@@ -119,32 +128,40 @@ public class LicenseCheckMojo extends AbstractMojo
 
         for(Document document : documents)
         {
-            if(document.isUnknownType())
+            if(!document.canCheck())
             {
                 warn("Unknown file extension: %s", document.getFile());
             }
             else if(document.hasHeader(header))
             {
-                debug("Header OK: %s", document.getFile());
+                debug("Header OK in: %s", document.getFile());
             }
             else
             {
-                info("Missing header: %s", document.getFile());
+                info("Missing header in: %s", document.getFile());
                 missingHeaders.add(document);
             }
+        }
+
+        if(!missingHeaders.isEmpty())
+        {
+            throw new MojoFailureException("Some files do not have the expected license header.");
         }
     }
 
     protected Map<String, String> buildMapping()
     {
-        Map<String, String> extensionMapping = new HashMap<String, String>(defaultMapping());
+        Map<String, String> extensionMapping = useDefaultMapping ? new HashMap<String, String>(defaultMapping()) : new HashMap<String, String>();
         extensionMapping.putAll(mapping);
         return extensionMapping;
     }
 
     protected void info(String format, Object... params)
     {
-        getLog().info(format(format, params));
+        if(!quiet)
+        {
+            getLog().info(format(format, params));
+        }
     }
 
     protected void debug(String format, Object... params)
