@@ -52,7 +52,7 @@ public class LicenseCheckMojoTest
                 super.basedir = new File(".");
                 super.header = new File("src/etc/header.txt");
                 super.quiet = true;
-                super.failIfMissingHeaders = false;
+                super.failIfMissing = false;
             }
         };
         mojo.execute();

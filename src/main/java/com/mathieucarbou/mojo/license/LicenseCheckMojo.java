@@ -106,9 +106,9 @@ public class LicenseCheckMojo extends AbstractMojo
     /**
      * Whether to fail the build if some file miss license header
      *
-     * @parameter expression="${license.failIfMissingHeaders}" default-value="true"
+     * @parameter expression="${license.failIfMissing}" default-value="true"
      */
-    protected boolean failIfMissingHeaders = true;
+    protected boolean failIfMissing = true;
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
@@ -151,7 +151,7 @@ public class LicenseCheckMojo extends AbstractMojo
 
         if(!missingHeaders.isEmpty())
         {
-            if(failIfMissingHeaders)
+            if(failIfMissing)
             {
                 throw new MojoFailureException("Some files do not have the expected license header.");
             }

@@ -37,7 +37,7 @@
                     <basedir>${basedir}</basedir>
                     <header>../../etc/header.txt</header>
                     <quiet>false</quiet>
-                    <failIfMissingHeaders>true</failIfMissingHeaders>
+                    <failIfMissing>true</failIfMissing>
                     <includes>
                         <include>**</include>
                     </includes>
