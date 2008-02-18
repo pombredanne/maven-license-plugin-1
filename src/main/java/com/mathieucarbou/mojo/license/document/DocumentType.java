@@ -42,9 +42,9 @@ public enum DocumentType
     APT("apt",              CommentType.APT),
     PROPERTIES("properties", CommentType.PROPERTIES),
     SH("sh",                CommentType.PROPERTIES),
-    TXT("txt",              CommentType.TXT),
-    BAT("bat",              CommentType.CMD),
-    CMD("cmd",              CommentType.CMD),
+    TXT("txt",              CommentType.TEXT),
+    BAT("bat",              CommentType.BATCH),
+    CMD("cmd",              CommentType.BATCH),
     UNKNOWN("unknown",      CommentType.UNKNOWN);
 
     ////////////////////////////////////
