@@ -106,7 +106,7 @@ public class LicenseCheckMojo extends AbstractMojo
     /**
      * Whether to fail the build if some file miss license header
      *
-     * @parameter expression="${license.useDefaultMapping}" default-value="true"
+     * @parameter expression="${license.failIfMissingHeaders}" default-value="true"
      */
     protected boolean failIfMissingHeaders = true;
 
