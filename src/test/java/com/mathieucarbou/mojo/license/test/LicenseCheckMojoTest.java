@@ -37,7 +37,7 @@ public class LicenseCheckMojoTest
         {
             {
                 super.basedir = new File(".");
-                super.headerFile = new File("src/etc/header.txt");
+                super.header = new File("src/etc/header.txt");
             }
         };
         mojo.execute();
@@ -50,7 +50,7 @@ public class LicenseCheckMojoTest
         {
             {
                 super.basedir = new File(".");
-                super.headerFile = new File("src/etc/header.txt");
+                super.header = new File("src/etc/header.txt");
                 super.quiet = true;
                 super.failIfMissingHeaders = false;
             }
@@ -65,7 +65,7 @@ public class LicenseCheckMojoTest
         {
             {
                 super.basedir = new File(".");
-                super.headerFile = new File("src/etc/header.txt");
+                super.header = new File("src/etc/header.txt");
                 super.useDefaultMapping = false;
             }
         };
@@ -79,7 +79,7 @@ public class LicenseCheckMojoTest
         {
             {
                 super.basedir = new File(".");
-                super.headerFile = new File("src/etc/header_bad.txt");
+                super.header = new File("src/etc/header_bad.txt");
             }
         };
         mojo.execute();

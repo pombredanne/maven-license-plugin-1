@@ -35,7 +35,7 @@
                 <artifactId>maven-license-plugin</artifactId>
                 <configuration>
                     <basedir>${basedir}</basedir>
-                    <headerFile>../../etc/header.txt</headerFile>
+                    <header>../../etc/header.txt</header>
                     <quiet>false</quiet>
                     <failIfMissingHeaders>true</failIfMissingHeaders>
                     <includes>

@@ -80,7 +80,7 @@ public class LicenseCheckMojo extends AbstractMojo
      * @parameter expression="${license.header}"
      * @required
      */
-    protected File headerFile;
+    protected File header;
 
     /**
      * Whether to use the default excludes when scanning for files.
@@ -114,7 +114,7 @@ public class LicenseCheckMojo extends AbstractMojo
     {
         getLog().info("Checking licenses...");
 
-        Header header = headerFromFile(headerFile);
+        Header header = headerFromFile(this.header);
 
         debug("Header %s:\n%s", header.getFile(), header);
 
