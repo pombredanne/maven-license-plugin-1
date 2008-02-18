@@ -40,9 +40,8 @@ import java.util.Map;
  *
  * @goal check
  * @phase verify
- *
- * <b>Date:</b> 13-Feb-2008<br>
- * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
+ * @date 13-Feb-2008
+ * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
 public class LicenseCheckMojo extends AbstractMojo
 {
