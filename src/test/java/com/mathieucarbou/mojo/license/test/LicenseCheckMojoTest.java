@@ -43,7 +43,7 @@ public class LicenseCheckMojoTest
         mojo.execute();
     }
 
-    @Test(expectedExceptions = MojoFailureException.class)
+    @Test
     public void test_execution_quiet() throws Exception
     {
         LicenseCheckMojo mojo = new LicenseCheckMojo()
@@ -52,6 +52,7 @@ public class LicenseCheckMojoTest
                 super.basedir = new File(".");
                 super.headerFile = new File("src/etc/header.txt");
                 super.quiet = true;
+                super.failIfMissingHeaders = false;
             }
         };
         mojo.execute();

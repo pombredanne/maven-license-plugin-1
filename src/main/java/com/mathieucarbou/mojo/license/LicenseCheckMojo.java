@@ -103,6 +103,13 @@ public class LicenseCheckMojo extends AbstractMojo
      */
     protected boolean useDefaultMapping = true;
 
+    /**
+     * Whether to fail the build if some file miss license header
+     *
+     * @parameter expression="${license.useDefaultMapping}" default-value="true"
+     */
+    protected boolean failIfMissingHeaders = true;
+
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         getLog().info("Checking licenses...");
@@ -144,7 +151,14 @@ public class LicenseCheckMojo extends AbstractMojo
 
         if(!missingHeaders.isEmpty())
         {
-            throw new MojoFailureException("Some files do not have the expected license header.");
+            if(failIfMissingHeaders)
+            {
+                throw new MojoFailureException("Some files do not have the expected license header.");
+            }
+            else
+            {
+                getLog().warn("Some files do not have the expected license header.");
+            }
         }
     }
 

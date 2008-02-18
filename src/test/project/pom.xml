@@ -37,6 +37,7 @@
                     <basedir>${basedir}</basedir>
                     <headerFile>../../etc/header.txt</headerFile>
                     <quiet>false</quiet>
+                    <failIfMissingHeaders>true</failIfMissingHeaders>
                     <includes>
                         <include>**</include>
                     </includes>
@@ -53,6 +54,7 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <phase>test</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
