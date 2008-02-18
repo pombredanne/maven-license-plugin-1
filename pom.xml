@@ -38,7 +38,7 @@
     <packaging>maven-plugin</packaging>
 
     <name>${project.artifactId}</name>
-    <url>${baseWebsiteUrl}/${project.artifactId}</url>
+    <url>http://code.google.com/p/${project.artifactId}/</url>
     <inceptionYear>2008</inceptionYear>
 
     <mailingLists/>
