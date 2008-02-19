@@ -16,10 +16,10 @@
 
 package com.mathieucarbou.mojo.license.document;
 
-import static com.mathieucarbou.mojo.license.document.CommentType.*;
 import static com.mathieucarbou.mojo.license.document.Document.*;
 import static org.codehaus.plexus.util.FileUtils.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +31,12 @@ import java.util.Map;
 public final class DocumentFactory
 {
     private final Map<String, String> mapping;
+    private final File basedir;
 
-    private DocumentFactory(Map<String, String> mapping)
+    private DocumentFactory(File basedir, Map<String, String> mapping)
     {
         this.mapping = mapping;
+        this.basedir = basedir;
     }
 
     public Document[] wrap(String[] files)
@@ -49,14 +51,12 @@ public final class DocumentFactory
 
     private Document getWrapper(String file)
     {
-        String extension = extension(file);
-        CommentType commentType = fromName(mapping.get(extension));
-        return newDocument(file, commentType);
+        return newDocument(new File(basedir, file), CommentType.fromName(mapping.get(extension(file))));
     }
 
-    public static DocumentFactory newDocumentFactory(Map<String, String> mapping)
+    public static DocumentFactory newDocumentFactory(File basedir, Map<String, String> mapping)
     {
-        return new DocumentFactory(mapping);
+        return new DocumentFactory(basedir, mapping);
     }
 
 }

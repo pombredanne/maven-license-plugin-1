@@ -38,7 +38,7 @@ public final class FileUtils
         return content;
     }
 
-    public static String readFirstLines(String file, int lineCount) throws IOException
+    public static String readFirstLines(File file, int lineCount) throws IOException
     {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line = null;

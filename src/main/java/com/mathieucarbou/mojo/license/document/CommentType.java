@@ -30,6 +30,7 @@ public enum CommentType
     PROPERTIES("", "# ", ""),
     TEXT("", "    ", ""),
     BATCH("", "REM ", ""),
+    SQL("", "-- ", ""),
     UNKNOWN("", "", "");
 
     ////////////////////////////////////

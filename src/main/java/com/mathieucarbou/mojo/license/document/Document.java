@@ -20,6 +20,7 @@ import static com.mathieucarbou.mojo.license.document.DocumentType.*;
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 import static org.codehaus.plexus.util.FileUtils.*;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -28,18 +29,18 @@ import java.io.IOException;
  */
 public final class Document
 {
-    private final String file;
+    private final File file;
     private final DocumentType documentType;
     private final CommentType commentType;
 
-    private Document(String file, CommentType commentType)
+    private Document(File file, CommentType commentType)
     {
         this.file = file;
-        this.documentType = fromExtension(extension(file));
+        this.documentType = fromExtension(extension(file.getName()));
         this.commentType = commentType;
     }
 
-    public String getFile()
+    public File getFile()
     {
         return file;
     }
@@ -49,7 +50,7 @@ public final class Document
         return documentType;
     }
 
-    public boolean canCheck()
+    public boolean isSupported()
     {
         return commentType != CommentType.UNKNOWN;
     }
@@ -58,7 +59,7 @@ public final class Document
     {
         try
         {
-            String fileHeader = readFirstLines(getFile(), header.getLineCount() + 10);
+            String fileHeader = readFirstLines(file, header.getLineCount() + 10);
             String fileHeaderOneLine = remove(fileHeader, commentType.getFirstLine().trim(), commentType.getEndLine().trim(), commentType.getEachLine().trim(), "\n", "\r", "\t", " ");
             return fileHeaderOneLine.contains(header.asOneLineString());
         }
@@ -68,8 +69,13 @@ public final class Document
         }
     }
 
-    public static Document newDocument(String file, CommentType commentType)
+    public static Document newDocument(File file, CommentType commentType)
     {
         return new Document(file, commentType);
+    }
+
+    public void updateHeader(Header header)
+    {
+        // TODO: implement header update
     }
 }

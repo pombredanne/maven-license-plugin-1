@@ -22,35 +22,23 @@ import static com.mathieucarbou.mojo.license.document.Header.*;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Check if the source files of the project have a valid license header
+ * Reformat files with a missing header to add it
  *
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
- * @goal check
- * @phase verify
+ * @goal format
  * @date 13-Feb-2008
  */
-public class LicenseCheckMojo extends AbstractLicenseMojo
+public class LicenseFormatMojo extends AbstractLicenseMojo
 {
-
-    /**
-     * Whether to fail the build if some file miss license header
-     *
-     * @parameter expression="${license.failIfMissing}" default-value="true"
-     */
-    protected boolean failIfMissing = true;
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
-        getLog().info("Checking licenses...");
+        getLog().info("Adding license header when missing...");
 
         Header header = headerFromFile(this.header);
         debug("Header %s:\n%s", header.getFile(), header);
 
-        List<Document> missingHeaders = new ArrayList<Document>();
         for(Document document : selectedDocuments())
         {
             if(!document.isSupported())
@@ -63,20 +51,8 @@ public class LicenseCheckMojo extends AbstractLicenseMojo
             }
             else
             {
-                info("Missing header in: %s", document.getFile());
-                missingHeaders.add(document);
-            }
-        }
-
-        if(!missingHeaders.isEmpty())
-        {
-            if(failIfMissing)
-            {
-                throw new MojoFailureException("Some files do not have the expected license header.");
-            }
-            else
-            {
-                getLog().warn("Some files do not have the expected license header.");
+                info("Adding license header in: %s", document.getFile());
+                document.updateHeader(header);
             }
         }
     }

@@ -45,6 +45,7 @@ public enum DocumentType
     TXT("txt",              CommentType.TEXT),
     BAT("bat",              CommentType.BATCH),
     CMD("cmd",              CommentType.BATCH),
+    SQL("sql",              CommentType.SQL),
     UNKNOWN("unknown",      CommentType.UNKNOWN);
 
     ////////////////////////////////////
