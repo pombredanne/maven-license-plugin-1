@@ -18,7 +18,6 @@ package com.mathieucarbou.mojo.license;
 
 import com.mathieucarbou.mojo.license.document.Document;
 import com.mathieucarbou.mojo.license.document.Header;
-import static com.mathieucarbou.mojo.license.document.Header.*;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -46,37 +45,24 @@ public class LicenseCheckMojo extends AbstractLicenseMojo
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         getLog().info("Checking licenses...");
-
-        Header header = headerFromFile(this.header);
-        debug("Header %s:\n%s", header.getFile(), header);
-
-        List<Document> missingHeaders = new ArrayList<Document>();
-        for(Document document : selectedDocuments())
+        final List<Document> missingHeaders = new ArrayList<Document>();
+        execute(new Callback()
         {
-            if(!document.isSupported())
-            {
-                warn("Unknown file extension: %s", document.getFile());
-            }
-            else if(document.hasHeader(header))
-            {
-                debug("Header OK in: %s", document.getFile());
-            }
-            else
+            public void onMissingHeader(Document document, Header header)
             {
                 info("Missing header in: %s", document.getFile());
                 missingHeaders.add(document);
             }
-        }
-
+        });
         if(!missingHeaders.isEmpty())
         {
             if(failIfMissing)
             {
-                throw new MojoFailureException("Some files do not have the expected license header.");
+                throw new MojoFailureException("Some files do not have the expected license header");
             }
             else
             {
-                getLog().warn("Some files do not have the expected license header.");
+                getLog().warn("Some files do not have the expected license header");
             }
         }
     }

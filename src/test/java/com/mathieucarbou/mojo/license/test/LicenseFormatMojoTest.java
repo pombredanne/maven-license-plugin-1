@@ -16,7 +16,9 @@
 
 package com.mathieucarbou.mojo.license.test;
 
+import com.mathieucarbou.mojo.license.LicenseCheckMojo;
 import com.mathieucarbou.mojo.license.LicenseFormatMojo;
+import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.FileUtils;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
@@ -35,10 +37,36 @@ public class LicenseFormatMojoTest
         FileUtils.copyDirectory(new File("src/test/project/documents"), new File("target/documents"));
     }
 
-    @Test
-    public void test_execution() throws Exception
+    @Test(expectedExceptions = MojoFailureException.class)
+    public void test_check_before() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
+        {
+            {
+                super.basedir = new File("target/documents");
+                super.header = new File("src/etc/header.txt");
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test(dependsOnMethods = "test_check_before")
+    public void test_format() throws Exception
     {
         LicenseFormatMojo mojo = new LicenseFormatMojo()
+        {
+            {
+                super.basedir = new File("target/documents");
+                super.header = new File("src/etc/header.txt");
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test(dependsOnMethods = "test_format")
+    public void test_check_after() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
         {
             {
                 super.basedir = new File("target/documents");

@@ -17,7 +17,6 @@
 package com.mathieucarbou.mojo.license.document;
 
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
-import org.apache.maven.plugin.MojoExecutionException;
 
 import java.io.File;
 
@@ -84,7 +83,7 @@ public final class Header
         return asString();
     }
 
-    public static Header headerFromFile(File header) throws MojoExecutionException
+    public static Header headerFromFile(File header)
     {
         return new Header(header);
     }

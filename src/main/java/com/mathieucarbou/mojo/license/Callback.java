@@ -18,30 +18,12 @@ package com.mathieucarbou.mojo.license;
 
 import com.mathieucarbou.mojo.license.document.Document;
 import com.mathieucarbou.mojo.license.document.Header;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 
 /**
- * Reformat files with a missing header to add it
- *
- * @author Mathieu Carbou (mathieu.carbou@gmail.com)
- * @goal format
- * @date 13-Feb-2008
+ * <b>Date:</b> 18-Feb-2008<br>
+ * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-public class LicenseFormatMojo extends AbstractLicenseMojo
+public interface Callback
 {
-
-    public void execute() throws MojoExecutionException, MojoFailureException
-    {
-        getLog().info("Adding license header when missing...");
-        execute(new Callback()
-        {
-            public void onMissingHeader(Document document, Header header)
-            {
-                info("Adding license header in: %s", document.getFile());
-                document.updateHeader(header);
-            }
-        });
-    }
-
+    void onMissingHeader(Document document, Header header);
 }

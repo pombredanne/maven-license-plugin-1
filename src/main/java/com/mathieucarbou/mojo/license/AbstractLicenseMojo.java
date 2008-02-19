@@ -19,6 +19,8 @@ package com.mathieucarbou.mojo.license;
 import com.mathieucarbou.mojo.license.document.Document;
 import static com.mathieucarbou.mojo.license.document.DocumentFactory.*;
 import static com.mathieucarbou.mojo.license.document.DocumentType.*;
+import com.mathieucarbou.mojo.license.document.Header;
+import static com.mathieucarbou.mojo.license.document.Header.*;
 import com.mathieucarbou.mojo.license.util.Selection;
 import static com.mathieucarbou.mojo.license.util.Selection.*;
 import org.apache.maven.plugin.AbstractMojo;
@@ -93,6 +95,27 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
      * @parameter expression="${license.quiet}" default-value="false"
      */
     protected boolean quiet = false;
+
+    protected final void execute(Callback callback)
+    {
+        Header header = headerFromFile(this.header);
+        debug("Header %s:\n%s", header.getFile(), header);
+        for(Document document : selectedDocuments())
+        {
+            if(!document.isSupported())
+            {
+                warn("Unknown file extension: %s", document.getFile());
+            }
+            else if(document.hasHeader(header))
+            {
+                debug("Header OK in: %s", document.getFile());
+            }
+            else
+            {
+                callback.onMissingHeader(document, header);
+            }
+        }
+    }
 
     protected final Document[] selectedDocuments()
     {
