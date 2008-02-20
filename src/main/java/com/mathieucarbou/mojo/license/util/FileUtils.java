@@ -23,7 +23,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.io.Reader;
+import java.nio.channels.FileLock;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -32,6 +36,23 @@ import java.util.Map;
  */
 public final class FileUtils
 {
+    private static final Map<File, FileLock> locks = new HashMap<File, FileLock>();
+
+    static
+    {
+        Runtime.getRuntime().addShutdownHook(new Thread("File lock cleaner")
+        {
+            @Override
+            public void run()
+            {
+                for(File file : new HashSet<File>(locks.keySet()))
+                {
+                    releaseLock(file);
+                }
+            }
+        });
+    }
+
     public static String read(File file, Map<String, String> properties) throws IOException
     {
         Reader reader = new InterpolationFilterReader(new BufferedReader(new FileReader(file)), properties);
@@ -61,5 +82,41 @@ public final class FileUtils
             str = str.replace(s, "");
         }
         return str;
+    }
+
+    public static RandomAccessFile lockForAccess(File file, String mode)
+    {
+        try
+        {
+            RandomAccessFile raf = new RandomAccessFile(file, mode);
+            FileLock lock = raf.getChannel().tryLock();
+            if(lock == null)
+            {
+                throw new IllegalStateException("Cannot acquire a lock on file " + file + ". Please verify that this file is not used by another process.");
+            }
+            locks.put(file, lock);
+            return raf;
+        }
+        catch(IOException e)
+        {
+            throw new IllegalStateException("An I/O error occured when trying to get a lock on file " + file + ". Please verify that this file is not used by another process. Cause: " + e.getMessage(), e);
+        }
+    }
+
+    public static void releaseLock(File file)
+    {
+        FileLock lock = locks.get(file);
+        if(lock != null)
+        {
+            try
+            {
+                lock.release();
+            }
+            catch(IOException e)
+            {
+                // no need to catch: the jvm will shutdown
+            }
+            locks.remove(file);
+        }
     }
 }

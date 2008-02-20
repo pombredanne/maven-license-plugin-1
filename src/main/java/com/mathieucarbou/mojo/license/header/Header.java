@@ -43,7 +43,7 @@ public final class Header
         }
         catch(Exception e)
         {
-            throw new IllegalArgumentException("Cannot read header document " + headerFile, e);
+            throw new IllegalArgumentException("Cannot read header document " + headerFile + ". Cause: " + e.getMessage(), e);
         }
     }
 

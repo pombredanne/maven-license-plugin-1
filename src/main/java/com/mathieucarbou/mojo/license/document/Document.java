@@ -23,10 +23,8 @@ import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 import static org.codehaus.plexus.util.FileUtils.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.channels.FileLock;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -70,7 +68,7 @@ public final class Document
         }
         catch(IOException e)
         {
-            throw new IllegalStateException("Cannot read file " + getFile(), e);
+            throw new IllegalStateException("Cannot read file " + getFile() + ". Cause: " + e.getMessage(), e);
         }
     }
 
@@ -83,44 +81,17 @@ public final class Document
     {
         String newHeader = header.buildForType(headerType);
 
-        try
-        {
-            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
-            FileLock lock = lock(raf);
-
-            
-
-            lock.release();
-        }
-        catch(FileNotFoundException e)
-        {
-            throw new IllegalStateException("The following file has been selected but is not available anymore: " + file);
-        }
-        catch(IOException e)
-        {
-            throw new IllegalStateException("An I/O error occured when updating header file " + file, e);
-        }
-
         System.out.println(newHeader);
+
+        RandomAccessFile access = lockForAccess(file, "rwd");
+
+        
+        
+        releaseLock(file);
 
         // TODO: update
     }
 
-    private FileLock lock(RandomAccessFile raf)
-    {
-        try
-        {
-            FileLock lock = raf.getChannel().tryLock();
-            if(lock == null)
-            {
-                throw new IllegalStateException("Cannot acquire a lock on file " + file + ". Please verify that this file is not used by another process.");
-            }
-            return lock;
-        }
-        catch(IOException e)
-        {
-            throw new IllegalStateException("An I/O error occured when trying to get a lock on file " + file + ". Please verify that this file is not used by another process.", e);
-        }
-    }
+    
 
 }
