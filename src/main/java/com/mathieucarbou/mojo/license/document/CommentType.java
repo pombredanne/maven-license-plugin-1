@@ -31,18 +31,19 @@ public enum CommentType
     TEXT("", "    ", ""),
     BATCH("", "REM ", ""),
     SQL("", "-- ", ""),
+    JSP("<%--", "    ", "--%>"),
     UNKNOWN("", "", "");
 
     ////////////////////////////////////
 
     private final String firstLine;
-    private final String eachLine;
+    private final String beforeEachLine;
     private final String endLine;
 
-    private CommentType(String firstLine, String eachLine, String endLine)
+    private CommentType(String firstLine, String beforeEachLine, String endLine)
     {
         this.firstLine = firstLine;
-        this.eachLine = eachLine;
+        this.beforeEachLine = beforeEachLine;
         this.endLine = endLine;
     }
 
@@ -51,9 +52,9 @@ public enum CommentType
         return firstLine;
     }
 
-    public String getEachLine()
+    public String getBeforeEachLine()
     {
-        return eachLine;
+        return beforeEachLine;
     }
 
     public String getEndLine()

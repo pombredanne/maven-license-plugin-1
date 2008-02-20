@@ -46,6 +46,7 @@ public enum DocumentType
     BAT("bat",              CommentType.BATCH),
     CMD("cmd",              CommentType.BATCH),
     SQL("sql",              CommentType.SQL),
+    JSP("jsp",              CommentType.JSP),
     UNKNOWN("unknown",      CommentType.UNKNOWN);
 
     ////////////////////////////////////

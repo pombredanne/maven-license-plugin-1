@@ -29,26 +29,15 @@ public final class Header
     private final File headerFile;
     private final String headerContent;
     private final String headerContentOneLine;
-    private final int lineCount;
+    private String[] lines;
 
     private Header(File headerFile)
     {
         this.headerFile = headerFile;
         try
         {
-            // read header
             this.headerContent = read(headerFile);
-
-            // get line count
-            int pos = 0;
-            int line = 1;
-            while((pos = headerContent.indexOf("\n", pos + 1)) != -1)
-            {
-                line++;
-            }
-            lineCount = line;
-
-            // get header on one line
+            lines = headerContent.split("\n");
             headerContentOneLine = remove(headerContent, " ", "\t", "\r", "\n");
         }
         catch(Exception e)
@@ -69,7 +58,7 @@ public final class Header
 
     public int getLineCount()
     {
-        return lineCount;
+        return lines.length;
     }
 
     public File getFile()
@@ -88,4 +77,8 @@ public final class Header
         return new Header(header);
     }
 
+    public String[] getLines()
+    {
+        return lines;
+    }
 }

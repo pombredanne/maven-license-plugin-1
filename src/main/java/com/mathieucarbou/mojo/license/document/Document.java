@@ -19,6 +19,7 @@ package com.mathieucarbou.mojo.license.document;
 import static com.mathieucarbou.mojo.license.document.DocumentType.*;
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 import static org.codehaus.plexus.util.FileUtils.*;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,7 +61,7 @@ public final class Document
         try
         {
             String fileHeader = readFirstLines(file, header.getLineCount() + 10);
-            String fileHeaderOneLine = remove(fileHeader, commentType.getFirstLine().trim(), commentType.getEndLine().trim(), commentType.getEachLine().trim(), "\n", "\r", "\t", " ");
+            String fileHeaderOneLine = remove(fileHeader, commentType.getFirstLine().trim(), commentType.getEndLine().trim(), commentType.getBeforeEachLine().trim(), "\n", "\r", "\t", " ");
             return fileHeaderOneLine.contains(header.asOneLineString());
         }
         catch(IOException e)
@@ -76,6 +77,19 @@ public final class Document
 
     public void updateHeader(Header header)
     {
-        // TODO: implement header update
+        StringBuilder newHeader = new StringBuilder();
+        if(!StringUtils.isEmpty(commentType.getFirstLine()))
+        {
+            newHeader.append(commentType.getFirstLine()).append("\n");
+        }
+        for(String line : header.getLines())
+        {
+            newHeader.append(commentType.getBeforeEachLine()).append(line).append("\n");
+        }
+        if(!StringUtils.isEmpty(commentType.getEndLine()))
+        {
+            newHeader.append(commentType.getEndLine()).append("\n");
+        }
+        // TODO: update
     }
 }

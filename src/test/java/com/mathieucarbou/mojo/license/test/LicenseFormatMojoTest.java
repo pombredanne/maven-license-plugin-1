@@ -45,6 +45,7 @@ public class LicenseFormatMojoTest
             {
                 super.basedir = new File("target/documents");
                 super.header = new File("src/etc/header.txt");
+                super.excludes = new String[] {"*.svn-base"};
             }
         };
         mojo.execute();
@@ -58,6 +59,7 @@ public class LicenseFormatMojoTest
             {
                 super.basedir = new File("target/documents");
                 super.header = new File("src/etc/header.txt");
+                super.excludes = new String[] {"*.svn-base"};
             }
         };
         mojo.execute();
@@ -71,6 +73,7 @@ public class LicenseFormatMojoTest
             {
                 super.basedir = new File("target/documents");
                 super.header = new File("src/etc/header.txt");
+                super.excludes = new String[] {"*.svn-base"};
             }
         };
         mojo.execute();
