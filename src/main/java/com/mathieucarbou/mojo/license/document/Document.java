@@ -79,19 +79,24 @@ public final class Document
 
     public void updateHeader(Header header)
     {
-        String newHeader = header.buildForType(headerType);
+        // TODO: update
 
+        String newHeader = header.buildForType(headerType);
         System.out.println(newHeader);
 
         RandomAccessFile access = lockForAccess(file, "rwd");
 
-        
-        
+        try
+        {
+            String firstLine = access.readLine();
+            boolean skipFirstLine = headerType.mustSkip(firstLine);
+        }
+        catch(IOException e)
+        {
+        }
+
+        closeSilently(access);
         releaseLock(file);
-
-        // TODO: update
     }
-
-    
 
 }

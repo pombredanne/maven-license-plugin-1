@@ -16,6 +16,8 @@
 
 package com.mathieucarbou.mojo.license.header;
 
+import java.util.regex.Pattern;
+
 /**
  * <b>Date:</b> 17-Feb-2008<br>
  * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
@@ -25,9 +27,9 @@ public enum HeaderType
     ////////// COMMENT TYPES //////////
 
     JAVA("/**", " * ", " */"),
-    XML("<!--\n", "    ", "\n-->"),
+    XML("<!--\n", "    ", "\n-->", "^<\\?xml.*>$"),
     APT("~~", "~~ ", "~~"),
-    PROPERTIES("#", "# ", "#"),
+    PROPERTIES("#", "# ", "#", "^#!.*$"),
     TEXT("    ", "    ", "    "),
     BATCH("REM", "REM ", "REM"),
     SQL("--", "-- ", "--"),
@@ -39,12 +41,19 @@ public enum HeaderType
     private final String firstLine;
     private final String beforeEachLine;
     private final String endLine;
+    private final Pattern skipLinePattern;
 
     private HeaderType(String firstLine, String beforeEachLine, String endLine)
+    {
+        this(firstLine, beforeEachLine, endLine, null);
+    }
+
+    private HeaderType(String firstLine, String beforeEachLine, String endLine, String skipLine)
     {
         this.firstLine = firstLine;
         this.beforeEachLine = beforeEachLine;
         this.endLine = endLine;
+        this.skipLinePattern = skipLine == null ? null : Pattern.compile(skipLine);
     }
 
     public String getFirstLine()
@@ -62,6 +71,11 @@ public enum HeaderType
         return endLine;
     }
 
+    public boolean mustSkip(String firstLine)
+    {
+        return skipLinePattern != null && firstLine != null && skipLinePattern.matcher(firstLine).matches();
+    }
+
     public static HeaderType fromName(String name)
     {
         for(HeaderType type : values())
@@ -73,4 +87,5 @@ public enum HeaderType
         }
         return UNKNOWN;
     }
+
 }

@@ -119,4 +119,15 @@ public final class FileUtils
             locks.remove(file);
         }
     }
+
+    public static void closeSilently(RandomAccessFile raf)
+    {
+        try
+        {
+            raf.close();
+        }
+        catch(Exception e)
+        {
+        }
+    }
 }
