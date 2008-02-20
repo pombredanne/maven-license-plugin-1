@@ -17,7 +17,7 @@
 package com.mathieucarbou.mojo.license;
 
 import com.mathieucarbou.mojo.license.document.Document;
-import com.mathieucarbou.mojo.license.document.Header;
+import com.mathieucarbou.mojo.license.header.Header;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 

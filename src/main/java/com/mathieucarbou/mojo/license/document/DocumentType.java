@@ -16,6 +16,8 @@
 
 package com.mathieucarbou.mojo.license.document;
 
+import com.mathieucarbou.mojo.license.header.HeaderType;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,26 +30,26 @@ public enum DocumentType
 {
     ////////// DOCUMENT TYPES //////////
 
-    JAVA("java",            CommentType.JAVA),
-    GROOVY("groovy",        CommentType.JAVA),
-    JS("js",                CommentType.JAVA),
-    CSS("css",              CommentType.JAVA),
-    XML("xml",              CommentType.XML),
-    DTD("dtd",              CommentType.XML),
-    XSD("xsd",              CommentType.XML),
-    FML("fml",              CommentType.XML),
-    XSL("xsl",              CommentType.XML),
-    HTML("html",            CommentType.XML),
-    HTM("htm",              CommentType.XML),
-    APT("apt",              CommentType.APT),
-    PROPERTIES("properties", CommentType.PROPERTIES),
-    SH("sh",                CommentType.PROPERTIES),
-    TXT("txt",              CommentType.TEXT),
-    BAT("bat",              CommentType.BATCH),
-    CMD("cmd",              CommentType.BATCH),
-    SQL("sql",              CommentType.SQL),
-    JSP("jsp",              CommentType.JSP),
-    UNKNOWN("unknown",      CommentType.UNKNOWN);
+    JAVA("java",            HeaderType.JAVA),
+    GROOVY("groovy",        HeaderType.JAVA),
+    JS("js",                HeaderType.JAVA),
+    CSS("css",              HeaderType.JAVA),
+    XML("xml",              HeaderType.XML),
+    DTD("dtd",              HeaderType.XML),
+    XSD("xsd",              HeaderType.XML),
+    FML("fml",              HeaderType.XML),
+    XSL("xsl",              HeaderType.XML),
+    HTML("html",            HeaderType.XML),
+    HTM("htm",              HeaderType.XML),
+    APT("apt",              HeaderType.APT),
+    PROPERTIES("properties", HeaderType.PROPERTIES),
+    SH("sh",                HeaderType.PROPERTIES),
+    TXT("txt",              HeaderType.TEXT),
+    BAT("bat",              HeaderType.BATCH),
+    CMD("cmd",              HeaderType.BATCH),
+    SQL("sql",              HeaderType.SQL),
+    JSP("jsp",              HeaderType.JSP),
+    UNKNOWN("unknown",      HeaderType.UNKNOWN);
 
     ////////////////////////////////////
 
@@ -62,12 +64,12 @@ public enum DocumentType
     }
 
     private final String extension;
-    private final CommentType defaultCommentType;
+    private final HeaderType defaultHeaderType;
 
-    private DocumentType(String extension, CommentType defaultCommentType)
+    private DocumentType(String extension, HeaderType defaultHeaderType)
     {
         this.extension = extension;
-        this.defaultCommentType = defaultCommentType;
+        this.defaultHeaderType = defaultHeaderType;
     }
 
     public String getExtension()
@@ -75,9 +77,9 @@ public enum DocumentType
         return extension;
     }
 
-    public CommentType getDefaultCommentType()
+    public HeaderType getDefaultCommentType()
     {
-        return defaultCommentType;
+        return defaultHeaderType;
     }
 
     @Override

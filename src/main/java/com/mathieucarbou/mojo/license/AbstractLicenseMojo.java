@@ -19,8 +19,8 @@ package com.mathieucarbou.mojo.license;
 import com.mathieucarbou.mojo.license.document.Document;
 import static com.mathieucarbou.mojo.license.document.DocumentFactory.*;
 import static com.mathieucarbou.mojo.license.document.DocumentType.*;
-import com.mathieucarbou.mojo.license.document.Header;
-import static com.mathieucarbou.mojo.license.document.Header.*;
+import com.mathieucarbou.mojo.license.header.Header;
+import static com.mathieucarbou.mojo.license.header.Header.*;
 import com.mathieucarbou.mojo.license.util.Selection;
 import static com.mathieucarbou.mojo.license.util.Selection.*;
 import org.apache.maven.plugin.AbstractMojo;
@@ -45,6 +45,13 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
      * @required
      */
     protected File header;
+
+    /**
+     * The properties to use when reading the header, to replace tokens
+     *
+     * @parameter
+     */
+    protected Map<String, String> properties = new HashMap<String, String>();
 
     /**
      * The base directory, in which to search for files.
@@ -98,7 +105,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
 
     protected final void execute(Callback callback)
     {
-        Header header = headerFromFile(this.header);
+        Header header = headerFromFile(this.header, mergeProperties());
         debug("Header %s:\n%s", header.getFile(), header);
         for(Document document : selectedDocuments())
         {
@@ -115,6 +122,23 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
                 callback.onMissingHeader(document, header);
             }
         }
+    }
+
+    protected final Map<String, String> mergeProperties()
+    {
+        // first put systen environment
+        Map<String, String> properties = new HashMap<String, String>(System.getenv());
+        // we override by properties in the POM
+        if(this.properties != null)
+        {
+            properties.putAll(this.properties);
+        }
+        // then we override by java system properties (command-line -D...)
+        for(Map.Entry<Object, Object> entry : System.getProperties().entrySet())
+        {
+            properties.put(entry.getKey().toString(), entry.getValue().toString());
+        }
+        return properties;
     }
 
     protected final Document[] selectedDocuments()

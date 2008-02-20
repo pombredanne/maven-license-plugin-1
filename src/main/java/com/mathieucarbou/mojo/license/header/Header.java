@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.mathieucarbou.mojo.license.document;
+package com.mathieucarbou.mojo.license.header;
 
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * <b>Date:</b> 15-Feb-2008<br>
@@ -31,12 +32,12 @@ public final class Header
     private final String headerContentOneLine;
     private String[] lines;
 
-    private Header(File headerFile)
+    private Header(File headerFile, Map<String, String> properties)
     {
         this.headerFile = headerFile;
         try
         {
-            this.headerContent = read(headerFile);
+            this.headerContent = read(headerFile, properties);
             lines = headerContent.split("\n");
             headerContentOneLine = remove(headerContent, " ", "\t", "\r", "\n");
         }
@@ -65,20 +66,43 @@ public final class Header
     {
         return headerFile;
     }
-    
+
+    public String buildForType(HeaderType type)
+    {
+        StringBuilder newHeader = new StringBuilder();
+        if(notEmpty(type.getFirstLine()))
+        {
+            newHeader.append(type.getFirstLine()).append("\n");
+        }
+        for(String line : getLines())
+        {
+            newHeader.append(type.getBeforeEachLine()).append(line).append("\n");
+        }
+        if(notEmpty(type.getEndLine()))
+        {
+            newHeader.append(type.getEndLine()).append("\n");
+        }
+        return newHeader.toString();
+    }
+
     @Override
     public String toString()
     {
         return asString();
     }
 
-    public static Header headerFromFile(File header)
+    public static Header headerFromFile(File header, Map<String, String> properties)
     {
-        return new Header(header);
+        return new Header(header, properties);
     }
 
     public String[] getLines()
     {
         return lines;
+    }
+
+    private boolean notEmpty(String str)
+    {
+        return str != null && str.length() > 0;
     }
 }

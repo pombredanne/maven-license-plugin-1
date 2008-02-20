@@ -24,6 +24,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.util.HashMap;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -46,6 +47,14 @@ public class LicenseFormatMojoTest
                 super.basedir = new File("target/documents");
                 super.header = new File("src/etc/header.txt");
                 super.excludes = new String[] {"*.svn-base"};
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();
@@ -60,6 +69,14 @@ public class LicenseFormatMojoTest
                 super.basedir = new File("target/documents");
                 super.header = new File("src/etc/header.txt");
                 super.excludes = new String[] {"*.svn-base"};
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();
@@ -74,6 +91,14 @@ public class LicenseFormatMojoTest
                 super.basedir = new File("target/documents");
                 super.header = new File("src/etc/header.txt");
                 super.excludes = new String[] {"*.svn-base"};
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();

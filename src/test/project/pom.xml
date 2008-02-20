@@ -16,6 +16,7 @@
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
+    <inceptionYear>2008</inceptionYear>
 
     <!--
          LIBS
@@ -51,6 +52,10 @@
                         <toto>xml</toto>
                     </mapping>
                     <useDefaultMapping>true</useDefaultMapping>
+                    <properties>
+                        <year>${project.inceptionYear}</year>
+                        <email>mathieu.carbou@gmail.com</email>
+                    </properties>
                 </configuration>
                 <executions>
                     <execution>

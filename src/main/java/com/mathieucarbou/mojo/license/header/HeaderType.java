@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package com.mathieucarbou.mojo.license.document;
+package com.mathieucarbou.mojo.license.header;
 
 /**
  * <b>Date:</b> 17-Feb-2008<br>
  * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-public enum CommentType
+public enum HeaderType
 {
     ////////// COMMENT TYPES //////////
 
     JAVA("/**", " * ", " */"),
-    XML("<!--", "    ", "-->"),
-    APT("", "~~ ", ""),
-    PROPERTIES("", "# ", ""),
-    TEXT("", "    ", ""),
-    BATCH("", "REM ", ""),
-    SQL("", "-- ", ""),
-    JSP("<%--", "    ", "--%>"),
+    XML("<!--\n", "    ", "\n-->"),
+    APT("~~", "~~ ", "~~"),
+    PROPERTIES("#", "# ", "#"),
+    TEXT("    ", "    ", "    "),
+    BATCH("REM", "REM ", "REM"),
+    SQL("--", "-- ", "--"),
+    JSP("<%--\n", "    ", "\n--%>"),
     UNKNOWN("", "", "");
 
     ////////////////////////////////////
@@ -40,7 +40,7 @@ public enum CommentType
     private final String beforeEachLine;
     private final String endLine;
 
-    private CommentType(String firstLine, String beforeEachLine, String endLine)
+    private HeaderType(String firstLine, String beforeEachLine, String endLine)
     {
         this.firstLine = firstLine;
         this.beforeEachLine = beforeEachLine;
@@ -62,9 +62,9 @@ public enum CommentType
         return endLine;
     }
 
-    public static CommentType fromName(String name)
+    public static HeaderType fromName(String name)
     {
-        for(CommentType type : values())
+        for(HeaderType type : values())
         {
             if(type.name().equalsIgnoreCase(name))
             {

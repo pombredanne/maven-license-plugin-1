@@ -17,12 +17,16 @@
 package com.mathieucarbou.mojo.license.document;
 
 import static com.mathieucarbou.mojo.license.document.DocumentType.*;
+import com.mathieucarbou.mojo.license.header.Header;
+import com.mathieucarbou.mojo.license.header.HeaderType;
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 import static org.codehaus.plexus.util.FileUtils.*;
-import org.codehaus.plexus.util.StringUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileLock;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -32,13 +36,13 @@ public final class Document
 {
     private final File file;
     private final DocumentType documentType;
-    private final CommentType commentType;
+    private final HeaderType headerType;
 
-    private Document(File file, CommentType commentType)
+    private Document(File file, HeaderType headerType)
     {
         this.file = file;
         this.documentType = fromExtension(extension(file.getName()));
-        this.commentType = commentType;
+        this.headerType = headerType;
     }
 
     public File getFile()
@@ -53,7 +57,7 @@ public final class Document
 
     public boolean isSupported()
     {
-        return commentType != CommentType.UNKNOWN;
+        return headerType != HeaderType.UNKNOWN;
     }
 
     public boolean hasHeader(Header header)
@@ -61,7 +65,7 @@ public final class Document
         try
         {
             String fileHeader = readFirstLines(file, header.getLineCount() + 10);
-            String fileHeaderOneLine = remove(fileHeader, commentType.getFirstLine().trim(), commentType.getEndLine().trim(), commentType.getBeforeEachLine().trim(), "\n", "\r", "\t", " ");
+            String fileHeaderOneLine = remove(fileHeader, headerType.getFirstLine().trim(), headerType.getEndLine().trim(), headerType.getBeforeEachLine().trim(), "\n", "\r", "\t", " ");
             return fileHeaderOneLine.contains(header.asOneLineString());
         }
         catch(IOException e)
@@ -70,26 +74,53 @@ public final class Document
         }
     }
 
-    public static Document newDocument(File file, CommentType commentType)
+    public static Document newDocument(File file, HeaderType headerType)
     {
-        return new Document(file, commentType);
+        return new Document(file, headerType);
     }
 
     public void updateHeader(Header header)
     {
-        StringBuilder newHeader = new StringBuilder();
-        if(!StringUtils.isEmpty(commentType.getFirstLine()))
+        String newHeader = header.buildForType(headerType);
+
+        try
         {
-            newHeader.append(commentType.getFirstLine()).append("\n");
+            RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+            FileLock lock = lock(raf);
+
+            
+
+            lock.release();
         }
-        for(String line : header.getLines())
+        catch(FileNotFoundException e)
         {
-            newHeader.append(commentType.getBeforeEachLine()).append(line).append("\n");
+            throw new IllegalStateException("The following file has been selected but is not available anymore: " + file);
         }
-        if(!StringUtils.isEmpty(commentType.getEndLine()))
+        catch(IOException e)
         {
-            newHeader.append(commentType.getEndLine()).append("\n");
+            throw new IllegalStateException("An I/O error occured when updating header file " + file, e);
         }
+
+        System.out.println(newHeader);
+
         // TODO: update
     }
+
+    private FileLock lock(RandomAccessFile raf)
+    {
+        try
+        {
+            FileLock lock = raf.getChannel().tryLock();
+            if(lock == null)
+            {
+                throw new IllegalStateException("Cannot acquire a lock on file " + file + ". Please verify that this file is not used by another process.");
+            }
+            return lock;
+        }
+        catch(IOException e)
+        {
+            throw new IllegalStateException("An I/O error occured when trying to get a lock on file " + file + ". Please verify that this file is not used by another process.", e);
+        }
+    }
+
 }

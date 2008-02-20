@@ -17,12 +17,14 @@
 package com.mathieucarbou.mojo.license.util;
 
 import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.InterpolationFilterReader;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Map;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -30,9 +32,9 @@ import java.io.Reader;
  */
 public final class FileUtils
 {
-    public static String read(File file) throws IOException
+    public static String read(File file, Map<String, String> properties) throws IOException
     {
-        Reader reader = new BufferedReader(new FileReader(file));
+        Reader reader = new InterpolationFilterReader(new BufferedReader(new FileReader(file)), properties);
         String content = IOUtil.toString(reader);
         reader.close();
         return content;

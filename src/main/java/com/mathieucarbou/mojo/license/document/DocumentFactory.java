@@ -17,6 +17,7 @@
 package com.mathieucarbou.mojo.license.document;
 
 import static com.mathieucarbou.mojo.license.document.Document.*;
+import com.mathieucarbou.mojo.license.header.HeaderType;
 import static org.codehaus.plexus.util.FileUtils.*;
 
 import java.io.File;
@@ -51,7 +52,7 @@ public final class DocumentFactory
 
     private Document getWrapper(String file)
     {
-        return newDocument(new File(basedir, file), CommentType.fromName(mapping.get(extension(file))));
+        return newDocument(new File(basedir, file), HeaderType.fromName(mapping.get(extension(file))));
     }
 
     public static DocumentFactory newDocumentFactory(File basedir, Map<String, String> mapping)
