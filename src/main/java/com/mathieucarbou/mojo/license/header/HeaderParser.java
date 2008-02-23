@@ -66,6 +66,12 @@ public final class HeaderParser
 
     private boolean hasHeader(FileContent fileContent, HeaderType headerType)
     {
+        // skip blank lines
+        while(line != null && "".equals(line.trim()))
+        {
+            line = fileContent.nextLine();
+        }
+        
         // check if there is already a header
         boolean gotHeader = false;
         if(line != null && line.indexOf(headerType.getFirstLine().replaceAll("\n", "")) != -1)
