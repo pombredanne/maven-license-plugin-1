@@ -34,7 +34,7 @@ public final class HeaderParser
     {
         beginPosition = findBeginPosition(fileContent, headerType);
         existingHeader = hasHeader(fileContent, headerType);
-        this.endPosition = existingHeader ? findEndPosition(fileContent, headerType) : -1;
+        this.endPosition = existingHeader ? findEndPosition(fileContent) : -1;
     }
 
     public int getBeginPosition()
@@ -84,7 +84,7 @@ public final class HeaderParser
         return gotHeader;
     }
 
-    private int findEndPosition(FileContent fileContent, HeaderType headerType)
+    private int findEndPosition(FileContent fileContent)
     {
         // we check if there is a header, if the next line is the blank line of the header
         int end = fileContent.getPosition();
