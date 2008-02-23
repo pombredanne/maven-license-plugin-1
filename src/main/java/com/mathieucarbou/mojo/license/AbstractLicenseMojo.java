@@ -113,6 +113,10 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
             {
                 warn("Unknown file extension: %s", document.getFile());
             }
+            else if(document.is(this.header))
+            {
+                debug("Skipping header file: %s", document.getFile());
+            }
             else if(document.hasHeader(header))
             {
                 debug("Header OK in: %s", document.getFile());

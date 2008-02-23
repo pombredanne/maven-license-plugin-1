@@ -92,4 +92,15 @@ public final class Document
         fileContent.write();
     }
 
+    public boolean is(File file)
+    {
+        try
+        {
+            return this.file.getCanonicalFile().equals(file.getCanonicalFile());
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException("Error comparing document " + this.file + " with file " + file + ". Cause: " + e.getMessage(), e);
+        }
+    }
 }
