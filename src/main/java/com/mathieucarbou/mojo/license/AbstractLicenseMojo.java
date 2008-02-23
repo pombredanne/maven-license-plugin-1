@@ -109,7 +109,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
         debug("Header %s:\n%s", header.getFile(), header);
         for(Document document : selectedDocuments())
         {
-            if(!document.isSupported())
+            if(document.isNotSupported())
             {
                 warn("Unknown file extension: %s", document.getFile());
             }

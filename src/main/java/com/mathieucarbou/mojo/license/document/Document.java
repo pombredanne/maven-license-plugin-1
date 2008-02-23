@@ -56,9 +56,9 @@ public final class Document
         return documentType;
     }
 
-    public boolean isSupported()
+    public boolean isNotSupported()
     {
-        return headerType != HeaderType.UNKNOWN;
+        return headerType == HeaderType.UNKNOWN;
     }
 
     public boolean hasHeader(Header header)
