@@ -102,8 +102,8 @@ public class LicenseCheckMojoTest
         assertEquals(sel.getExcluded(), new String[] {"documents/**", "target/*", ".svn/*"});
         assertEquals(sel.getIncluded(), new String[] {"*"});
 
-        assertEquals(sel.getSelectedFiles(), new String[] {"header.txt", "pom.xml"});
-        assertEquals(sel.getSelectedFiles(), new String[] {"header.txt", "pom.xml"});
+        assertEquals(sel.getSelectedFiles(), new String[] {"pom.xml"});
+        assertEquals(sel.getSelectedFiles(), new String[] {"pom.xml"});
     }
 
 }
