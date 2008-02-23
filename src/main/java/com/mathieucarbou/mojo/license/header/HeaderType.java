@@ -26,13 +26,13 @@ public enum HeaderType
 {
     ////////// COMMENT TYPES //////////
 
-    JAVA("/**", " * ", " */\n"),
+    JAVA("/**", " * ", " */"),
     XML("<!--\n", "    ", "\n-->", "^<\\?xml.*>$"),
-    APT("~~", "~~ ", "~~\n"),
-    PROPERTIES("#", "# ", "#\n", "^#!.*$"),
+    APT("~~", "~~ ", "~~"),
+    PROPERTIES("#", "# ", "#", "^#!.*$"),
     TEXT("    ", "    ", "    "),
-    BATCH("REM", "REM ", "REM\n"),
-    SQL("--", "-- ", "--\n"),
+    BATCH("REM", "REM ", "REM"),
+    SQL("--", "-- ", "--"),
     JSP("<%--\n", "    ", "\n--%>"),
     UNKNOWN("", "", "");
 

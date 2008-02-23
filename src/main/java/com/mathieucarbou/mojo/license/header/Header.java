@@ -82,7 +82,7 @@ public final class Header
         {
             newHeader.append(type.getEndLine()).append("\n");
         }
-        return newHeader.toString();
+        return newHeader.append("\n").toString();
     }
 
     @Override

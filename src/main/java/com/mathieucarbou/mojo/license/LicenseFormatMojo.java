@@ -33,7 +33,7 @@ public class LicenseFormatMojo extends AbstractLicenseMojo
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
-        getLog().info("Adding license header when missing...");
+        getLog().info("Updating license headers...");
         execute(new Callback()
         {
             public void onMissingHeader(Document document, Header header)

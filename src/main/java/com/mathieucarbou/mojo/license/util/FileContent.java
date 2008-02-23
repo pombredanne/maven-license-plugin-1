@@ -51,8 +51,7 @@ public final class FileContent
         OutputStream out = lock(file);
         try
         {
-            System.out.println(fileContent);
-            //out.write(fileContent.toString().getBytes());
+            out.write(fileContent.toString().getBytes());
         }
         catch(Exception e)
         {
@@ -64,9 +63,14 @@ public final class FileContent
         }
     }
 
+    public boolean endReached()
+    {
+        return position >= fileContent.length();
+    }
+
     public String nextLine()
     {
-        if(position >= fileContent.length())
+        if(endReached())
         {
             return null;
         }
