@@ -94,6 +94,13 @@ public final class FileContent
     public void insert(int index, String str)
     {
         fileContent.insert(index, str);
+        // remove possible double blank lines caused when a blank line was previously there (the header add a blank line)
+        position = index + str.length();
+        String next = nextLine();
+        if(next != null && "".equals(next))
+        {
+            fileContent.delete(index + str.length(), position);
+        }
     }
 
     public static FileContent readFrom(File file)
