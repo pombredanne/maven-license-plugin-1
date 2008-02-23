@@ -19,12 +19,13 @@ package com.mathieucarbou.mojo.license.document;
 import static com.mathieucarbou.mojo.license.document.DocumentType.*;
 import com.mathieucarbou.mojo.license.header.Header;
 import com.mathieucarbou.mojo.license.header.HeaderType;
+import com.mathieucarbou.mojo.license.util.FileContent;
+import static com.mathieucarbou.mojo.license.util.FileContent.*;
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 import static org.codehaus.plexus.util.FileUtils.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -79,24 +80,45 @@ public final class Document
 
     public void updateHeader(Header header)
     {
-        // TODO: update
+        FileContent fileContent = readFrom(file);
 
+        // find begin position of insertion, in case there is a first line to not delete
+        int beginPosition = 0;
+        String line = fileContent.nextLine();
+        if(line != null && headerType.mustSkip(line))
+        {
+            beginPosition = fileContent.getPosition();
+            line = fileContent.nextLine();
+        }
+
+        // check if there is already a header
+        boolean gotHeader = false;
+        if(line != null && line.indexOf(headerType.getFirstLine().replaceAll("\n", "")) != -1)
+        {
+            StringBuilder existingHeader = new StringBuilder();
+            do
+            {
+                existingHeader.append(line.toLowerCase());
+                line = fileContent.nextLine();
+            }
+            while(line != null && ("".equals(line) || line.indexOf(headerType.getEndLine().replace("\n", "")) == -1 || line.startsWith(headerType.getBeforeEachLine())));
+            gotHeader = existingHeader.indexOf("copyright") != -1 && existingHeader.indexOf("license") != -1;
+            existingHeader.setLength(0);
+            existingHeader = null;
+        }
+
+        // in case there is a header, we remove it
+        if(gotHeader)
+        {
+            fileContent.delete(beginPosition, fileContent.getPosition());
+        }
+
+        // and we insert the new one
         String newHeader = header.buildForType(headerType);
-        System.out.println(newHeader);
+        //System.out.println(newHeader);
+        fileContent.insert(beginPosition, newHeader);
 
-        RandomAccessFile access = lockForAccess(file, "rwd");
-
-        try
-        {
-            String firstLine = access.readLine();
-            boolean skipFirstLine = headerType.mustSkip(firstLine);
-        }
-        catch(IOException e)
-        {
-        }
-
-        closeSilently(access);
-        releaseLock(file);
+        fileContent.write();
     }
 
 }

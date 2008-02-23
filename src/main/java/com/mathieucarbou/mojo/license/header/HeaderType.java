@@ -26,13 +26,13 @@ public enum HeaderType
 {
     ////////// COMMENT TYPES //////////
 
-    JAVA("/**", " * ", " */"),
+    JAVA("/**", " * ", " */\n"),
     XML("<!--\n", "    ", "\n-->", "^<\\?xml.*>$"),
-    APT("~~", "~~ ", "~~"),
-    PROPERTIES("#", "# ", "#", "^#!.*$"),
+    APT("~~", "~~ ", "~~\n"),
+    PROPERTIES("#", "# ", "#\n", "^#!.*$"),
     TEXT("    ", "    ", "    "),
-    BATCH("REM", "REM ", "REM"),
-    SQL("--", "-- ", "--"),
+    BATCH("REM", "REM ", "REM\n"),
+    SQL("--", "-- ", "--\n"),
     JSP("<%--\n", "    ", "\n--%>"),
     UNKNOWN("", "", "");
 
@@ -71,9 +71,9 @@ public enum HeaderType
         return endLine;
     }
 
-    public boolean mustSkip(String firstLine)
+    public boolean mustSkip(String line)
     {
-        return skipLinePattern != null && firstLine != null && skipLinePattern.matcher(firstLine).matches();
+        return skipLinePattern != null && line != null && skipLinePattern.matcher(line).matches();
     }
 
     public static HeaderType fromName(String name)

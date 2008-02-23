@@ -55,6 +55,12 @@ public class LicenseFormatMojoTest
                     }
 
                 };
+                super.mapping = new HashMap<String, String>()
+                {
+                    {
+                        put("toto", "xml");
+                    }
+                };
             }
         };
         mojo.execute();
@@ -77,6 +83,12 @@ public class LicenseFormatMojoTest
                     }
 
                 };
+                super.mapping = new HashMap<String, String>()
+                {
+                    {
+                        put("toto", "xml");
+                    }
+                };
             }
         };
         mojo.execute();
@@ -98,6 +110,12 @@ public class LicenseFormatMojoTest
                         put("email", "mathieu.carbou@gmail.com");
                     }
 
+                };
+                super.mapping = new HashMap<String, String>()
+                {
+                    {
+                        put("toto", "xml");
+                    }
                 };
             }
         };

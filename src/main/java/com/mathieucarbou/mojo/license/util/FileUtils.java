@@ -20,10 +20,11 @@ import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.InterpolationFilterReader;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.io.Reader;
 import java.nio.channels.FileLock;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public final class FileUtils
             {
                 for(File file : new HashSet<File>(locks.keySet()))
                 {
-                    releaseLock(file);
+                    unlock(file);
                 }
             }
         });
@@ -56,6 +57,14 @@ public final class FileUtils
     public static String read(File file, Map<String, String> properties) throws IOException
     {
         Reader reader = new InterpolationFilterReader(new BufferedReader(new FileReader(file)), properties);
+        String content = IOUtil.toString(reader);
+        reader.close();
+        return content;
+    }
+
+    public static String read(File file) throws IOException
+    {
+        Reader reader = new BufferedReader(new FileReader(file));
         String content = IOUtil.toString(reader);
         reader.close();
         return content;
@@ -84,18 +93,18 @@ public final class FileUtils
         return str;
     }
 
-    public static RandomAccessFile lockForAccess(File file, String mode)
+    public static FileOutputStream lock(File file)
     {
         try
         {
-            RandomAccessFile raf = new RandomAccessFile(file, mode);
-            FileLock lock = raf.getChannel().tryLock();
+            FileOutputStream out = new FileOutputStream(file);
+            FileLock lock = out.getChannel().tryLock();
             if(lock == null)
             {
                 throw new IllegalStateException("Cannot acquire a lock on file " + file + ". Please verify that this file is not used by another process.");
             }
             locks.put(file, lock);
-            return raf;
+            return out;
         }
         catch(IOException e)
         {
@@ -103,7 +112,7 @@ public final class FileUtils
         }
     }
 
-    public static void releaseLock(File file)
+    public static void unlock(File file)
     {
         FileLock lock = locks.get(file);
         if(lock != null)
@@ -114,20 +123,22 @@ public final class FileUtils
             }
             catch(IOException e)
             {
-                // no need to catch: the jvm will shutdown
             }
             locks.remove(file);
         }
     }
 
-    public static void closeSilently(RandomAccessFile raf)
+    public static void closeSilently(Closeable closeable)
     {
-        try
+        if(closeable != null)
         {
-            raf.close();
-        }
-        catch(Exception e)
-        {
+            try
+            {
+                closeable.close();
+            }
+            catch(Exception e)
+            {
+            }
         }
     }
 }
