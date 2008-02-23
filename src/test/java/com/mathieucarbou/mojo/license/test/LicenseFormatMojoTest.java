@@ -67,7 +67,7 @@ public class LicenseFormatMojoTest
     }
 
     @Test(dependsOnMethods = "test_check_before")
-    public void test_format() throws Exception
+    public void test_add() throws Exception
     {
         LicenseFormatMojo mojo = new LicenseFormatMojo()
         {
@@ -94,7 +94,7 @@ public class LicenseFormatMojoTest
         mojo.execute();
     }
 
-    @Test(dependsOnMethods = "test_format")
+    @Test(dependsOnMethods = "test_add")
     public void test_check_after() throws Exception
     {
         LicenseCheckMojo mojo = new LicenseCheckMojo()
@@ -107,6 +107,90 @@ public class LicenseFormatMojoTest
                 {
                     {
                         put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
+                super.mapping = new HashMap<String, String>()
+                {
+                    {
+                        put("toto", "xml");
+                    }
+                };
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test(dependsOnMethods = "test_check_after", expectedExceptions = MojoFailureException.class)
+    public void test_check_before_update() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
+        {
+            {
+                super.basedir = new File("target/documents");
+                super.header = new File("src/etc/header.txt");
+                super.excludes = new String[] {"*.svn-base"};
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2010");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
+                super.mapping = new HashMap<String, String>()
+                {
+                    {
+                        put("toto", "xml");
+                    }
+                };
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test(dependsOnMethods = "test_check_before_update")
+    public void test_update() throws Exception
+    {
+        LicenseFormatMojo mojo = new LicenseFormatMojo()
+        {
+            {
+                super.basedir = new File("target/documents");
+                super.header = new File("src/etc/header.txt");
+                super.excludes = new String[] {"*.svn-base"};
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2010");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
+                super.mapping = new HashMap<String, String>()
+                {
+                    {
+                        put("toto", "xml");
+                    }
+                };
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test(dependsOnMethods = "test_update")
+    public void test_check_after_update() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
+        {
+            {
+                super.basedir = new File("target/documents");
+                super.header = new File("src/etc/header.txt");
+                super.excludes = new String[] {"*.svn-base"};
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2010");
                         put("email", "mathieu.carbou@gmail.com");
                     }
 
