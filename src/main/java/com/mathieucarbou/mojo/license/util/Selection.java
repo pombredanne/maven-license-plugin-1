@@ -31,7 +31,7 @@ import java.util.List;
 public final class Selection
 {
     public static final String[] OTHER_DEFAULT_EXCLUDES = {
-        "target/**", "test-output/**",
+        "target/**", "test-output/**", "release.properties",
         "cobertura.ser", ".clover/**",
         ".classpath", ".project", ".settings/**",
         "*.iml", "*.ipr", "*.iws"};
