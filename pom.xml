@@ -14,7 +14,7 @@
 
     <groupId>com.mathieucarbou.mojo</groupId>
     <artifactId>maven-license-plugin</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <packaging>maven-plugin</packaging>
 
     <name>${project.artifactId}</name>
@@ -32,9 +32,9 @@
     -->
 
     <scm>
-        <connection>scm:svn:http://maven-license-plugin.googlecode.com/svn/trunk</connection>
-        <developerConnection>scm:svn:https://maven-license-plugin.googlecode.com/svn/trunk</developerConnection>
-        <url>http://maven-license-plugin.googlecode.com/svn/trunk</url>
+        <connection>scm:svn:http://maven-license-plugin.googlecode.com/svn/tags/maven-license-plugin-1.0.3</connection>
+        <developerConnection>scm:svn:https://maven-license-plugin.googlecode.com/svn/tags/maven-license-plugin-1.0.3</developerConnection>
+        <url>http://maven-license-plugin.googlecode.com/svn/tags/maven-license-plugin-1.0.3</url>
     </scm>
 
     <!--
