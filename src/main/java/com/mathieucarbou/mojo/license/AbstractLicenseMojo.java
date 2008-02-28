@@ -23,10 +23,12 @@ import com.mathieucarbou.mojo.license.header.Header;
 import static com.mathieucarbou.mojo.license.header.Header.*;
 import com.mathieucarbou.mojo.license.util.Selection;
 import static com.mathieucarbou.mojo.license.util.Selection.*;
+import static com.mathieucarbou.mojo.license.util.resource.ResourceFactory.*;
 import org.apache.maven.plugin.AbstractMojo;
 
 import java.io.File;
 import static java.lang.String.*;
+import java.net.URL;
 import static java.util.Arrays.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,12 +41,20 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
 {
 
     /**
+     * The base directory, in which to search for files.
+     *
+     * @parameter expression="${license.basedir}" default-value="${basedir}"
+     * @required
+     */
+    protected File basedir;
+
+    /**
      * The text document containing the license header to check or use for reformatting
      *
      * @parameter expression="${license.header}"
      * @required
      */
-    protected File header;
+    protected String header;
 
     /**
      * The properties to use when reading the header, to replace tokens
@@ -52,14 +62,6 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
      * @parameter
      */
     protected Map<String, String> properties = new HashMap<String, String>();
-
-    /**
-     * The base directory, in which to search for files.
-     *
-     * @parameter expression="${license.basedir}" default-value="${basedir}"
-     * @required
-     */
-    protected File basedir;
 
     /**
      * Specifies files, which are included in the check. By default, all files are included.
@@ -97,7 +99,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
     protected boolean useDefaultMapping = true;
 
     /**
-     * Set this to "true" to cause no output. Defaults to false.
+     * Set this to "true" to cause no output
      *
      * @parameter expression="${license.quiet}" default-value="false"
      */
@@ -105,15 +107,16 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
 
     protected final void execute(Callback callback)
     {
-        Header header = headerFromFile(this.header, mergeProperties());
-        debug("Header %s:\n%s", header.getFile(), header);
+        URL location = newResourceFactory(basedir).findResource(this.header);
+        Header header = readFrom(location, mergeProperties());
+        debug("Header %s:\n%s", header.getLocation(), header);
         for(Document document : selectedDocuments())
         {
             if(document.isNotSupported())
             {
                 warn("Unknown file extension: %s", document.getFile());
             }
-            else if(document.is(this.header))
+            else if(document.is(header))
             {
                 debug("Skipping header file: %s", document.getFile());
             }

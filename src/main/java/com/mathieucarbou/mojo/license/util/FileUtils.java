@@ -25,7 +25,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.nio.channels.FileLock;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,9 +56,9 @@ public final class FileUtils
         });
     }
 
-    public static String read(File file, Map<String, String> properties) throws IOException
+    public static String read(URL location, Map<String, String> properties) throws IOException
     {
-        Reader reader = new InterpolationFilterReader(new BufferedReader(new FileReader(file)), properties);
+        Reader reader = new InterpolationFilterReader(new BufferedReader(new InputStreamReader(location.openStream())), properties);
         String content = IOUtil.toString(reader);
         reader.close();
         return content;

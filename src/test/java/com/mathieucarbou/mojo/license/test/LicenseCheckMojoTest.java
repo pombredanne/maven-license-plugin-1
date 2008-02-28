@@ -18,6 +18,7 @@ package com.mathieucarbou.mojo.license.test;
 
 import com.mathieucarbou.mojo.license.LicenseCheckMojo;
 import com.mathieucarbou.mojo.license.util.Selection;
+import com.mathieucarbou.mojo.license.util.resource.InvalidResourceException;
 import org.apache.maven.plugin.MojoFailureException;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
@@ -37,7 +38,7 @@ public class LicenseCheckMojoTest
         {
             {
                 super.basedir = new File(".");
-                super.header = new File("src/etc/header.txt");
+                super.header = "src/etc/header.txt";
             }
         };
         mojo.execute();
@@ -50,7 +51,7 @@ public class LicenseCheckMojoTest
         {
             {
                 super.basedir = new File(".");
-                super.header = new File("src/etc/header.txt");
+                super.header = "src/etc/header.txt";
                 super.quiet = true;
                 super.failIfMissing = false;
             }
@@ -65,21 +66,47 @@ public class LicenseCheckMojoTest
         {
             {
                 super.basedir = new File(".");
-                super.header = new File("src/etc/header.txt");
+                super.header = "src/etc/header.txt";
                 super.useDefaultMapping = false;
             }
         };
         mojo.execute();
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidResourceException.class)
     public void test_execution_bad_header() throws Exception
     {
         LicenseCheckMojo mojo = new LicenseCheckMojo()
         {
             {
                 super.basedir = new File(".");
-                super.header = new File("src/etc/header_bad.txt");
+                super.header = "src/etc/header_bad.txt";
+            }
+        };
+        mojo.execute();
+    }
+
+    @Test(expectedExceptions = MojoFailureException.class)
+    public void test_execution_url_file_system() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
+        {
+            {
+                super.basedir = new File("src/test/project");
+                super.header = "documents/header.txt";
+            }
+        };
+        mojo.execute();
+    }
+    
+    @Test(expectedExceptions = MojoFailureException.class)
+    public void test_execution_url_classpath() throws Exception
+    {
+        LicenseCheckMojo mojo = new LicenseCheckMojo()
+        {
+            {
+                super.basedir = new File(".");
+                super.header = "header.txt"; // locate in test/resources
             }
         };
         mojo.execute();

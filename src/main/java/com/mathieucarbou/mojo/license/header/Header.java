@@ -18,7 +18,7 @@ package com.mathieucarbou.mojo.license.header;
 
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 
-import java.io.File;
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -27,23 +27,23 @@ import java.util.Map;
  */
 public final class Header
 {
-    private final File headerFile;
+    private final URL location;
     private final String headerContent;
     private final String headerContentOneLine;
     private String[] lines;
 
-    private Header(File headerFile, Map<String, String> properties)
+    private Header(URL location, Map<String, String> properties)
     {
-        this.headerFile = headerFile;
+        this.location = location;
         try
         {
-            this.headerContent = read(headerFile, properties);
+            this.headerContent = read(location, properties);
             lines = headerContent.split("\n");
             headerContentOneLine = remove(headerContent, " ", "\t", "\r", "\n");
         }
         catch(Exception e)
         {
-            throw new IllegalArgumentException("Cannot read header document " + headerFile + ". Cause: " + e.getMessage(), e);
+            throw new IllegalArgumentException("Cannot read header document " + location + ". Cause: " + e.getMessage(), e);
         }
     }
 
@@ -62,9 +62,9 @@ public final class Header
         return lines.length;
     }
 
-    public File getFile()
+    public URL getLocation()
     {
-        return headerFile;
+        return location;
     }
 
     public String buildForType(HeaderType type)
@@ -91,11 +91,6 @@ public final class Header
         return asString();
     }
 
-    public static Header headerFromFile(File header, Map<String, String> properties)
-    {
-        return new Header(header, properties);
-    }
-
     public String[] getLines()
     {
         return lines;
@@ -105,4 +100,10 @@ public final class Header
     {
         return str != null && str.length() > 0;
     }
+
+    public static Header readFrom(URL location, Map<String, String> properties)
+    {
+        return new Header(location, properties);
+    }
+    
 }

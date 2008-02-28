@@ -75,11 +75,6 @@ public final class Document
         }
     }
 
-    public static Document newDocument(File file, HeaderType headerType)
-    {
-        return new Document(file, headerType);
-    }
-
     public void updateHeader(Header header)
     {
         FileContent fileContent = readFrom(file);
@@ -92,15 +87,20 @@ public final class Document
         fileContent.write();
     }
 
-    public boolean is(File file)
+    public boolean is(Header header)
     {
         try
         {
-            return this.file.getCanonicalFile().equals(file.getCanonicalFile());
+            return header.getLocation().sameFile(this.file.toURI().toURL());
         }
-        catch(IOException e)
+        catch(Exception e)
         {
             throw new RuntimeException("Error comparing document " + this.file + " with file " + file + ". Cause: " + e.getMessage(), e);
         }
     }
+    public static Document newDocument(File file, HeaderType headerType)
+    {
+        return new Document(file, headerType);
+    }
+
 }

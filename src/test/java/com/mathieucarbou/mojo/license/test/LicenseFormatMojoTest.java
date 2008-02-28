@@ -45,7 +45,7 @@ public class LicenseFormatMojoTest
         {
             {
                 super.basedir = new File("target/documents");
-                super.header = new File("target/documents/header.txt");
+                super.header = "target/documents/header.txt";
                 super.excludes = new String[] {"*.svn-base"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -73,7 +73,7 @@ public class LicenseFormatMojoTest
         {
             {
                 super.basedir = new File("target/documents");
-                super.header = new File("target/documents/header.txt");
+                super.header = "target/documents/header.txt";
                 super.excludes = new String[] {"*.svn-base"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -101,7 +101,7 @@ public class LicenseFormatMojoTest
         {
             {
                 super.basedir = new File("target/documents");
-                super.header = new File("target/documents/header.txt");
+                super.header = "target/documents/header.txt";
                 super.excludes = new String[] {"*.svn-base"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -129,7 +129,7 @@ public class LicenseFormatMojoTest
         {
             {
                 super.basedir = new File("target/documents");
-                super.header = new File("target/documents/header.txt");
+                super.header = "target/documents/header.txt";
                 super.excludes = new String[] {"*.svn-base"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -157,7 +157,7 @@ public class LicenseFormatMojoTest
         {
             {
                 super.basedir = new File("target/documents");
-                super.header = new File("target/documents/header.txt");
+                super.header = "target/documents/header.txt";
                 super.excludes = new String[] {"*.svn-base"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -185,7 +185,7 @@ public class LicenseFormatMojoTest
         {
             {
                 super.basedir = new File("target/documents");
-                super.header = new File("target/documents/header.txt");
+                super.header = "target/documents/header.txt";
                 super.excludes = new String[] {"*.svn-base"};
                 super.properties = new HashMap<String, String>()
                 {
