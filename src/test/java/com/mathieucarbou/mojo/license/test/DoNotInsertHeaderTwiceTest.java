@@ -20,7 +20,7 @@ import com.mathieucarbou.mojo.license.LicenseCheckMojo;
 import com.mathieucarbou.mojo.license.LicenseFormatMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.FileUtils;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -32,7 +32,7 @@ import java.util.HashMap;
  */
 public class DoNotInsertHeaderTwiceTest
 {
-    @BeforeSuite
+    @BeforeTest
     public void copyFiles() throws Exception
     {
         FileUtils.copyDirectory(new File("src/test/project/documents"), new File("target/documents"));
