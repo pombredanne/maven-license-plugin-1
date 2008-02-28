@@ -46,6 +46,7 @@ public class LicenseCheckMojo extends AbstractLicenseMojo
     {
         getLog().info("Checking licenses...");
         final List<Document> missingHeaders = new ArrayList<Document>();
+
         execute(new Callback()
         {
             public void onMissingHeader(Document document, Header header)
@@ -53,7 +54,13 @@ public class LicenseCheckMojo extends AbstractLicenseMojo
                 info("Missing header in: %s", document.getFile());
                 missingHeaders.add(document);
             }
+
+            public void onExistingHeader(Document document, Header header)
+            {
+                debug("Header OK in: %s", document.getFile());
+            }
         });
+        
         if(!missingHeaders.isEmpty())
         {
             if(failIfMissing)

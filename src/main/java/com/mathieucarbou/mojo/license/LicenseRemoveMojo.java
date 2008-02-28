@@ -22,30 +22,30 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
- * Reformat files with a missing header to add it
+ * Remove the specified header from source files
  *
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
- * @goal format
+ * @goal remove
  * @date 13-Feb-2008
  */
-public class LicenseFormatMojo extends AbstractLicenseMojo
+public class LicenseRemoveMojo extends AbstractLicenseMojo
 {
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
-        getLog().info("Updating license headers...");
+        getLog().info("Removing license headers...");
 
         execute(new Callback()
         {
             public void onMissingHeader(Document document, Header header)
             {
-                info("Updating license header in: %s", document.getFile());
-                document.updateHeader(header);
+                debug("Header was not found in: %s", document.getFile());
             }
 
             public void onExistingHeader(Document document, Header header)
             {
-                debug("Header OK in: %s", document.getFile());
+                info("Removing license header from: %s", document.getFile());
+                document.removeHeader();
             }
         });
     }

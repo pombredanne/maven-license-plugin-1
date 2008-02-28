@@ -27,14 +27,16 @@ public final class HeaderParser
     private final int beginPosition;
     private final int endPosition;
     private final boolean existingHeader;
+    private final FileContent fileContent;
 
     private String line;
 
     public HeaderParser(FileContent fileContent, HeaderType headerType)
     {
+        this.fileContent = fileContent;
         beginPosition = findBeginPosition(fileContent, headerType);
         existingHeader = hasHeader(fileContent, headerType);
-        this.endPosition = existingHeader ? findEndPosition(fileContent) : -1;
+        endPosition = existingHeader ? findEndPosition(fileContent) : -1;
     }
 
     public int getBeginPosition()
@@ -50,6 +52,11 @@ public final class HeaderParser
     public boolean gotHeader()
     {
         return existingHeader;
+    }
+
+    public FileContent getFileContent()
+    {
+        return fileContent;
     }
 
     private int findBeginPosition(FileContent fileContent, HeaderType headerType)

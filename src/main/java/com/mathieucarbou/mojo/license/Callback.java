@@ -26,4 +26,6 @@ import com.mathieucarbou.mojo.license.header.Header;
 public interface Callback
 {
     void onMissingHeader(Document document, Header header);
+
+    void onExistingHeader(Document document, Header header);
 }

@@ -122,7 +122,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
             }
             else if(document.hasHeader(header))
             {
-                debug("Header OK in: %s", document.getFile());
+                callback.onExistingHeader(document, header);
             }
             else
             {

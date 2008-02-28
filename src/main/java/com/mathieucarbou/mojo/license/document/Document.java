@@ -21,7 +21,6 @@ import com.mathieucarbou.mojo.license.header.Header;
 import com.mathieucarbou.mojo.license.header.HeaderParser;
 import static com.mathieucarbou.mojo.license.header.HeaderParser.*;
 import com.mathieucarbou.mojo.license.header.HeaderType;
-import com.mathieucarbou.mojo.license.util.FileContent;
 import static com.mathieucarbou.mojo.license.util.FileContent.*;
 import static com.mathieucarbou.mojo.license.util.FileUtils.*;
 import static org.codehaus.plexus.util.FileUtils.*;
@@ -77,16 +76,19 @@ public final class Document
 
     public void updateHeader(Header header)
     {
-        FileContent fileContent = readFrom(file);
-        HeaderParser parser = parseHeader(fileContent, headerType);
-        if(parser.gotHeader())
-        {
-            fileContent.delete(parser.getBeginPosition(), parser.getEndPosition());
-        }
-        fileContent.insert(parser.getBeginPosition(), header.buildForType(headerType));
-        fileContent.write();
+        HeaderParser parser = createParser();
+        removeHeaderIfExist(parser);
+        parser.getFileContent().insert(parser.getBeginPosition(), header.buildForType(headerType));
+        parser.getFileContent().write();
     }
 
+    public void removeHeader()
+    {
+        HeaderParser parser = createParser();
+        removeHeaderIfExist(parser);
+        parser.getFileContent().write();
+    }
+    
     public boolean is(Header header)
     {
         try
@@ -98,6 +100,20 @@ public final class Document
             throw new RuntimeException("Error comparing document " + this.file + " with file " + file + ". Cause: " + e.getMessage(), e);
         }
     }
+
+    private HeaderParser createParser()
+    {
+        return parseHeader(readFrom(file), headerType);
+    }
+
+    private void removeHeaderIfExist(HeaderParser parser)
+    {
+        if(parser.gotHeader())
+        {
+            parser.getFileContent().delete(parser.getBeginPosition(), parser.getEndPosition());
+        }
+    }
+
     public static Document newDocument(File file, HeaderType headerType)
     {
         return new Document(file, headerType);
