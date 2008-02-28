@@ -84,7 +84,7 @@
             <archive>http://groups.google.com/group/maven-license-plugin-codesite</archive>
         </mailingList>
     </mailingLists>
-
+ 
     <!--
         Distributions
     -->
