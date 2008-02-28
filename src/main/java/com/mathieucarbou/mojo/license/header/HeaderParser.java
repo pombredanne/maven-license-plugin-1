@@ -83,7 +83,7 @@ public final class HeaderParser
                 line = fileContent.nextLine();
             }
             while(line != null && ("".equals(line) || line.indexOf(headerType.getEndLine().replace("\n", "")) == -1 || line.startsWith(headerType.getBeforeEachLine())));
-            gotHeader = existingHeader.indexOf("copyright") != -1 && existingHeader.indexOf("license") != -1;
+            gotHeader = existingHeader.indexOf("copyright") != -1;
             existingHeader.setLength(0);
             existingHeader = null;
         }
