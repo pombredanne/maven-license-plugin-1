@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -71,9 +72,18 @@
         <url>http://code.google.com/p/${project.artifactId}/issues</url>
     </issueManagement>
 
-    <ciManagement />
+    <ciManagement/>
 
-    <mailingLists />
+    <mailingLists>
+        <mailingList>
+            <name>maven-license-plugin-announce</name>
+            <archive>http://groups.google.com/group/maven-license-plugin-announce</archive>
+        </mailingList>
+        <mailingList>
+            <name>maven-license-plugin-codesite</name>
+            <archive>http://groups.google.com/group/maven-license-plugin-codesite</archive>
+        </mailingList>
+    </mailingLists>
 
     <!--
         Distributions
