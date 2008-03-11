@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -72,7 +71,7 @@
         <url>http://code.google.com/p/${project.artifactId}/issues</url>
     </issueManagement>
 
-    <ciManagement/>
+    <ciManagement />
 
     <mailingLists>
         <mailingList>
@@ -232,30 +231,6 @@
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
             </plugin>
-            <plugin>
-                <artifactId>maven-changes-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>announcement-generate</id>
-                        <goals>
-                            <goal>announcement-generate</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>announcement-mail</id>
-                        <goals>
-                            <goal>announcement-mail</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <smtpHost>relais.videotron.ca</smtpHost>
-                    <smtpPort implementation="java.lang.Integer">25</smtpPort>
-                    <toAddresses>
-                        <toAddress implementation="java.lang.String">maven-license-plugin-announce@googlegroups.com</toAddress>
-                    </toAddresses>
-                </configuration>
-            </plugin>
             <!-- documentation -->
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
@@ -315,16 +290,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-changelog-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-changes-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>changes-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
             </plugin>
             <plugin>
                 <artifactId>maven-pmd-plugin</artifactId>
