@@ -76,10 +76,14 @@
     <mailingLists>
         <mailingList>
             <name>maven-license-plugin-announce</name>
+            <subscribe>maven-license-plugin-announce-subscribe@googlegroups.com</subscribe>
+            <unsubscribe>maven-license-plugin-announce-unsubscribe@googlegroups.com</unsubscribe>
             <archive>http://groups.google.com/group/maven-license-plugin-announce</archive>
         </mailingList>
         <mailingList>
             <name>maven-license-plugin-codesite</name>
+            <subscribe>maven-license-plugin-codesite-subscribe@googlegroups.com</subscribe>
+            <unsubscribe>maven-license-plugin-codesite-unsubscribe@googlegroups.com</unsubscribe>
             <archive>http://groups.google.com/group/maven-license-plugin-codesite</archive>
         </mailingList>
     </mailingLists>
