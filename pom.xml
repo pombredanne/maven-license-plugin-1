@@ -246,7 +246,7 @@
                 <artifactId>maven-help-plugin</artifactId>
                 <configuration>
                     <full>true</full>
-                    <output>${project.build.outputDirectory}/help-output.txt</output>
+                    <output>target/help-output.txt</output>
                 </configuration>
             </plugin>
             <plugin>
