@@ -26,34 +26,39 @@ public enum HeaderType
 {
     ////////// COMMENT TYPES //////////
 
-    JAVA("/**", " * ", " */"),
-    XML("<!--\n", "    ", "\n-->", "^<\\?xml.*>$"),
-    APT("~~", "~~ ", "~~"),
-    PROPERTIES("#", "# ", "#", "^#!.*$"),
-    TEXT("====", "    ", "===="),
-    BATCH("@REM", "@REM ", "@REM"),
-    SQL("--", "-- ", "--"),
-    JSP("<%--\n", "    ", "\n--%>"),
-    UNKNOWN("", "", "");
+    JAVA("/**", " * ", " */", null, "(\\s|\\t)*/\\*.*$", ".*\\*/(\\s|\\t)*$"),
+    XML("<!--\n", "    ", "\n-->", "^<\\?xml.*>$", "(\\s|\\t)*<!--.*$", ".*-->(\\s|\\t)*$"),
+    APT("~~", "~~ ", "~~", null, "~~$", "~~$"),
+    PROPERTIES("#", "# ", "#", "^#!.*$", "#$", "#$"),
+    TEXT("====", "    ", "====", null, "====$", "====$"),
+    BATCH("@REM", "@REM ", "@REM", null, "@REM$", "@REM$"),
+    SQL("--", "-- ", "--", null, "--$", "--$"),
+    JSP("<%--\n", "    ", "\n--%>", null, "(\\s|\\t)*<%--.*$", ".*--%>(\\s|\\t)*$"),
+    UNKNOWN("", "", "", null, null, null);
 
     ////////////////////////////////////
 
     private final String firstLine;
     private final String beforeEachLine;
     private final String endLine;
+    
     private final Pattern skipLinePattern;
+    private final Pattern firstLineDetectionPattern;
+    private final Pattern endLineDetectionPattern;
 
-    private HeaderType(String firstLine, String beforeEachLine, String endLine)
-    {
-        this(firstLine, beforeEachLine, endLine, null);
-    }
-
-    private HeaderType(String firstLine, String beforeEachLine, String endLine, String skipLine)
+    private HeaderType(String firstLine, String beforeEachLine, String endLine, String skipLinePattern, String firstLineDetectionPattern, String endLineDetectionPattern)
     {
         this.firstLine = firstLine;
         this.beforeEachLine = beforeEachLine;
         this.endLine = endLine;
-        this.skipLinePattern = skipLine == null ? null : Pattern.compile(skipLine);
+        this.skipLinePattern = compile(skipLinePattern);
+        this.firstLineDetectionPattern = compile(firstLineDetectionPattern);
+        this.endLineDetectionPattern = compile(endLineDetectionPattern);
+    }
+
+    private Pattern compile(String regexp)
+    {
+        return regexp == null ? null : Pattern.compile(regexp);
     }
 
     public String getFirstLine()
@@ -76,6 +81,16 @@ public enum HeaderType
         return skipLinePattern != null && line != null && skipLinePattern.matcher(line).matches();
     }
 
+    public boolean isFirstHeaderLine(String line)
+    {
+        return firstLineDetectionPattern != null && line != null && firstLineDetectionPattern.matcher(line).matches();
+    }
+
+    public boolean isLastHeaderLine(String line)
+    {
+        return endLineDetectionPattern != null && line != null && endLineDetectionPattern.matcher(line).matches();
+    }
+    
     public static HeaderType fromName(String name)
     {
         for(HeaderType type : values())

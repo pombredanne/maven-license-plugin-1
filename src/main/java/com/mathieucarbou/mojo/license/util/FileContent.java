@@ -108,4 +108,9 @@ public final class FileContent
         return new FileContent(file);
     }
 
+    @Override
+    public String toString()
+    {
+        return file.toString();
+    }
 }

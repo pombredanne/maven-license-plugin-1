@@ -49,7 +49,7 @@ public class LicenseCheckMojo extends AbstractLicenseMojo
 
         execute(new Callback()
         {
-            public void onMissingHeader(Document document, Header header)
+            public void onHeaderNotFound(Document document, Header header)
             {
                 info("Missing header in: %s", document.getFile());
                 missingHeaders.add(document);

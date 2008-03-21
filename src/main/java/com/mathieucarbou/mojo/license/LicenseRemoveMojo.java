@@ -37,9 +37,10 @@ public class LicenseRemoveMojo extends AbstractLicenseMojo
 
         execute(new Callback()
         {
-            public void onMissingHeader(Document document, Header header)
+            public void onHeaderNotFound(Document document, Header header)
             {
-                debug("Header was not found in: %s", document.getFile());
+                debug("Header was not found in: %s (But keep trying to find a similar header to remove)", document.getFile());
+                document.removeHeader();
             }
 
             public void onExistingHeader(Document document, Header header)

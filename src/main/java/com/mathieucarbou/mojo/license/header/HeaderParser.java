@@ -81,7 +81,7 @@ public final class HeaderParser
         
         // check if there is already a header
         boolean gotHeader = false;
-        if(line != null && line.indexOf(headerType.getFirstLine().replaceAll("\n", "")) != -1)
+        if(headerType.isFirstHeaderLine(line))
         {
             StringBuilder existingHeader = new StringBuilder();
             do
@@ -89,7 +89,7 @@ public final class HeaderParser
                 existingHeader.append(line.toLowerCase());
                 line = fileContent.nextLine();
             }
-            while(line != null && ("".equals(line) || line.indexOf(headerType.getEndLine().replace("\n", "")) == -1 || line.startsWith(headerType.getBeforeEachLine())));
+            while(line != null && ("".equals(line) || !headerType.isLastHeaderLine(line) || line.startsWith(headerType.getBeforeEachLine())));
             gotHeader = existingHeader.indexOf("copyright") != -1;
             existingHeader.setLength(0);
             existingHeader = null;

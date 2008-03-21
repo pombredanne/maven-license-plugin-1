@@ -45,6 +45,7 @@ public class LicenseRemoveMojoTest
         LicenseRemoveMojo mojo = new LicenseRemoveMojo()
         {
             {
+                super.includes = new String[] {"**/Java*.java"};
                 super.basedir = new File("target/documents1");
                 super.header = "target/documents1/header.txt";
                 super.excludes = new String[] {"*.svn-base", "*header.txt"};

@@ -37,7 +37,7 @@ public class LicenseFormatMojo extends AbstractLicenseMojo
 
         execute(new Callback()
         {
-            public void onMissingHeader(Document document, Header header)
+            public void onHeaderNotFound(Document document, Header header)
             {
                 info("Updating license header in: %s", document.getFile());
                 document.updateHeader(header);

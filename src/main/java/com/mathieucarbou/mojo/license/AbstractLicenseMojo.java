@@ -126,7 +126,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
             }
             else
             {
-                callback.onMissingHeader(document, header);
+                callback.onHeaderNotFound(document, header);
             }
         }
     }
