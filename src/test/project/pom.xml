@@ -32,13 +32,13 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.mathieucarbou.mojo</groupId>
+                <groupId>com.google.code.mojo</groupId>
                 <artifactId>maven-license-plugin</artifactId>
                 <configuration>
                     <header>documents/other-header.txt</header>
                     <!-- <includes>
                         <include>**/MockIP.java</include>
-                    </includes -->>
+                    </includes -->
                     <properties>
                         <year>2008</year>
                         <email>test@gmail.com</email>

@@ -32,7 +32,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.mathieucarbou.mojo</groupId>
+                <groupId>com.google.code.mojo</groupId>
                 <artifactId>maven-license-plugin</artifactId>
                 <configuration>
                     <basedir>${basedir}</basedir>

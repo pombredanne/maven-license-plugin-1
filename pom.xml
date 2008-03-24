@@ -6,7 +6,7 @@
          POM settings
      -->
 
-    <groupId>com.mathieucarbou.mojo</groupId>
+    <groupId>com.google.code.mojo</groupId>
     <artifactId>maven-license-plugin</artifactId>
     <version>1.2.3-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
@@ -104,11 +104,6 @@
             <url>dav:https://mc-repo.googlecode.com/svn/maven2/snapshots</url>
             <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
-        <!--<site>
-            <id>mc-site</id>
-            <name>Project website location for deployment</name>
-            <url>ftp://ftpperso.free.fr/p/${project.artifactId}</url>
-        </site>-->
     </distributionManagement>
 
     <!--
@@ -126,12 +121,6 @@
                 <artifactId>wagon-webdav</artifactId>
                 <version>1.0-beta-2</version>
             </extension>
-            <!-- custom release of the trunk or wagon ftp, to allow ftp deploy for site -->
-            <!--<extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>1.0-20080208</version>
-            </extension>-->
         </extensions>
         <plugins>
             <!-- for maven plugins -->
