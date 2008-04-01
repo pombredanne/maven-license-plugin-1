@@ -8,7 +8,7 @@
 
     <groupId>com.google.code</groupId>
     <artifactId>maven-license-plugin</artifactId>
-    <version>1.2.4</version>
+    <version>1.2.5-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>${project.artifactId}</name>
@@ -29,9 +29,9 @@
     -->
 
     <scm>
-        <connection>scm:svn:http://maven-license-plugin.googlecode.com/svn/tags/maven-license-plugin-1.2.4</connection>
-        <developerConnection>scm:svn:https://maven-license-plugin.googlecode.com/svn/tags/maven-license-plugin-1.2.4</developerConnection>
-        <url>http://maven-license-plugin.googlecode.com/svn/tags/maven-license-plugin-1.2.4</url>
+        <connection>scm:svn:http://maven-license-plugin.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://maven-license-plugin.googlecode.com/svn/trunk</developerConnection>
+        <url>http://maven-license-plugin.googlecode.com/svn/trunk</url>
     </scm>
 
     <!--
