@@ -352,7 +352,7 @@
             </plugin>
             <plugin>
                 <inherited>true</inherited>
-                <groupId>com.google.code.mojo</groupId>
+                <groupId>com.google.code</groupId>
                 <artifactId>maven-license-plugin</artifactId>
                 <configuration>
                     <header>D:/data/repositories/maven2/conf/header.txt</header>

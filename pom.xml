@@ -6,7 +6,7 @@
          POM settings
      -->
 
-    <groupId>com.google.code.mojo</groupId>
+    <groupId>com.google.code</groupId>
     <artifactId>maven-license-plugin</artifactId>
     <version>1.2.4-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
