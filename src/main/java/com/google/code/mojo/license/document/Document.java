@@ -78,7 +78,7 @@ public final class Document
     {
         HeaderParser parser = createParser();
         removeHeaderIfExist(parser);
-        parser.getFileContent().insert(parser.getBeginPosition(), header.buildForType(headerType));
+        parser.getFileContent().insert(parser.getBeginPosition(), header.buildForType(parser.getHeaderType()));
         parser.getFileContent().write();
     }
 

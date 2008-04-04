@@ -28,15 +28,18 @@ public final class HeaderParser
     private final int endPosition;
     private final boolean existingHeader;
     private final FileContent fileContent;
+    private boolean firstLineSkipped;
+    private HeaderType headerType;
 
     private String line;
 
     public HeaderParser(FileContent fileContent, HeaderType headerType)
     {
+        this.headerType = headerType;
         this.fileContent = fileContent;
-        beginPosition = findBeginPosition(fileContent, headerType);
-        existingHeader = hasHeader(fileContent, headerType);
-        endPosition = existingHeader ? findEndPosition(fileContent) : -1;
+        beginPosition = findBeginPosition();
+        existingHeader = hasHeader();
+        endPosition = existingHeader ? findEndPosition() : -1;
     }
 
     public int getBeginPosition()
@@ -59,7 +62,12 @@ public final class HeaderParser
         return fileContent;
     }
 
-    private int findBeginPosition(FileContent fileContent, HeaderType headerType)
+    public HeaderType getHeaderType()
+    {
+        return headerType;
+    }
+
+    private int findBeginPosition()
     {
         int beginPosition = 0;
         line = fileContent.nextLine();
@@ -67,12 +75,19 @@ public final class HeaderParser
         {
             beginPosition = fileContent.getPosition();
             line = fileContent.nextLine();
+            firstLineSkipped = true;
         }
         return beginPosition;
     }
 
-    private boolean hasHeader(FileContent fileContent, HeaderType headerType)
+    private boolean hasHeader()
     {
+        // fix for issue 10 - freemarker supports two patterns of comments
+        if(headerType == HeaderType.FTL && firstLineSkipped)
+        {
+            headerType = HeaderType.FTL_ALT;
+        }
+
         // skip blank lines
         while(line != null && "".equals(line.trim()))
         {
@@ -97,7 +112,7 @@ public final class HeaderParser
         return gotHeader;
     }
 
-    private int findEndPosition(FileContent fileContent)
+    private int findEndPosition()
     {
         // we check if there is a header, if the next line is the blank line of the header
         int end = fileContent.getPosition();

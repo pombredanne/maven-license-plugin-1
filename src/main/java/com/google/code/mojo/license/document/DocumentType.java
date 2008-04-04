@@ -49,6 +49,7 @@ public enum DocumentType
     CMD("cmd",              HeaderType.BATCH),
     SQL("sql",              HeaderType.SQL),
     JSP("jsp",              HeaderType.JSP),
+    FREEMARKER("ftl",       HeaderType.FTL),
     UNKNOWN("unknown",      HeaderType.UNKNOWN);
 
     ////////////////////////////////////

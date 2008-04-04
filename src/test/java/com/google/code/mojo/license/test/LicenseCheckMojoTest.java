@@ -24,6 +24,7 @@ import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.util.HashMap;
 
 /**
  * <b>Date:</b> 16-Feb-2008<br>
@@ -39,6 +40,14 @@ public class LicenseCheckMojoTest
             {
                 super.basedir = new File(".");
                 super.header = "src/etc/header.txt";
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();
@@ -54,6 +63,14 @@ public class LicenseCheckMojoTest
                 super.header = "src/etc/header.txt";
                 super.quiet = true;
                 super.failIfMissing = false;
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();
@@ -68,6 +85,14 @@ public class LicenseCheckMojoTest
                 super.basedir = new File(".");
                 super.header = "src/etc/header.txt";
                 super.useDefaultMapping = false;
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();
@@ -81,6 +106,14 @@ public class LicenseCheckMojoTest
             {
                 super.basedir = new File(".");
                 super.header = "src/etc/header_bad.txt";
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();
@@ -94,6 +127,14 @@ public class LicenseCheckMojoTest
             {
                 super.basedir = new File("src/test/project");
                 super.header = "documents/header.txt";
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();
@@ -107,6 +148,14 @@ public class LicenseCheckMojoTest
             {
                 super.basedir = new File(".");
                 super.header = "header.txt"; // locate in test/resources
+                super.properties = new HashMap<String, String>()
+                {
+                    {
+                        put("year", "2008");
+                        put("email", "mathieu.carbou@gmail.com");
+                    }
+
+                };
             }
         };
         mojo.execute();
