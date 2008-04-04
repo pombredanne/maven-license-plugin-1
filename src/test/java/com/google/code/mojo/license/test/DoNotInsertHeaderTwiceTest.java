@@ -35,7 +35,7 @@ public class DoNotInsertHeaderTwiceTest
     @BeforeTest
     public void copyFiles() throws Exception
     {
-        FileUtils.copyDirectory(new File("src/test/project/documents"), new File("target/documents2"));
+        FileUtils.copyDirectory(new File("src/test/project/documents"), new File("target/documents3"));
     }
 
     @Test(expectedExceptions = MojoFailureException.class)
@@ -44,8 +44,8 @@ public class DoNotInsertHeaderTwiceTest
         LicenseCheckMojo mojo = new LicenseCheckMojo()
         {
             {
-                super.basedir = new File("target/documents2");
-                super.header = "target/documents2/other-header.txt";
+                super.basedir = new File("target/documents3");
+                super.header = "target/documents3/other-header.txt";
                 super.includes = new String[] {"**/MockIP.java"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -66,8 +66,8 @@ public class DoNotInsertHeaderTwiceTest
         LicenseFormatMojo mojo = new LicenseFormatMojo()
         {
             {
-                super.basedir = new File("target/documents2");
-                super.header = "target/documents2/other-header.txt";
+                super.basedir = new File("target/documents3");
+                super.header = "target/documents3/other-header.txt";
                 super.includes = new String[] {"**/MockIP.java"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -88,8 +88,8 @@ public class DoNotInsertHeaderTwiceTest
         LicenseCheckMojo mojo = new LicenseCheckMojo()
         {
             {
-                super.basedir = new File("target/documents2");
-                super.header = "target/documents2/other-header.txt";
+                super.basedir = new File("target/documents3");
+                super.header = "target/documents3/other-header.txt";
                 super.includes = new String[] {"**/MockIP.java"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -110,8 +110,8 @@ public class DoNotInsertHeaderTwiceTest
         LicenseCheckMojo mojo = new LicenseCheckMojo()
         {
             {
-                super.basedir = new File("target/documents2");
-                super.header = "target/documents2/other-header.txt";
+                super.basedir = new File("target/documents3");
+                super.header = "target/documents3/other-header.txt";
                 super.includes = new String[] {"**/MockIP.java"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -132,8 +132,8 @@ public class DoNotInsertHeaderTwiceTest
         LicenseFormatMojo mojo = new LicenseFormatMojo()
         {
             {
-                super.basedir = new File("target/documents2");
-                super.header = "target/documents2/other-header.txt";
+                super.basedir = new File("target/documents3");
+                super.header = "target/documents3/other-header.txt";
                 super.includes = new String[] {"**/MockIP.java"};
                 super.properties = new HashMap<String, String>()
                 {
@@ -154,8 +154,8 @@ public class DoNotInsertHeaderTwiceTest
         LicenseCheckMojo mojo = new LicenseCheckMojo()
         {
             {
-                super.basedir = new File("target/documents2");
-                super.header = "target/documents2/other-header.txt";
+                super.basedir = new File("target/documents3");
+                super.header = "target/documents3/other-header.txt";
                 super.includes = new String[] {"**/MockIP.java"};
                 super.properties = new HashMap<String, String>()
                 {
