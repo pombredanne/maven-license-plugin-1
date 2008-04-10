@@ -34,7 +34,8 @@ public final class Selection
         "target/**", "test-output/**", "release.properties",  "pom.xml",
         "cobertura.ser", ".clover/**",
         ".classpath", ".project", ".settings/**",
-        "*.iml", "*.ipr", "*.iws"};
+        "*.iml", "*.ipr", "*.iws",
+        "**/*.jpg", "**/*.png", "**/*.gif", "**/*.ico"};
 
     private final File basedir;
     private final String[] included;

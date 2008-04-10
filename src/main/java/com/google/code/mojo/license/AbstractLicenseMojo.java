@@ -25,12 +25,15 @@ import com.google.code.mojo.license.util.Selection;
 import static com.google.code.mojo.license.util.Selection.*;
 import static com.google.code.mojo.license.util.resource.ResourceFactory.*;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import static java.lang.String.*;
 import java.net.URL;
+import java.util.ArrayList;
 import static java.util.Arrays.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -105,6 +108,13 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
      */
     protected boolean quiet = false;
 
+    /**
+     * @parameter default-value="${project}"
+     * @required
+     * @readonly
+     */
+    protected MavenProject project;
+
     protected final void execute(Callback callback)
     {
         URL location = newResourceFactory(basedir).findResource(this.header);
@@ -150,7 +160,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
 
     protected final Document[] selectedDocuments()
     {
-        Selection selection = newSelection(basedir, includes, excludes, useDefaultExcludes);
+        Selection selection = newSelection(basedir, includes, buildExcludes(), useDefaultExcludes);
         debug("From: %s", basedir);
         debug("Including: %s", deepToString(selection.getIncluded()));
         debug("Excluding: %s", deepToString(selection.getExcluded()));
@@ -160,6 +170,21 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
             debug("Selected file: %s [type=%s]", document.getFile(), document.getDocumentType());
         }
         return documents;
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private String[] buildExcludes()
+    {
+        List<String> excludes = new ArrayList<String>();
+        excludes.addAll(asList(this.excludes));
+        if(project != null && project.getModules() != null)
+        {
+            for(String module : (List<String>) project.getModules())
+            {
+                excludes.add(module + "/**");
+            }
+        }
+        return excludes.toArray(new String[excludes.size()]);
     }
 
     protected final void info(String format, Object... params)
