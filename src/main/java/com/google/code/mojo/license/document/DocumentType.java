@@ -35,6 +35,7 @@ public enum DocumentType
     JS("js",                HeaderType.JAVA),
     CSS("css",              HeaderType.JAVA),
     XML("xml",              HeaderType.XML),
+    XHTML("xhtml",          HeaderType.XML),
     DTD("dtd",              HeaderType.XML),
     XSD("xsd",              HeaderType.XML),
     FML("fml",              HeaderType.XML),
