@@ -26,7 +26,7 @@ public enum HeaderType
 {
     ////////// COMMENT TYPES //////////
 
-    //      FirstLine   Before      EndOfLine   SkipLine                FirstLineDetection      LastLineDetection      
+    //      FirstLine   Before      EndLine     SkipLine                FirstLineDetection      LastLineDetection      
 
     JAVA    ("/**",     " * ",      " */",      null,                   "(\\s|\\t)*/\\*.*$",    ".*\\*/(\\s|\\t)*$"),
     XML     ("<!--\n",  "    ",     "\n-->",    "^<\\?xml.*>$",         "(\\s|\\t)*<!--.*$",    ".*-->(\\s|\\t)*$"),
@@ -38,6 +38,7 @@ public enum HeaderType
     JSP     ("<%--\n",  "    ",     "\n--%>",   null,                   "(\\s|\\t)*<%--.*$",    ".*--%>(\\s|\\t)*$"),
     FTL     ("<#--\n",  "    ",     "\n-->",    "\\[#ftl(\\s.*)?\\]",   "(\\s|\\t)*<#--.*$",    ".*-->(\\s|\\t)*$"),
     FTL_ALT ("[#--\n",  "    ",     "\n--]",    "\\[#ftl(\\s.*)?\\]",   "(\\s|\\t)*\\[#--.*$",  ".*--\\](\\s|\\t)*$"),
+    VELOCITY("#*",      " * ",      " *#",      null,                   "(\\s|\\t)*#\\*.*$",    ".*\\*#(\\s|\\t)*$"),
     UNKNOWN ("",        "",         "",         null,                   null,                   null);
 
     ////////////////////////////////////

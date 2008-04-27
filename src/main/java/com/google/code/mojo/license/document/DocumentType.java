@@ -32,24 +32,25 @@ public enum DocumentType
 
     JAVA("java",            HeaderType.JAVA),
     GROOVY("groovy",        HeaderType.JAVA),
-    JS("js",                HeaderType.JAVA),
+    JAVASCRIPT("js",        HeaderType.JAVA),
     CSS("css",              HeaderType.JAVA),
     XML("xml",              HeaderType.XML),
     XHTML("xhtml",          HeaderType.XML),
     DTD("dtd",              HeaderType.XML),
     XSD("xsd",              HeaderType.XML),
-    FML("fml",              HeaderType.XML),
+    DOXIA_FAQ("fml",        HeaderType.XML),
     XSL("xsl",              HeaderType.XML),
     HTML("html",            HeaderType.XML),
     HTM("htm",              HeaderType.XML),
-    APT("apt",              HeaderType.APT),
+    DOXIA_APT("apt",        HeaderType.APT),
     PROPERTIES("properties", HeaderType.PROPERTIES),
-    SH("sh",                HeaderType.PROPERTIES),
+    SHELL("sh",             HeaderType.PROPERTIES),
     TXT("txt",              HeaderType.TEXT),
-    BAT("bat",              HeaderType.BATCH),
-    CMD("cmd",              HeaderType.BATCH),
+    WINDOWS_BATCH("bat",    HeaderType.BATCH),
+    WINDOWS_SHELL("cmd",    HeaderType.BATCH),
     SQL("sql",              HeaderType.SQL),
     JSP("jsp",              HeaderType.JSP),
+    VELOCITY("vm",          HeaderType.VELOCITY),
     FREEMARKER("ftl",       HeaderType.FTL),
     UNKNOWN("unknown",      HeaderType.UNKNOWN);
 
@@ -82,12 +83,6 @@ public enum DocumentType
     public HeaderType getDefaultCommentType()
     {
         return defaultHeaderType;
-    }
-
-    @Override
-    public String toString()
-    {
-        return extension;
     }
 
     public static DocumentType fromExtension(String extension)
