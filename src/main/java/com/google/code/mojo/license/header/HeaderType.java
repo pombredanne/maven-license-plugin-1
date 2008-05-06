@@ -16,6 +16,8 @@
 
 package com.google.code.mojo.license.header;
 
+import static com.google.code.mojo.license.util.FileUtils.*;
+
 import java.util.regex.Pattern;
 
 /**
@@ -26,18 +28,20 @@ public enum HeaderType
 {
     ////////// COMMENT TYPES //////////
 
+    
+
     //      FirstLine   Before      EndLine     SkipLine                FirstLineDetection      LastLineDetection      
 
     JAVA    ("/**",     " * ",      " */",      null,                   "(\\s|\\t)*/\\*.*$",    ".*\\*/(\\s|\\t)*$"),
-    XML     ("<!--\n",  "    ",     "\n-->",    "^<\\?xml.*>$",         "(\\s|\\t)*<!--.*$",    ".*-->(\\s|\\t)*$"),
+    XML     ("<!--" + eol(),  "    ",      eol() + "-->",    "^<\\?xml.*>$",         "(\\s|\\t)*<!--.*$",    ".*-->(\\s|\\t)*$"),
     APT     ("~~",      "~~ ",      "~~",       null,                   "~~$",                  "~~$"),
     PROPERTIES("#",     "# ",       "#",        "^#!.*$",               "#$",                   "#$"),
     TEXT    ("====",    "    ",     "====",     null,                   "====$",                "====$"),
     BATCH   ("@REM",    "@REM ",    "@REM",     null,                   "@REM$",                "@REM$"),
     SQL     ("--",      "-- ",      "--",       null,                   "--$",                  "--$"),
-    JSP     ("<%--\n",  "    ",     "\n--%>",   null,                   "(\\s|\\t)*<%--.*$",    ".*--%>(\\s|\\t)*$"),
-    FTL     ("<#--\n",  "    ",     "\n-->",    "\\[#ftl(\\s.*)?\\]",   "(\\s|\\t)*<#--.*$",    ".*-->(\\s|\\t)*$"),
-    FTL_ALT ("[#--\n",  "    ",     "\n--]",    "\\[#ftl(\\s.*)?\\]",   "(\\s|\\t)*\\[#--.*$",  ".*--\\](\\s|\\t)*$"),
+    JSP     ("<%--" + eol(),  "    ",     eol() + "--%>",   null,                   "(\\s|\\t)*<%--.*$",    ".*--%>(\\s|\\t)*$"),
+    FTL     ("<#--" + eol(),  "    ",     eol() + "-->",    "\\[#ftl(\\s.*)?\\]",   "(\\s|\\t)*<#--.*$",    ".*-->(\\s|\\t)*$"),
+    FTL_ALT ("[#--" + eol(),  "    ",     eol() + "--]",    "\\[#ftl(\\s.*)?\\]",   "(\\s|\\t)*\\[#--.*$",  ".*--\\](\\s|\\t)*$"),
     VELOCITY("#*",      " * ",      " *#",      null,                   "(\\s|\\t)*#\\*.*$",    ".*\\*#(\\s|\\t)*$"),
     UNKNOWN ("",        "",         "",         null,                   null,                   null);
 

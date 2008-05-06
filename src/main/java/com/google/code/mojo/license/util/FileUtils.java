@@ -56,6 +56,11 @@ public final class FileUtils
         });
     }
 
+    public static String eol()
+    {
+        return System.getProperty("line.separator");
+    }
+
     public static String read(URL location, Map<String, String> properties) throws IOException
     {
         Reader reader = new InterpolationFilterReader(new BufferedReader(new InputStreamReader(location.openStream())), properties);

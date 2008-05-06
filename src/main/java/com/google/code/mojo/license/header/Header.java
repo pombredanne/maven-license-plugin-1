@@ -31,6 +31,7 @@ public final class Header
     private final String headerContent;
     private final String headerContentOneLine;
     private String[] lines;
+    private String eol;
 
     private Header(URL location, Map<String, String> properties)
     {
@@ -38,6 +39,7 @@ public final class Header
         try
         {
             this.headerContent = read(location, properties);
+            eol = headerContent.contains("\r\n") ? "\r\n" : "\n";
             lines = headerContent.split("\n");
             headerContentOneLine = remove(headerContent, " ", "\t", "\r", "\n");
         }
@@ -67,12 +69,17 @@ public final class Header
         return location;
     }
 
+    public String eol()
+    {
+        return eol;
+    }
+
     public String buildForType(HeaderType type)
     {
         StringBuilder newHeader = new StringBuilder();
         if(notEmpty(type.getFirstLine()))
         {
-            newHeader.append(type.getFirstLine()).append("\n");
+            newHeader.append(type.getFirstLine()).append(eol());
         }
         for(String line : getLines())
         {
@@ -80,9 +87,9 @@ public final class Header
         }
         if(notEmpty(type.getEndLine()))
         {
-            newHeader.append(type.getEndLine()).append("\n");
+            newHeader.append(type.getEndLine()).append(eol());
         }
-        return newHeader.append("\n").toString();
+        return newHeader.append(eol()).toString();
     }
 
     @Override
@@ -105,5 +112,5 @@ public final class Header
     {
         return new Header(location, properties);
     }
-    
+
 }
