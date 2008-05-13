@@ -25,6 +25,8 @@ import com.google.code.mojo.license.util.Selection;
 import static com.google.code.mojo.license.util.Selection.*;
 import static com.google.code.mojo.license.util.resource.ResourceFactory.*;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
@@ -115,9 +117,17 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
      */
     protected MavenProject project;
 
-    protected final void execute(Callback callback)
+    protected final void execute(Callback callback) throws MojoExecutionException, MojoFailureException
     {
-        URL location = newResourceFactory(basedir).findResource(this.header);
+        URL location;
+        try
+        {
+            location = newResourceFactory(basedir).findResource(this.header);
+        }
+        catch(Exception e)
+        {
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
         Header header = readFrom(location, mergeProperties());
         debug("Header %s:\n%s", header.getLocation(), header);
         for(Document document : selectedDocuments())

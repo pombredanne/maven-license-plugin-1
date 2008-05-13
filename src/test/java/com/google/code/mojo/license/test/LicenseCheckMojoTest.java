@@ -18,7 +18,7 @@ package com.google.code.mojo.license.test;
 
 import com.google.code.mojo.license.LicenseCheckMojo;
 import com.google.code.mojo.license.util.Selection;
-import com.google.code.mojo.license.util.resource.InvalidResourceException;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
@@ -98,7 +98,7 @@ public class LicenseCheckMojoTest
         mojo.execute();
     }
 
-    @Test(expectedExceptions = InvalidResourceException.class)
+    @Test(expectedExceptions = MojoExecutionException.class)
     public void test_execution_bad_header() throws Exception
     {
         LicenseCheckMojo mojo = new LicenseCheckMojo()

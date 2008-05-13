@@ -34,8 +34,9 @@
             <plugin>
                 <groupId>com.google.code.maven-license-plugin</groupId>
                 <artifactId>maven-license-plugin</artifactId>
+                <version>1.3.1-SNAPSHOT</version>
                 <configuration>
-                    <header>documents/other-header.txt</header>
+                    <!--<header>documents/other-header.txt</header>-->
                     <!-- <includes>
                         <include>**/MockIP.java</include>
                     </includes -->
