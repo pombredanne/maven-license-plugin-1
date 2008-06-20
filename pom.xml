@@ -110,10 +110,6 @@
         BUILD
     -->
 
-    <prerequisites>
-        <maven>2.0.8</maven>
-    </prerequisites>
-
     <build>
         <extensions>
             <extension>
