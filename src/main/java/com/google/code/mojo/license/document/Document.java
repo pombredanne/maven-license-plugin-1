@@ -37,12 +37,14 @@ public final class Document
     private final File file;
     private final DocumentType documentType;
     private final HeaderType headerType;
+    private final String encoding;
 
-    private Document(File file, HeaderType headerType)
+    private Document(File file, HeaderType headerType, String encoding)
     {
         this.file = file;
         this.documentType = fromExtension(extension(file.getName()));
         this.headerType = headerType;
+        this.encoding = encoding;
     }
 
     public File getFile()
@@ -103,7 +105,7 @@ public final class Document
 
     private HeaderParser createParser()
     {
-        return parseHeader(readFrom(file), headerType);
+        return parseHeader(readFrom(file, encoding), headerType);
     }
 
     private void removeHeaderIfExist(HeaderParser parser)
@@ -114,9 +116,9 @@ public final class Document
         }
     }
 
-    public static Document newDocument(File file, HeaderType headerType)
+    public static Document newDocument(File file, HeaderType headerType, String encoding)
     {
-        return new Document(file, headerType);
+        return new Document(file, headerType, encoding);
     }
 
 }

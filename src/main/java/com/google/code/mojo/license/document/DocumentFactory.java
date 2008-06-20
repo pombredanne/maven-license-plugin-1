@@ -33,11 +33,13 @@ public final class DocumentFactory
 {
     private final Map<String, String> mapping;
     private final File basedir;
+    private final String encoding;
 
-    private DocumentFactory(File basedir, Map<String, String> mapping)
+    private DocumentFactory(File basedir, Map<String, String> mapping, String encoding)
     {
         this.mapping = mapping;
         this.basedir = basedir;
+        this.encoding = encoding;
     }
 
     public Document[] wrap(String[] files)
@@ -45,19 +47,19 @@ public final class DocumentFactory
         List<Document> wrappers = new ArrayList<Document>(files.length);
         for(String file : files)
         {
-            wrappers.add(getWrapper(file));
+            wrappers.add(getWrapper(file, encoding));
         }
         return wrappers.toArray(new Document[wrappers.size()]);
     }
 
-    private Document getWrapper(String file)
+    private Document getWrapper(String file, String encoding)
     {
-        return newDocument(new File(basedir, file), HeaderType.fromName(mapping.get(extension(file))));
+        return newDocument(new File(basedir, file), HeaderType.fromName(mapping.get(extension(file))), encoding);
     }
 
-    public static DocumentFactory newDocumentFactory(File basedir, Map<String, String> mapping)
+    public static DocumentFactory newDocumentFactory(File basedir, Map<String, String> mapping, String encoding)
     {
-        return new DocumentFactory(basedir, mapping);
+        return new DocumentFactory(basedir, mapping, encoding);
     }
 
 }

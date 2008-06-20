@@ -18,9 +18,11 @@ package com.google.code.mojo.license.util;
 
 import static com.google.code.mojo.license.util.FileUtils.*;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 /**
  * <b>Date:</b> 21-Feb-2008<br>
@@ -30,15 +32,17 @@ public final class FileContent
 {
     private final File file;
     private final StringBuilder fileContent;
+    private final String encoding;
 
     private int position;
 
-    private FileContent(File file)
+    private FileContent(File file, String encoding)
     {
         try
         {
             this.file = file;
-            this.fileContent = new StringBuilder(read(file));
+            this.fileContent = new StringBuilder(read(file, encoding));
+            this.encoding = encoding;
         }
         catch(IOException e)
         {
@@ -48,10 +52,11 @@ public final class FileContent
 
     public void write()
     {
-        OutputStream out = lock(file);
+        Writer out = null;
         try
         {
-            out.write(fileContent.toString().getBytes());
+            out = new BufferedWriter(new OutputStreamWriter(lock(file), encoding));
+            out.append(fileContent.toString());
         }
         catch(Exception e)
         {
@@ -103,9 +108,9 @@ public final class FileContent
         }
     }
 
-    public static FileContent readFrom(File file)
+    public static FileContent readFrom(File file, String encoding)
     {
-        return new FileContent(file);
+        return new FileContent(file, encoding);
     }
 
     @Override

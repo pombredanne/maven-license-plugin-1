@@ -22,6 +22,7 @@ import org.codehaus.plexus.util.InterpolationFilterReader;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -69,9 +70,9 @@ public final class FileUtils
         return content;
     }
 
-    public static String read(File file) throws IOException
+    public static String read(File file, String encoding) throws IOException
     {
-        Reader reader = new BufferedReader(new FileReader(file));
+        Reader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
         String content = IOUtil.toString(reader);
         reader.close();
         return content;

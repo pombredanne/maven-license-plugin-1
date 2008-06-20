@@ -109,6 +109,13 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
      * @parameter expression="${license.quiet}" default-value="false"
      */
     protected boolean quiet = false;
+    
+    /**
+     * Set the charcter encoding for files
+     * 
+     * @parameter expression="${license.encoding}" default-value="${file.encoding}"
+     */
+    protected String encoding = System.getProperty("file.encoding");
 
     /**
      * @parameter default-value="${project}"
@@ -174,7 +181,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
         debug("From: %s", basedir);
         debug("Including: %s", deepToString(selection.getIncluded()));
         debug("Excluding: %s", deepToString(selection.getExcluded()));
-        Document[] documents = newDocumentFactory(basedir, buildMapping()).wrap(selection.getSelectedFiles());
+        Document[] documents = newDocumentFactory(basedir, buildMapping(), encoding).wrap(selection.getSelectedFiles());
         for(Document document : documents)
         {
             debug("Selected file: %s [type=%s]", document.getFile(), document.getDocumentType());
