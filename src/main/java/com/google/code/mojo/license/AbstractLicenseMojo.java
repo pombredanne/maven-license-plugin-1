@@ -32,6 +32,7 @@ import org.apache.maven.project.MavenProject;
 import java.io.File;
 import static java.lang.String.*;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import static java.util.Arrays.*;
 import java.util.HashMap;
@@ -122,13 +123,37 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
      * @required
      * @readonly
      */
-    protected MavenProject project;
+    protected MavenProject project = new MavenProject();
 
+    @SuppressWarnings({"unchecked"})
     protected final void execute(Callback callback) throws MojoExecutionException, MojoFailureException
     {
+        class CL extends URLClassLoader
+        {
+            CL()
+            {
+                super(new URL[0], Thread.currentThread().getContextClassLoader());
+            }
+
+            @Override
+            public void addURL(URL url) {
+                super.addURL(url);
+            }
+        }
+        
+        CL cl = new CL();
         URL location;
         try
         {
+            List<String> cp = project.getCompileClasspathElements();
+            for (String s : cp)
+            {
+                if(s != null)
+                {
+                    cl.addURL(new URL(s));
+                }
+            }
+            Thread.currentThread().setContextClassLoader(cl);
             location = newResourceFactory(basedir).findResource(this.header);
         }
         catch(Exception e)
