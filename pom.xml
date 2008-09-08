@@ -247,6 +247,7 @@
                     <failIfMissing>true</failIfMissing>
                     <excludes>
                         <exclude>LICENSE.txt</exclude>
+                        <exclude>NOTICE.txt</exclude>
                         <exclude>src/test/project/**</exclude>
                     </excludes>
                 </configuration>

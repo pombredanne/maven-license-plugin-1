@@ -150,7 +150,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo
             {
                 if(s != null)
                 {
-                    cl.addURL(new URL(s));
+                    cl.addURL(new File(s).toURI().toURL());
                 }
             }
             Thread.currentThread().setContextClassLoader(cl);

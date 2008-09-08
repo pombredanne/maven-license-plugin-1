@@ -31,6 +31,6 @@ public class InvalidResourceException extends RuntimeException
 
     public InvalidResourceException(String resource, Throwable cause)
     {
-        super("Resource not found '" + resource + "': " + cause.getMessage(), cause);
+        super("Resource not found '" + resource + "'", cause);
     }
 }
