@@ -220,6 +220,18 @@
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
             </plugin>
+            <plugin>
+                <artifactId>maven-repository-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>bundle-create</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>bundle-create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- documentation -->
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
