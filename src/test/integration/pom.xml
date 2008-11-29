@@ -49,9 +49,9 @@
                     <includes>
                         <include>languages/**</include>
                     </includes>
-                    <additionalHeaderDefinitions>
+                    <headerDefinitions>
                         <definitions>myconfig.xml</definitions>
-                    </additionalHeaderDefinitions>
+                    </headerDefinitions>
                     <mapping>
                         <gen>DOUBLESLASH_STYLE</gen>
                         <xqy>XQUERY</xqy>
