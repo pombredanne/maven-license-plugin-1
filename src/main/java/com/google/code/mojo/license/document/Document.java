@@ -22,14 +22,14 @@ import com.google.code.mojo.license.header.HeaderParser;
 import com.google.code.mojo.license.header.HeaderType;
 import com.google.code.mojo.license.util.FileContent;
 import com.google.code.mojo.license.util.FileUtils;
-import static com.google.code.mojo.license.util.FileUtils.*;
+import static com.google.code.mojo.license.util.FileUtils.readFirstLines;
+import static com.google.code.mojo.license.util.FileUtils.remove;
 
 import java.io.File;
 import java.io.IOException;
 
 /**
- * <b>Date:</b> 16-Feb-2008<br>
- * <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
+ * <b>Date:</b> 16-Feb-2008<br> <b>Author:</b> Mathieu Carbou (mathieu.carbou@gmail.com)
  */
 public final class Document {
     private final File file;
@@ -52,6 +52,9 @@ public final class Document {
     }
 
     public boolean isNotSupported() {
+        if (headerDefinition == null) {
+            return true;
+        }
         return HeaderType.UNKNOWN.getDefinition().getType().equals(headerDefinition.getType());
     }
 
