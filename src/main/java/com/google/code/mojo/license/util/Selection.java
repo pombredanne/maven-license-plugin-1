@@ -35,7 +35,8 @@ public final class Selection {
             "**/.classpath", "**/.project", "**/.settings/**",
             "**/*.iml", "**/*.ipr", "**/*.iws",
             "**/*.jpg", "**/*.png", "**/*.gif", "**/*.ico",
-            "**/*.class", "**/MANIFEST.MF"};
+            "**/*.class", "**/MANIFEST.MF",
+            "**/*.jar"};
 
     private final File basedir;
     private final String[] included;
