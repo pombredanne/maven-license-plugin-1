@@ -152,7 +152,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo {
         try {
             finder.setCompileClassPath(project.getCompileClasspathElements());
         } catch (DependencyResolutionRequiredException e) {
-            throw new MojoFailureException(e.getMessage(), e);
+            throw new MojoExecutionException(e.getMessage(), e);
         }
         finder.setPluginClassPath(getClass().getClassLoader());
 

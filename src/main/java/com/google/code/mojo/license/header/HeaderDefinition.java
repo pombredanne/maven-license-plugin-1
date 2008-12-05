@@ -130,14 +130,6 @@ public class HeaderDefinition {
         return skipLinePattern;
     }
 
-    protected Pattern getFirstLineDetectionPattern() {
-        return firstLineDetectionPattern;
-    }
-
-    protected Pattern getLastLineDetectionPattern() {
-        return lastLineDetectionPattern;
-    }
-
     /**
      * Sets header definition properties using its property name and its string value.<br> If you want to set a property
      * to null you must not call this function.<br/> This function is mainly used while parsing properties from the XML
