@@ -87,9 +87,8 @@ public final class AdditionalHeaderDefinitionTest {
                 .addTag("firstLine").addText("#region LicenseEOL/**")
                 .addTag("beforeEachLine").addText(" * ")
                 .addTag("endLine").addText(" */EOL#endregion")
-                .addTag("skipLine").addText("^#.*$")
-                .addTag("firstLineDetectionPattern").addText("(\\s|\\t)*/\\*.*$")
-                .addTag("lastLineDetectionPattern").addText(".*\\*/(\\s|\\t)*$");
+                .addTag("firstLineDetectionPattern").addText("#region.*^EOL/\\*\\*.*$")
+                .addTag("lastLineDetectionPattern").addText("\\*/EOL#endregion");
 
 
         AdditionalHeaderDefinition loader = new AdditionalHeaderDefinition(def);
