@@ -79,4 +79,29 @@ public final class AdditionalHeaderDefinitionTest {
 
         System.out.println(header.buildForDefinition(loader.getDefinitions().get("text"), false));
     }
+
+  @Test
+    public void test_advanced_definitions() throws Exception {
+        XMLDocument def = XMLDoc.newDocument().addRoot("additionalHeaders")
+                .addTag("csregion")
+                .addTag("firstLine").addText("#region LicenseEOL/**")
+                .addTag("beforeEachLine").addText(" * ")
+                .addTag("endLine").addText(" */EOL#endregion")
+                .addTag("skipLine").addText("^#.*$")
+                .addTag("firstLineDetectionPattern").addText("(\\s|\\t)*/\\*.*$")
+                .addTag("lastLineDetectionPattern").addText(".*\\*/(\\s|\\t)*$");
+
+
+        AdditionalHeaderDefinition loader = new AdditionalHeaderDefinition(def);
+
+        Map<String, String> props = new HashMap<String, String>();
+        props.put("year", "2008");
+        Header header = new Header(getClass().getResource("/test-header1.txt"), props);
+
+        //FileUtils.write(new File("src/test/resources/test-header4.txt"), header.buildForDefinition(loader.getDefinitions().get("csregion"), false), System.getProperty("file.encoding"));
+
+        final String content = FileUtils.read(new File("src/test/resources/test-header4.txt"), System.getProperty("file.encoding"));
+        assertEquals(header.buildForDefinition(loader.getDefinitions().get("csregion"), content.indexOf("\n") == -1),
+                content);
+    }
 }
