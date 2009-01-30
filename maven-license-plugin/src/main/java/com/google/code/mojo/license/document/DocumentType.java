@@ -76,6 +76,11 @@ public enum DocumentType {
     LISP("el",              HeaderType.EXCLAMATION3_STYLE),
     LUA("lua",              HeaderType.LUA),
     VB("bas",               HeaderType.APOSTROPHE_STYLE),
+    MXML("mxml",            HeaderType.XML_STYLE),
+    AS("as",                HeaderType.JAVADOC_STYLE),
+    AJ("aj",                HeaderType.JAVADOC_STYLE),
+    POM("pom",              HeaderType.XML_STYLE),
+
     UNKNOWN("",             HeaderType.UNKNOWN);
 
     ////////////////////////////////////
