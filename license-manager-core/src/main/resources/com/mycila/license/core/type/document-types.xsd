@@ -14,10 +14,10 @@
                 <xs:element name="document" type="Document" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
-        <unique name="id">
-            <selector xpath=".//*"/>
-            <field xpath="@extension"/>
-        </unique>
+        <xs:unique name="id">
+            <xs:selector xpath=".//*"/>
+            <xs:field xpath="@extension"/>
+        </xs:unique>
     </xs:element>
 
     <xs:complexType name="Document">

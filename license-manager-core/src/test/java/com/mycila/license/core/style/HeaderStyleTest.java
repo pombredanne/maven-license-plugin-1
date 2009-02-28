@@ -9,6 +9,17 @@ import org.testng.annotations.Test;
 public final class HeaderStyleTest {
 
     @Test
+    public void test_load_defaults() throws Exception {
+        HeaderStyles headerStyles = new HeaderStyles();
+        headerStyles.loadDefaults();
+        assertEquals(headerStyles.size(), 23);
+        for (HeaderStyle style : headerStyles.getHeaderStyles()) {
+            System.out.println(style);
+        }
+    }
+
+    @SuppressWarnings({"ObjectEqualsNull"})
+    @Test
     public void test_create() throws Exception {
         HeaderStyle style1 = new HeaderStyle("xml");
         HeaderStyle style2 = new HeaderStyle("xml");
@@ -34,6 +45,18 @@ public final class HeaderStyleTest {
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Inexisting Header Style: inexisting");
+        }
+    }
+
+    @Test
+    public void test_add_loc() throws Exception {
+        assertEquals(new HeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles.xml")).size(), 1);
+        assertEquals(new HeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles-min.xml")).size(), 1);
+        try {
+            new HeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles-invalid.xml"));
+            fail();
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains("Style definition at"));
         }
     }
 
@@ -113,7 +136,10 @@ public final class HeaderStyleTest {
         assertEquals(style.toString(), "HeaderStyle 'xml' (XML header style)\n" +
                 " - begining: <!--EOL\n" +
                 " - before each line:     \n" +
-                " - ending: EOL-->");
+                " - ending: EOL-->\n" +
+                " - detection to skip with: ^<\\?xml.*>$\n" +
+                " - detection of begining with: (\\s|\\t)*<!--.*$\n" +
+                " - detection of end with: (\\s|\\t)*<!--.*$");
         assertEquals(style.detectSkip, "^<\\?xml.*>$");
         assertEquals(style.detectBegining, "(\\s|\\t)*<!--.*$");
         assertEquals(style.detectEnding, "(\\s|\\t)*<!--.*$");

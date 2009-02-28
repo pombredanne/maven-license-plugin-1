@@ -18,7 +18,7 @@ package com.google.code.mojo.license.header;
 
 import com.google.code.mojo.license.util.FileUtils;
 import com.google.code.xmltool.XMLDoc;
-import com.google.code.xmltool.XMLDocument;
+import com.google.code.xmltool.XMLTag;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -32,7 +32,7 @@ import java.util.Map;
 public final class AdditionalHeaderDefinitionTest {
     @Test
     public void test_load_definitions() throws Exception {
-        XMLDocument def = XMLDoc.newDocument().addRoot("additionalHeaders")
+        XMLTag def = XMLDoc.newDocument(true).addRoot("additionalHeaders")
                 .addTag("xquery")
                 .addTag("firstLine").addText("(:")
                 .addTag("beforeEachLine").addText(" : ")
@@ -61,7 +61,7 @@ public final class AdditionalHeaderDefinitionTest {
 
     @Test
     public void test_load_definitions2() throws Exception {
-        XMLDocument def = XMLDoc.newDocument().addRoot("additionalHeaders")
+        XMLTag def = XMLDoc.newDocument(true).addRoot("additionalHeaders")
                 .addTag("text")
                 .addTag("firstLine").addText(":(")
                 .addTag("beforeEachLine").addText(" ( ")
@@ -82,7 +82,7 @@ public final class AdditionalHeaderDefinitionTest {
 
   @Test
     public void test_advanced_definitions() throws Exception {
-        XMLDocument def = XMLDoc.newDocument().addRoot("additionalHeaders")
+        XMLTag def = XMLDoc.newDocument(true).addRoot("additionalHeaders")
                 .addTag("csregion")
                 .addTag("firstLine").addText("#region LicenseEOL/**")
                 .addTag("beforeEachLine").addText(" * ")

@@ -45,7 +45,10 @@ public final class HeaderStyle implements Comparable<HeaderStyle> {
                 .append("\n")
                 .append(" - begining: ").append(defineBegining).append("\n")
                 .append(" - before each line: ").append(defineStartLine).append("\n")
-                .append(" - ending: ").append(defineEnding)
+                .append(" - ending: ").append(defineEnding).append("\n")
+                .append(" - detection to skip with: ").append(detectSkip).append("\n")
+                .append(" - detection of begining with: ").append(detectBegining).append("\n")
+                .append(" - detection of end with: ").append(detectEnding)
                 .toString();
     }
 
