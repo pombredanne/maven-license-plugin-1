@@ -17,7 +17,7 @@
 package com.google.code.mojo.license.header;
 
 import com.google.code.xmltool.CallBack;
-import com.google.code.xmltool.XMLDocument;
+import com.google.code.xmltool.XMLTag;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,12 +71,12 @@ public class AdditionalHeaderDefinition {
      *
      * @param doc The XML definition to read.
      */
-    public AdditionalHeaderDefinition(XMLDocument doc) {
+    public AdditionalHeaderDefinition(XMLTag doc) {
         if (doc == null) {
             throw new IllegalArgumentException("The header definition XML document cannot be null");
         }
         doc.gotoRoot().forEachChild(new CallBack() {
-            public void execute(XMLDocument doc) {
+            public void execute(XMLTag doc) {
                 final String type = doc.getCurrentTagName().toLowerCase();
                 HeaderDefinition definition = definitions.get(type);
                 if (definition == null) {
@@ -106,7 +106,7 @@ public class AdditionalHeaderDefinition {
             this.definition = definition;
         }
 
-        public void execute(XMLDocument xmlDocument) {
+        public void execute(XMLTag xmlDocument) {
             String value = xmlDocument.getText();
             if ("".equals(value)) // value can't be null
             {

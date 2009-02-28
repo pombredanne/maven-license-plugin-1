@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://mycila.com/license/styles/1.0" xmlns="http://mycila.com/license/styles/1.0">
+
+    <xs:element name="styles">
+        <xs:annotation>
+            <xs:documentation source="version">1.0+</xs:documentation>
+            <xs:documentation source="description">
+                Root element of all style definitions
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="style" type="Style" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+        <unique name="id">
+            <selector xpath=".//*"/>
+            <field xpath="@name"/>
+        </unique>
+    </xs:element>
+
+    <xs:complexType name="Style">
+        <xs:annotation>
+            <xs:documentation source="version">1.0+</xs:documentation>
+            <xs:documentation source="description">
+                Define a new header style with a unique name
+            </xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="description" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation source="version">1.0+</xs:documentation>
+                    <xs:documentation source="description">
+                        Provides an optional description for this header style definition
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="definition" type="Definition"/>
+            <xs:element name="detection" type="DetectionPatterns"/>
+        </xs:all>
+        <xs:attribute name="name" type="Name" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Definition">
+        <xs:all>
+            <xs:element name="begining" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation source="version">1.0+</xs:documentation>
+                    <xs:documentation source="description">
+                        Caracters to be put before the header. You can provide a 'start line', like '/**' in Java.
+                        To represent end of lines, use 'EOF'. I.e.: for XML, &lt;!--EOL
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="startLine" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation source="version">1.0+</xs:documentation>
+                    <xs:documentation source="description">
+                        Caracters to be put before each line of the header, like ' * ' in Java.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ending" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation source="version">1.0+</xs:documentation>
+                    <xs:documentation source="description">
+                        Caracters to be put after the header. You can provide a 'end line', like ' */' in Java.
+                        To represent end of lines, use 'EOF'. I.e.: for XML, EOL--&gt;
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="DetectionPatterns">
+        <xs:all>
+            <xs:element name="skip" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation source="version">1.0+</xs:documentation>
+                    <xs:documentation source="description">
+                        You can define a regular expression to match lines to skip from header detection. This is
+                        useful for bash scripts, which begin by '#!/bin/sh' or for XML files which begin by the xml header.
+                        You must provide a valid Java regular Expression (See http://java.sun.com/javase/6/docs/api/index.html?java/util/regex/Pattern.html).
+                        If you need to activate case insensitive flag or dotall flag, you can use embedded constructs like this example: '(?is).*copyright.*'
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="begining" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation source="version">1.0+</xs:documentation>
+                    <xs:documentation source="description">
+                        Define the regular expression to match the line(s) starting the header.
+                        You must provide a valid Java regular Expression (See http://java.sun.com/javase/6/docs/api/index.html?java/util/regex/Pattern.html).
+                        If you need to activate case insensitive flag or dotall flag, you can use embedded constructs like this example: '(?is).*copyright.*'
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ending" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation source="version">1.0+</xs:documentation>
+                    <xs:documentation source="description">
+                        Define the regular expression to match the line(s) ending the header.
+                        You must provide a valid Java regular Expression (See http://java.sun.com/javase/6/docs/api/index.html?java/util/regex/Pattern.html).
+                        If you need to activate case insensitive flag or dotall flag, you can use embedded constructs like this example: '(?is).*copyright.*'
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:simpleType name="Name">
+        <xs:annotation>
+            <xs:documentation source="version">1.0+</xs:documentation>
+            <xs:documentation source="description">
+                The name must be unique and be a valid identifier. Must begin with a-z or _ and then accepted caracters are: a-z, 0-9, _
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z_][a-z0-9_]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

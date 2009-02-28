@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://mycila.com/license/mappings/1.0" xmlns="http://mycila.com/license/mappings/1.0">
+
+    <xs:element name="mappings">
+        <xs:annotation>
+            <xs:documentation source="version">1.0+</xs:documentation>
+            <xs:documentation source="description">
+                Root element of all mapping definitions
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="document" type="Document" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+        <unique name="id">
+            <selector xpath=".//*"/>
+            <field xpath="@extension"/>
+        </unique>
+    </xs:element>
+
+    <xs:complexType name="Document">
+        <xs:annotation>
+            <xs:documentation source="version">1.0+</xs:documentation>
+            <xs:documentation source="description">
+                Define a mapping between an extension (file type) and a header style
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="extension" type="Extension" use="required"/>
+        <xs:attribute name="style" type="Style" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="Extension">
+        <xs:annotation>
+            <xs:documentation source="version">1.0+</xs:documentation>
+            <xs:documentation source="description">
+                The extension of the document
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="Style">
+        <xs:annotation>
+            <xs:documentation source="version">1.0+</xs:documentation>
+            <xs:documentation source="description">
+                The header style
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z_][a-z0-9_]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

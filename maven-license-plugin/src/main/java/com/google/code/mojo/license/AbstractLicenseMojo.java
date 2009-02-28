@@ -241,7 +241,7 @@ public abstract class AbstractLicenseMojo extends AbstractMojo {
         final Map<String, HeaderDefinition> headers = new HashMap<String, HeaderDefinition>(HeaderType.defaultDefinitions());
         // and then override them with those provided in properties file
         for (String resource : headerDefinitions) {
-            final AdditionalHeaderDefinition fileDefinitions = new AdditionalHeaderDefinition(XMLDoc.from(finder.findResource(resource)));
+            final AdditionalHeaderDefinition fileDefinitions = new AdditionalHeaderDefinition(XMLDoc.from(finder.findResource(resource), true));
             final Map<String, HeaderDefinition> map = fileDefinitions.getDefinitions();
             debug("%d header definitions loaded from '%s'", map.size(), resource);
             headers.putAll(map);

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://mycila.com/license/mappings/1.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://mycila.com/license/mappings/1.0 document-types.xsd">
+
+    <document extension="java" style="javadoc"/>
+    <document extension="groovy" style="javadoc"/>
+    <document extension="js" style="slashstar"/>
+    <document extension="css" style="javadoc"/>
+    <document extension="cs" style="javadoc"/>
+    <document extension="as" style="javadoc"/>
+    <document extension="c" style="javadoc"/>
+    <document extension="cpp" style="javadoc"/>
+    <document extension="h" style="javadoc"/>
+    <document extension="xml" style="xml"/>
+    <document extension="xhtml" style="xml"/>
+    <document extension="dtd" style="xml"/>
+    <document extension="xsd" style="xml"/>
+    <document extension="fml" style="xml"/>
+    <document extension="xsl" style="xml"/>
+    <document extension="html" style="xml"/>
+    <document extension="htm" style="xml"/>
+    <document extension="jspx" style="xml"/>
+    <document extension="apt" style="doubletilde"/>
+    <document extension="properties" style="script"/>
+    <document extension="sh" style="script"/>
+    <document extension="py" style="script"/>
+    <document extension="rb" style="script"/>
+    <document extension="pl" style="script"/>
+    <document extension="pm" style="script"/>
+    <document extension="txt" style="text"/>
+    <document extension="bat" style="batch"/>
+    <document extension="cmd" style="batch"/>
+    <document extension="sql" style="doubledashes"/>
+    <document extension="adb" style="doubledashes"/>
+    <document extension="ads" style="doubledashes"/>
+    <document extension="e" style="doubledashes"/>
+    <document extension="jsp" style="dynascript"/>
+    <document extension="asp" style="asp"/>
+    <document extension="php" style="php"/>
+    <document extension="vm" style="sharpstart"/>
+    <document extension="ftl" style="ftl"/>
+    <document extension="asm" style="semicolon"/>
+    <document extension="cfc" style="dynascript3"/>
+    <document extension="cfm" style="dynascript3"/>
+    <document extension="pas" style="bracesstar"/>
+    <document extension="erl" style="percent3"/>
+    <document extension="hrl" style="percent3"/>
+    <document extension="f" style="exclamation"/>
+    <document extension="el" style="exclamation3"/>
+    <document extension="lua" style="lua"/>
+    <document extension="bas" style="apostrophe"/>
+    <document extension="mxml" style="xml"/>
+    <document extension="aj" style="javadoc"/>
+    <document extension="pom" style="xml"/>
+    
+</mappings>
