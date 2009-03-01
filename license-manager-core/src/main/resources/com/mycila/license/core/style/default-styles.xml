@@ -181,7 +181,7 @@
         </detection>
     </style>
 
-    <style name="eclamation3">
+    <style name="exclamation3">
         <definition>
             <begining>!!! ----</begining>
             <startLine>!!! </startLine>

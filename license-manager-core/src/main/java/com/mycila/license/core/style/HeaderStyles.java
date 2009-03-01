@@ -20,7 +20,7 @@ public final class HeaderStyles {
     private static final URL DEFAULT_HEADER_STYLES = Configuration.class.getResource("/com/mycila/license/core/style/default-styles.xml");
     private static final URL HEADER_STYLES_SCHEMA = Configuration.class.getResource("/com/mycila/license/core/style/header-style.xsd");
 
-    private SortedSet<HeaderStyle> headerStyles = new TreeSet<HeaderStyle>();
+    private final SortedSet<HeaderStyle> headerStyles = new TreeSet<HeaderStyle>();
 
     public HeaderStyles loadDefaults() {
         return add(DEFAULT_HEADER_STYLES);
@@ -60,7 +60,7 @@ public final class HeaderStyles {
         return Builder.of(style);
     }
 
-    public HeaderStyle getHeaderStyle(String name) {
+    public HeaderStyle getByName(String name) {
         notNull(name, "Style name");
         for (HeaderStyle headerStyle : headerStyles) {
             if (headerStyle.getName().equalsIgnoreCase(name)) {

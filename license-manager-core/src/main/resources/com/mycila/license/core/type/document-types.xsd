@@ -38,7 +38,9 @@
                 The extension of the document
             </xs:documentation>
         </xs:annotation>
-        <xs:restriction base="xs:string"/>
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
     </xs:simpleType>
 
     <xs:simpleType name="Style">

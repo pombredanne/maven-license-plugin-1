@@ -38,7 +38,7 @@
     <document extension="jsp" style="dynascript"/>
     <document extension="asp" style="asp"/>
     <document extension="php" style="php"/>
-    <document extension="vm" style="sharpstart"/>
+    <document extension="vm" style="sharpstar"/>
     <document extension="ftl" style="ftl"/>
     <document extension="asm" style="semicolon"/>
     <document extension="cfc" style="dynascript3"/>

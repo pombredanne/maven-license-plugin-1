@@ -9,13 +9,11 @@ import static com.mycila.license.core.util.Check.*;
 final class DocumentType implements Comparable<DocumentType> {
 
     private final String extension;
-    private final HeaderStyle headerStyle;
+    HeaderStyle headerStyle;
 
-    DocumentType(String extension, HeaderStyle headerStyle) {
+    DocumentType(String extension) {
         notNull(extension, "Document extension");
-        notNull(extension, "Header style");
         this.extension = extension.toLowerCase();
-        this.headerStyle = headerStyle;
     }
 
     public String getExtension() {
@@ -28,5 +26,23 @@ final class DocumentType implements Comparable<DocumentType> {
 
     public int compareTo(DocumentType o) {
         return getExtension().compareTo(o.getExtension());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DocumentType that = (DocumentType) o;
+        return extension.equals(that.extension);
+    }
+
+    @Override
+    public int hashCode() {
+        return extension.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "DocumentType: " + getExtension() + " => " + getHeaderStyle();
     }
 }
