@@ -16,8 +16,8 @@
 
 package com.google.code.mojo.license.header;
 
-import com.google.code.xmltool.CallBack;
-import com.google.code.xmltool.XMLTag;
+import com.mycila.xmltool.CallBack;
+import com.mycila.xmltool.XMLTag;
 
 import java.util.HashMap;
 import java.util.Map;

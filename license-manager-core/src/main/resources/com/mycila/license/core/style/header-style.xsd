@@ -49,7 +49,7 @@
                     <xs:documentation source="version">1.0+</xs:documentation>
                     <xs:documentation source="description">
                         Caracters to be put before the header. You can provide a 'start line', like '/**' in Java.
-                        To represent end of lines, use 'EOF'. I.e.: for XML, &lt;!--EOL
+                        To represent end of lines, use 'EOL'. I.e.: for XML, &lt;!--EOL
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
@@ -66,7 +66,7 @@
                     <xs:documentation source="version">1.0+</xs:documentation>
                     <xs:documentation source="description">
                         Caracters to be put after the header. You can provide a 'end line', like ' */' in Java.
-                        To represent end of lines, use 'EOF'. I.e.: for XML, EOL--&gt;
+                        To represent end of lines, use 'EOL'. I.e.: for XML, EOL--&gt;
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>

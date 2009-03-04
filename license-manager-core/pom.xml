@@ -61,7 +61,11 @@
                                 <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask" />
                                 <jarjar destfile="${project.build.directory}/${project.build.finalName}.jar" update="true">
                                     <zipfileset src="${project.build.directory}/dependency/xmltool-2.4.jar" />
-                                    <rule pattern="com.google.code.xmltool.**" result="com.mycila.license.core.internal.xmltool.@1" />
+                                    <zipfileset src="${project.build.directory}/dependency/plexus-utils-1.5.8.jar" />
+                                    <rule pattern="com.mycila.xmltool.**" result="com.mycila.license.core.internal.xmltool.@1" />
+                                    <rule pattern="hidden.org.codehaus.plexus.**" result="com.mycila.license.core.internal.hidden.@1" />
+                                    <rule pattern="org.codehaus.plexus.**" result="com.mycila.license.core.internal.plexus.@1" />
+                                    <keep pattern="com.mycila.license.core.**" />
                                 </jarjar>
                             </tasks>
                         </configuration>
@@ -89,8 +93,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.google.code.xmltool</groupId>
+            <groupId>com.mycila.xmltool</groupId>
             <artifactId>xmltool</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>

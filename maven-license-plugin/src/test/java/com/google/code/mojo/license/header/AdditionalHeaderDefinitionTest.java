@@ -17,8 +17,8 @@
 package com.google.code.mojo.license.header;
 
 import com.google.code.mojo.license.util.FileUtils;
-import com.google.code.xmltool.XMLDoc;
-import com.google.code.xmltool.XMLTag;
+import com.mycila.xmltool.XMLDoc;
+import com.mycila.xmltool.XMLTag;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 

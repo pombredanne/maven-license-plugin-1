@@ -1,13 +1,13 @@
 package com.mycila.license.core.type;
 
-import com.google.code.xmltool.CallBack;
-import com.google.code.xmltool.XMLDoc;
-import com.google.code.xmltool.XMLTag;
-import com.google.code.xmltool.util.ValidationResult;
 import com.mycila.license.core.Configuration;
 import com.mycila.license.core.style.HeaderStyle;
 import com.mycila.license.core.style.HeaderStyles;
 import static com.mycila.license.core.util.Check.*;
+import com.mycila.xmltool.CallBack;
+import com.mycila.xmltool.XMLDoc;
+import com.mycila.xmltool.XMLTag;
+import com.mycila.xmltool.util.ValidationResult;
 
 import java.net.URL;
 import java.util.Collections;
@@ -25,8 +25,7 @@ public final class DocumentTypes {
     private final SortedSet<DocumentType> documentTypes = new TreeSet<DocumentType>();
     private final HeaderStyles headerStyles;
 
-    public DocumentTypes(HeaderStyles headerStyles) {
-        notNull(headerStyles, "Header styles");
+    private DocumentTypes(HeaderStyles headerStyles) {
         this.headerStyles = headerStyles;
     }
 
@@ -104,4 +103,8 @@ public final class DocumentTypes {
         }
     }
 
+    public static DocumentTypes newDocumentTypes(HeaderStyles headerStyles) {
+        notNull(headerStyles, "Header styles");
+        return new DocumentTypes(headerStyles);
+    }
 }

@@ -1,11 +1,11 @@
 package com.mycila.license.core.style;
 
-import com.google.code.xmltool.CallBack;
-import com.google.code.xmltool.XMLDoc;
-import com.google.code.xmltool.XMLTag;
-import com.google.code.xmltool.util.ValidationResult;
 import com.mycila.license.core.Configuration;
 import static com.mycila.license.core.util.Check.*;
+import com.mycila.xmltool.CallBack;
+import com.mycila.xmltool.XMLDoc;
+import com.mycila.xmltool.XMLTag;
+import com.mycila.xmltool.util.ValidationResult;
 
 import java.net.URL;
 import java.util.Collections;
@@ -22,6 +22,8 @@ public final class HeaderStyles {
 
     private final SortedSet<HeaderStyle> headerStyles = new TreeSet<HeaderStyle>();
 
+    private HeaderStyles() {}
+
     public HeaderStyles loadDefaults() {
         return add(DEFAULT_HEADER_STYLES);
     }
@@ -37,16 +39,16 @@ public final class HeaderStyles {
         tag.forEachChild(new CallBack() {
             public void execute(XMLTag doc) {
                 Builder builder = add(doc.getAttribute("name"))
-                        .defineBegining(textOrData(doc, "%1$s:definition/%1$s:begining", ns))
-                        .defineStartLine(textOrData(doc, "%1$s:definition/%1$s:startLine", ns))
-                        .defineEnding(textOrData(doc, "%1$s:definition/%1$s:ending", ns))
-                        .detectBegining(textOrData(doc, "%1$s:detection/%1$s:begining", ns))
-                        .detectEnding(textOrData(doc, "%1$s:detection/%1$s:ending", ns));
+                        .defineBegining(doc.getTextOrCDATA("%1$s:definition/%1$s:begining", ns))
+                        .defineStartLine(doc.getTextOrCDATA("%1$s:definition/%1$s:startLine", ns))
+                        .defineEnding(doc.getTextOrCDATA("%1$s:definition/%1$s:ending", ns))
+                        .detectBegining(doc.getTextOrCDATA("%1$s:detection/%1$s:begining", ns))
+                        .detectEnding(doc.getTextOrCDATA("%1$s:detection/%1$s:ending", ns));
                 if (doc.hasTag("%1$s:description", ns)) {
-                    builder.description(textOrData(doc, "%1$s:description", ns));
+                    builder.description(doc.getTextOrCDATA("%1$s:description", ns));
                 }
                 if (doc.hasTag("%1$s:detection/%1$s:skip", ns)) {
-                    builder.detectSkip(textOrData(doc, "%1$s:detection/%1$s:skip", ns));
+                    builder.detectSkip(doc.getTextOrCDATA("%1$s:detection/%1$s:skip", ns));
                 }
             }
         });
@@ -62,8 +64,9 @@ public final class HeaderStyles {
 
     public HeaderStyle getByName(String name) {
         notNull(name, "Style name");
+        name = name.toLowerCase();
         for (HeaderStyle headerStyle : headerStyles) {
-            if (headerStyle.getName().equalsIgnoreCase(name)) {
+            if (headerStyle.getName().equals(name)) {
                 return headerStyle;
             }
         }
@@ -135,9 +138,7 @@ public final class HeaderStyles {
         }
     }
 
-    private static String textOrData(XMLTag doc, String xpath, Object... args) {
-        String txt = doc.getText(xpath, args);
-        return "".equals(txt) ? doc.getCDATA(xpath, args) : txt;
+    public static HeaderStyles newHeaderStyles() {
+        return new HeaderStyles();
     }
-    
 }

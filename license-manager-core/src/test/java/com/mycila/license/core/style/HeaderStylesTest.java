@@ -1,5 +1,6 @@
 package com.mycila.license.core.style;
 
+import static com.mycila.license.core.style.HeaderStyles.*;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -10,7 +11,7 @@ public final class HeaderStylesTest {
 
     @Test
     public void test_load_defaults() throws Exception {
-        HeaderStyles headerStyles = new HeaderStyles();
+        HeaderStyles headerStyles = newHeaderStyles();
         headerStyles.loadDefaults();
         assertEquals(headerStyles.size(), 23);
         for (HeaderStyle style : headerStyles.getHeaderStyles()) {
@@ -21,7 +22,7 @@ public final class HeaderStylesTest {
     @Test
     public void test_get_style() throws Exception {
         try {
-            new HeaderStyles().getByName("inexisting");
+            newHeaderStyles().getByName("inexisting");
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Inexisting Header Style: inexisting");
@@ -30,10 +31,10 @@ public final class HeaderStylesTest {
 
     @Test
     public void test_add_loc() throws Exception {
-        assertEquals(new HeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles.xml")).size(), 1);
-        assertEquals(new HeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles-min.xml")).size(), 1);
+        assertEquals(newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles.xml")).size(), 1);
+        assertEquals(newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles-min.xml")).size(), 1);
         try {
-            new HeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles-invalid.xml"));
+            newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles-invalid.xml"));
             fail();
         } catch (Exception e) {
             assertTrue(e.getMessage().contains("Style definition at"));
@@ -43,7 +44,7 @@ public final class HeaderStylesTest {
     @Test
     public void test_create_style() throws Exception {
         try {
-            new HeaderStyles().add("a")
+            newHeaderStyles().add("a")
                     .defineStartLine("    ")
                     .defineEnding("EOL-->")
                     .detectBegining("(\\s|\\t)*<!--.*$")
@@ -54,7 +55,7 @@ public final class HeaderStylesTest {
             assertEquals(e.getMessage(), "Begining definition cannot be null");
         }
         try {
-            new HeaderStyles().add("a")
+            newHeaderStyles().add("a")
                     .defineBegining("<!--EOL")
                     .defineEnding("EOL-->")
                     .detectBegining("(\\s|\\t)*<!--.*$")
@@ -65,7 +66,7 @@ public final class HeaderStylesTest {
             assertEquals(e.getMessage(), "StartLine definition cannot be null");
         }
         try {
-            new HeaderStyles().add("a")
+            newHeaderStyles().add("a")
                     .defineBegining("<!--EOL")
                     .defineStartLine("    ")
                     .detectBegining("(\\s|\\t)*<!--.*$")
@@ -76,7 +77,7 @@ public final class HeaderStylesTest {
             assertEquals(e.getMessage(), "Ending definition cannot be null");
         }
         try {
-            new HeaderStyles().add("a")
+            newHeaderStyles().add("a")
                     .defineBegining("<!--EOL")
                     .defineStartLine("    ")
                     .defineEnding("EOL-->")
@@ -87,7 +88,7 @@ public final class HeaderStylesTest {
             assertEquals(e.getMessage(), "Begining detection cannot be null");
         }
         try {
-            new HeaderStyles().add("a")
+            newHeaderStyles().add("a")
                     .defineBegining("<!--EOL")
                     .defineStartLine("    ")
                     .defineEnding("EOL-->")
@@ -101,7 +102,7 @@ public final class HeaderStylesTest {
 
     @Test
     public void test_add_style() throws Exception {
-        HeaderStyles styles = new HeaderStyles();
+        HeaderStyles styles = newHeaderStyles();
         assertEquals(styles.size(), 0);
         HeaderStyle style = styles.add("xml")
                 .description("XML header style")
@@ -127,7 +128,7 @@ public final class HeaderStylesTest {
 
     @Test
     public void test_add_duplicate_style() throws Exception {
-        HeaderStyles styles = new HeaderStyles();
+        HeaderStyles styles = newHeaderStyles();
         HeaderStyle style1 = styles.add("xml")
                 .description("XML header style")
                 .defineBegining("<!--EOL")

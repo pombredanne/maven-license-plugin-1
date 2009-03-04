@@ -1,5 +1,6 @@
 package com.mycila.license.core;
 
+import com.mycila.license.core.select.FileSelector;
 import com.mycila.license.core.style.HeaderStyles;
 import com.mycila.license.core.type.DocumentTypes;
 
@@ -11,8 +12,8 @@ public final class Configuration {
     /*private File baseDirectory = new File(".");
     private Set<String> includes = new HashSet<String>();
     private Set<String> excludes = new HashSet<String>();
-    private boolean useDefaultExcludes = true;*/
-    private final FileSelection fileSelection = new FileSelection();
+    private boolean withDefaultExcludes = true;*/
+    private final FileSelector fileSelection = FileSelector.newFileSelector();
 
     /*private URL header;
     private Pattern headerDetectionPattern = Pattern.compile("(?is).*copyright.*");
@@ -21,11 +22,11 @@ public final class Configuration {
 
     /*private boolean useDefaultHeaderStyles = true;
     private SortedMap<String, HeaderStyle> headerStyles = new TreeMap<String, HeaderStyle>();*/
-    private final HeaderStyles headerStyles = new HeaderStyles();
+    private final HeaderStyles headerStyles = HeaderStyles.newHeaderStyles();
 
     /*private boolean useDefaultDocumentTypes = true;
     private SortedMap<DocumentType, HeaderStyle> documentTypes = new TreeMap<DocumentType, HeaderStyle>();*/
-    private final DocumentTypes documentTypes = new DocumentTypes(headerStyles);
+    private final DocumentTypes documentTypes = DocumentTypes.newDocumentTypes(headerStyles);
 
     private boolean verbose = false;
     private boolean quiet = false;

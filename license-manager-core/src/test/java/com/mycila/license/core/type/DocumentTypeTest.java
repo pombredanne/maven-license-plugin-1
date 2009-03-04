@@ -12,7 +12,7 @@ public final class DocumentTypeTest {
     @SuppressWarnings({"ObjectEqualsNull"})
     @Test
     public void test_create() throws Exception {
-        HeaderStyles headerStyles = new HeaderStyles();
+        HeaderStyles headerStyles = HeaderStyles.newHeaderStyles();
         headerStyles.loadDefaults();
 
         DocumentType type1 = new DocumentType("xml");

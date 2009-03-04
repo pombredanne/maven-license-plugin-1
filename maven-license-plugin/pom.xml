@@ -35,7 +35,8 @@
         BUILD
     -->
 
-    <build>
+    <build>
+
         <plugins>
             <!-- for maven plugins -->
             <plugin>
@@ -63,7 +64,7 @@
             <artifactId>maven-plugin-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.google.code.xmltool</groupId>
+            <groupId>com.mycila.xmltool</groupId>
             <artifactId>xmltool</artifactId>
         </dependency>
         <dependency>

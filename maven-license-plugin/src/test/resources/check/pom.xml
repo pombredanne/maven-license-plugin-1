@@ -397,9 +397,9 @@
             <version>2.0.9</version>
         </dependency>
         <dependency>
-            <groupId>com.google.code.xmltool</groupId>
+            <groupId>com.mycila.xmltool</groupId>
             <artifactId>xmltool</artifactId>
-            <version>1.4</version>
+            <version>2.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>

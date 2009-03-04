@@ -26,7 +26,7 @@ import com.google.code.mojo.license.header.HeaderDefinition;
 import com.google.code.mojo.license.header.HeaderType;
 import com.google.code.mojo.license.util.Selection;
 import com.google.code.mojo.license.util.resource.ResourceFinder;
-import com.google.code.xmltool.XMLDoc;
+import com.mycila.xmltool.XMLDoc;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
