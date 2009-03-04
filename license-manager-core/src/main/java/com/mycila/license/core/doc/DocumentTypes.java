@@ -55,6 +55,7 @@ public final class DocumentTypes {
     public MappingBuilder map(String extension) {
         notNull(extension, "Document extension");
         final DocumentType type = new DocumentType(extension.toLowerCase());
+        documentTypes.remove(type);
         documentTypes.add(type);
         return new MappingBuilder() {
             public DocumentTypes to(HeaderStyle headerStyle) {

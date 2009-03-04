@@ -102,11 +102,13 @@ public final class DocumentTypesTest {
     @Test
     public void test_add_duplicate_mapping() throws Exception {
         DocumentTypes mappings = newDocumentTypes(headerStyles);
-        mappings.map("java").to(headerStyles.getByName("javadoc"));
+        mappings.map("java").to(headerStyles.getByName("xml"));
         DocumentType doc1 = mappings.getByExtension("java");
         assertNotNull(doc1);
+        assertEquals(mappings.getByExtension("java").getHeaderStyle().getName(), "xml");
         mappings.map("java").to(headerStyles.getByName("javadoc"));
         assertTrue(doc1.equals(mappings.getByExtension("java")));
+        assertEquals(mappings.getByExtension("java").getHeaderStyle().getName(), "javadoc");
         assertFalse(doc1 == mappings.getByExtension("java"));
     }
 

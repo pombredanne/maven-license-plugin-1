@@ -58,6 +58,7 @@ public final class HeaderStyles {
     public Builder add(String styleName) {
         notNull(styleName, "Style name");
         HeaderStyle style = new HeaderStyle(styleName.toLowerCase());
+        headerStyles.remove(style);
         headerStyles.add(style);
         return Builder.of(style);
     }
