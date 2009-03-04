@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<styles xmlns="http://mycila.com/license/styles/1.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://mycila.com/license/styles/1.0 header-style.xsd">
+
+    <style name="javadoc">
+        <description>Javadoc header style</description>
+        <definition>
+            <begining>/**</begining>
+            <startLine> * </startLine>
+            <ending> */</ending>
+        </definition>
+        <detection>
+            <begining>(\s|\t)*/\*.*$</begining>
+            <ending>.*\*/(\s|\t)*$</ending>
+        </detection>
+    </style>
+
+    <style name="xml">
+        <description>XML header style</description>
+        <definition>
+            <begining><![CDATA[<!--EOL]]></begining>
+            <startLine>    </startLine>
+            <ending><![CDATA[EOL-->]]></ending>
+        </definition>
+        <detection>
+            <skip><![CDATA[^<\?xml.*>$]]></skip>
+            <begining><![CDATA[(\s|\t)*<!--.*$]]></begining>
+            <ending><![CDATA[.*-->(\s|\t)*$]]></ending>
+        </detection>
+    </style>
+
+    <style name="script">
+        <description>Bash scripts header style</description>
+        <definition>
+            <begining># ----</begining>
+            <startLine># </startLine>
+            <ending># ----</ending>
+        </definition>
+        <detection>
+            <skip>^#!.*$</skip>
+            <begining>#\s----$</begining>
+            <ending>#\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="semicolon">
+        <description>Batch header style</description>
+        <definition>
+            <begining>; ----</begining>
+            <startLine>; </startLine>
+            <ending>; ----</ending>
+        </definition>
+        <detection>
+            <begining>;\s----$</begining>
+            <ending>;\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="apostrophe">
+        <definition>
+            <begining>' ----</begining>
+            <startLine>' </startLine>
+            <ending>' ----</ending>
+        </definition>
+        <detection>
+            <begining>'\s----$</begining>
+            <ending>'\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="exclamation">
+        <description>VB header styles</description>
+        <definition>
+            <begining>' ----</begining>
+            <startLine>' </startLine>
+            <ending>' ----</ending>
+        </definition>
+        <detection>
+            <begining>'\s----$</begining>
+            <ending>'\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="doubledashes">
+        <description>SQL header styles</description>
+        <definition>
+            <begining>-- ----</begining>
+            <startLine>-- </startLine>
+            <ending>-- ----</ending>
+        </definition>
+        <detection>
+            <begining>--\s----$</begining>
+            <ending>--\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="slashstar">
+        <description>Java comment header style</description>
+        <definition>
+            <begining>/*</begining>
+            <startLine> * </startLine>
+            <ending> */</ending>
+        </definition>
+        <detection>
+            <begining>(\s|\t)*/\*.*$</begining>
+            <ending>.*\*/(\s|\t)*$</ending>
+        </detection>
+    </style>
+
+    <style name="bracesstar">
+        <definition>
+            <begining>\{*</begining>
+            <startLine> * </startLine>
+            <ending> *\}</ending>
+        </definition>
+        <detection>
+            <begining>(\s|\t)*\{\*.*$</begining>
+            <ending>.*\*\}(\s|\t)*$</ending>
+        </detection>
+    </style>
+
+    <style name="sharpstar">
+        <definition>
+            <begining>#*</begining>
+            <startLine> * </startLine>
+            <ending> *#</ending>
+        </definition>
+        <detection>
+            <begining>(\s|\t)*#\*.*$</begining>
+            <ending>.*\*#(\s|\t)*$</ending>
+        </detection>
+    </style>
+
+    <style name="doubletilde">
+        <description>SQL header styles</description>
+        <definition>
+            <begining>~~ ----</begining>
+            <startLine>~~ </startLine>
+            <ending>~~ ----</ending>
+        </definition>
+        <detection>
+            <begining>~~\s----$</begining>
+            <ending>~~\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="dynascript">
+        <definition>
+            <begining><![CDATA[<%--EOL]]></begining>
+            <startLine>    </startLine>
+            <ending><![CDATA[EOL--%>]]></ending>
+        </definition>
+        <detection>
+            <begining><![CDATA[(\s|\t)*<%--.*$]]></begining>
+            <ending><![CDATA[.*--%>(\s|\t)*$]]></ending>
+        </detection>
+    </style>
+
+    <style name="dynascript3">
+        <definition>
+            <begining><![CDATA[<!---EOL]]></begining>
+            <startLine>    </startLine>
+            <ending><![CDATA[EOL--->]]></ending>
+        </definition>
+        <detection>
+            <begining><![CDATA[(\s|\t)*<!---.*$]]></begining>
+            <ending><![CDATA[.*--->(\s|\t)*$]]></ending>
+        </detection>
+    </style>
+
+    <style name="percent3">
+        <definition>
+            <begining>%%% ----</begining>
+            <startLine>%%% </startLine>
+            <ending>%%% ----</ending>
+        </definition>
+        <detection>
+            <begining>%%%\s----$</begining>
+            <ending>%%%\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="exclamation3">
+        <definition>
+            <begining>!!! ----</begining>
+            <startLine>!!! </startLine>
+            <ending>!!! ----</ending>
+        </definition>
+        <detection>
+            <begining>!!!\s----$</begining>
+            <ending>!!!\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="doubleslash">
+        <definition>
+            <begining>// ----</begining>
+            <startLine>// </startLine>
+            <ending>// ----</ending>
+        </definition>
+        <detection>
+            <begining>//\s----$</begining>
+            <ending>//\s----$</ending>
+        </detection>
+    </style>
+
+    <style name="php">
+        <definition>
+            <begining>/*</begining>
+            <startLine> * </startLine>
+            <ending> */</ending>
+        </definition>
+        <detection>
+            <skip><![CDATA[^<\?php.*$]]></skip>
+            <begining>(\s|\t)*/\*.*$</begining>
+            <ending>.*\*/(\s|\t)*$</ending>
+        </detection>
+    </style>
+
+    <style name="asp">
+        <definition>
+            <begining><![CDATA[<%]]></begining>
+            <startLine>    </startLine>
+            <ending><![CDATA[%>]]></ending>
+        </definition>
+        <detection>
+            <skip><![CDATA[^<\?php.*$]]></skip>
+            <begining><![CDATA[(\s|\t)*<%[^@].*$]]></begining>
+            <ending><![CDATA[.*%>(\s|\t)*$]]></ending>
+        </detection>
+    </style>
+
+    <style name="lua">
+        <definition>
+            <begining>--[[EOL</begining>
+            <startLine>    </startLine>
+            <ending>EOL]]</ending>
+        </definition>
+        <detection>
+            <begining>--\[\[$</begining>
+            <ending>\]\]$</ending>
+        </detection>
+    </style>
+
+    <style name="ftl">
+        <definition>
+            <begining><![CDATA[<#--EOL]]></begining>
+            <startLine>    </startLine>
+            <ending><![CDATA[EOL-->]]></ending>
+        </definition>
+        <detection>
+            <skip>\[#ftl(\s.*)?\]</skip>
+            <begining><![CDATA[(\s|\t)*<#--.*$]]></begining>
+            <ending><![CDATA[.*-->(\s|\t)*$]]></ending>
+        </detection>
+    </style>
+
+    <style name="ftl_alt">
+        <definition>
+            <begining>[#--EOL</begining>
+            <startLine>    </startLine>
+            <ending>EOL--]</ending>
+        </definition>
+        <detection>
+            <skip>\[#ftl(\s.*)?\]</skip>
+            <begining>(\s|\t)*\[#--.*$</begining>
+            <ending>.*--\](\s|\t)*$</ending>
+        </detection>
+    </style>
+
+    <style name="text">
+        <definition>
+            <begining>====</begining>
+            <startLine>    </startLine>
+            <ending>====</ending>
+        </definition>
+        <detection>
+            <begining>====$</begining>
+            <ending>====$</ending>
+        </detection>
+    </style>
+
+    <style name="batch">
+        <definition>
+            <begining>@REM ----</begining>
+            <startLine>@REM </startLine>
+            <ending>@REM ----</ending>
+        </definition>
+        <detection>
+            <begining>@REM\s----$</begining>
+            <ending>@REM\s----$</ending>
+        </detection>
+    </style>
+
+</styles>

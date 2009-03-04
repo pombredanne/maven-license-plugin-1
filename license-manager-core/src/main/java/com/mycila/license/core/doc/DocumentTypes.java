@@ -19,8 +19,8 @@ import java.util.TreeSet;
  */
 public final class DocumentTypes {
 
-    private static final URL DEFAULT_DOCUMENT_TYPES = Configuration.class.getResource("/com/mycila/license/core/type/default-document-types.xml");
-    private static final URL DOCUMENT_TYPES_SCHEMA = Configuration.class.getResource("/com/mycila/license/core/type/document-types.xsd");
+    private static final URL DEFAULT_DOCUMENT_TYPES = Configuration.class.getResource("/com/mycila/license/core/doc/default-document-types.xml");
+    private static final URL DOCUMENT_TYPES_SCHEMA = Configuration.class.getResource("/com/mycila/license/core/doc/document-types.xsd");
 
     private final SortedSet<DocumentType> documentTypes = new TreeSet<DocumentType>();
     private final HeaderStyles headerStyles;

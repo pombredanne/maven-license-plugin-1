@@ -42,15 +42,15 @@ public final class DocumentTypesTest {
 
     @Test
     public void test_add_mapping_loc() throws Exception {
-        assertEquals(newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/type/types.xml")).size(), 2);
+        assertEquals(newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/doc/types.xml")).size(), 2);
         try {
-            newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/type/types-invalid.xml"));
+            newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/doc/types-invalid.xml"));
             fail();
         } catch (Exception e) {
             assertTrue(e.getMessage().contains("Mapping definition at"));
         }
         try {
-            newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/type/types-inexisting-style.xml"));
+            newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/doc/types-inexisting-style.xml"));
             fail();
         } catch (Exception e) {
             assertTrue(e.getMessage().contains("Inexisting Header Style: inexisting"));
@@ -106,7 +106,8 @@ public final class DocumentTypesTest {
         DocumentType doc1 = mappings.getByExtension("java");
         assertNotNull(doc1);
         mappings.map("java").to(headerStyles.getByName("javadoc"));
-        assertFalse(doc1.equals(mappings.getByExtension("java")));
+        assertTrue(doc1.equals(mappings.getByExtension("java")));
+        assertFalse(doc1 == mappings.getByExtension("java"));
     }
 
 }
