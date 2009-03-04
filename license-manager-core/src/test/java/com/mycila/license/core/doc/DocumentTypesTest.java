@@ -1,8 +1,8 @@
-package com.mycila.license.core.type;
+package com.mycila.license.core.doc;
 
-import com.mycila.license.core.style.HeaderStyles;
-import static com.mycila.license.core.style.HeaderStyles.*;
-import static com.mycila.license.core.type.DocumentTypes.*;
+import static com.mycila.license.core.doc.DocumentTypes.*;
+import com.mycila.license.core.header.HeaderStyles;
+import static com.mycila.license.core.header.HeaderStyles.*;
 import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -88,9 +88,9 @@ public final class DocumentTypesTest {
     public void test_create_mapping() throws Exception {
         DocumentTypes mappings = newDocumentTypes(headerStyles);
         assertEquals(mappings.size(), 0);
-        DocumentType doc = mappings.map("java").to(headerStyles.getByName("javadoc"));
+        mappings.map("java").to(headerStyles.getByName("javadoc"));
         assertEquals(mappings.size(), 1);
-        assertEquals(doc.toString(), "DocumentType: java => HeaderStyle 'javadoc' (Javadoc header style)\n" +
+        assertEquals(mappings.getByExtension("java").toString(), "DocumentType: java => HeaderStyle 'javadoc' (Javadoc header style)\n" +
                 " - begining: /**\n" +
                 " - before each line:  * \n" +
                 " - ending:  */\n" +
@@ -102,10 +102,11 @@ public final class DocumentTypesTest {
     @Test
     public void test_add_duplicate_mapping() throws Exception {
         DocumentTypes mappings = newDocumentTypes(headerStyles);
-        DocumentType doc1 = mappings.map("java").to(headerStyles.getByName("javadoc"));
-        assertEquals(mappings.getByExtension("java"), doc1);
-        DocumentType doc2 = mappings.map("java").to(headerStyles.getByName("javadoc"));
-        assertEquals(mappings.getByExtension("java"), doc2);
+        mappings.map("java").to(headerStyles.getByName("javadoc"));
+        DocumentType doc1 = mappings.getByExtension("java");
+        assertNotNull(doc1);
+        mappings.map("java").to(headerStyles.getByName("javadoc"));
+        assertFalse(doc1.equals(mappings.getByExtension("java")));
     }
 
 }

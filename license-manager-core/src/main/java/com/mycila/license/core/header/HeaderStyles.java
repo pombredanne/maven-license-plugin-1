@@ -1,4 +1,4 @@
-package com.mycila.license.core.style;
+package com.mycila.license.core.header;
 
 import com.mycila.license.core.Configuration;
 import static com.mycila.license.core.util.Check.*;
@@ -17,8 +17,8 @@ import java.util.TreeSet;
  */
 public final class HeaderStyles {
 
-    private static final URL DEFAULT_HEADER_STYLES = Configuration.class.getResource("/com/mycila/license/core/style/default-styles.xml");
-    private static final URL HEADER_STYLES_SCHEMA = Configuration.class.getResource("/com/mycila/license/core/style/header-style.xsd");
+    private static final URL DEFAULT_HEADER_STYLES = Configuration.class.getResource("/com/mycila/license/core/header/default-styles.xml");
+    private static final URL HEADER_STYLES_SCHEMA = Configuration.class.getResource("/com/mycila/license/core/header/header-style.xsd");
 
     private final SortedSet<HeaderStyle> headerStyles = new TreeSet<HeaderStyle>();
 

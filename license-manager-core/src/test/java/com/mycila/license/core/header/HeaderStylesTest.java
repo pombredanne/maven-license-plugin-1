@@ -1,6 +1,6 @@
-package com.mycila.license.core.style;
+package com.mycila.license.core.header;
 
-import static com.mycila.license.core.style.HeaderStyles.*;
+import static com.mycila.license.core.header.HeaderStyles.*;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -31,10 +31,10 @@ public final class HeaderStylesTest {
 
     @Test
     public void test_add_loc() throws Exception {
-        assertEquals(newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles.xml")).size(), 1);
-        assertEquals(newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles-min.xml")).size(), 1);
+        assertEquals(newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/header/styles.xml")).size(), 1);
+        assertEquals(newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/header/styles-min.xml")).size(), 1);
         try {
-            newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/style/styles-invalid.xml"));
+            newHeaderStyles().add(getClass().getResource("/com/mycila/license/core/header/styles-invalid.xml"));
             fail();
         } catch (Exception e) {
             assertTrue(e.getMessage().contains("Style definition at"));

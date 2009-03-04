@@ -1,8 +1,8 @@
-package com.mycila.license.core.type;
+package com.mycila.license.core.doc;
 
 import com.mycila.license.core.Configuration;
-import com.mycila.license.core.style.HeaderStyle;
-import com.mycila.license.core.style.HeaderStyles;
+import com.mycila.license.core.header.HeaderStyle;
+import com.mycila.license.core.header.HeaderStyles;
 import static com.mycila.license.core.util.Check.*;
 import com.mycila.xmltool.CallBack;
 import com.mycila.xmltool.XMLDoc;
@@ -54,9 +54,15 @@ public final class DocumentTypes {
 
     public MappingBuilder map(String extension) {
         notNull(extension, "Document extension");
-        DocumentType type = new DocumentType(extension.toLowerCase());
+        final DocumentType type = new DocumentType(extension.toLowerCase());
         documentTypes.add(type);
-        return MappingBuilder.of(type);
+        return new MappingBuilder() {
+            public DocumentTypes to(HeaderStyle headerStyle) {
+                notNull(headerStyle, "Header style");
+                type.headerStyle = headerStyle;
+                return DocumentTypes.this;
+            }
+        };
     }
 
     public boolean isExtensionSupported(String extension) {
@@ -84,23 +90,8 @@ public final class DocumentTypes {
         return documentTypes.size();
     }
 
-    static class MappingBuilder {
-
-        private final DocumentType documentType;
-
-        MappingBuilder(DocumentType documentType) {
-            this.documentType = documentType;
-        }
-
-        DocumentType to(HeaderStyle headerStyle) {
-            notNull(headerStyle, "Header style");
-            documentType.headerStyle = headerStyle;
-            return documentType;
-        }
-
-        static MappingBuilder of(DocumentType documentType) {
-            return new MappingBuilder(documentType);
-        }
+    static interface MappingBuilder {
+        DocumentTypes to(HeaderStyle headerStyle);
     }
 
     public static DocumentTypes newDocumentTypes(HeaderStyles headerStyles) {

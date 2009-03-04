@@ -1,6 +1,6 @@
-package com.mycila.license.core.type;
+package com.mycila.license.core.doc;
 
-import com.mycila.license.core.style.HeaderStyle;
+import com.mycila.license.core.header.HeaderStyle;
 import static com.mycila.license.core.util.Check.*;
 
 /**

@@ -1,4 +1,4 @@
-package com.mycila.license.core.style;
+package com.mycila.license.core.header;
 
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)

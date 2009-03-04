@@ -1,6 +1,6 @@
 package com.mycila.license.core.task;
 
-import com.mycila.license.core.style.HeaderStyle;
+import com.mycila.license.core.header.HeaderStyle;
 
 import java.io.File;
 

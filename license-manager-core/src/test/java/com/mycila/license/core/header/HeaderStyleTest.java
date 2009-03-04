@@ -1,4 +1,4 @@
-package com.mycila.license.core.style;
+package com.mycila.license.core.header;
 
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;

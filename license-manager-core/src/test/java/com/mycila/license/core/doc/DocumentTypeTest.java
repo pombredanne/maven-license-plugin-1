@@ -1,6 +1,6 @@
-package com.mycila.license.core.type;
+package com.mycila.license.core.doc;
 
-import com.mycila.license.core.style.HeaderStyles;
+import com.mycila.license.core.header.HeaderStyles;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
