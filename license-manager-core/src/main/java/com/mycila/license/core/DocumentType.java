@@ -1,7 +1,6 @@
-package com.mycila.license.core.doc;
+package com.mycila.license.core;
 
-import com.mycila.license.core.header.HeaderStyle;
-import static com.mycila.license.core.util.Check.*;
+import static com.mycila.license.core.Check.*;
 
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
@@ -16,11 +15,11 @@ final class DocumentType implements Comparable<DocumentType> {
         this.extension = extension.toLowerCase();
     }
 
-    public String getExtension() {
+    String getExtension() {
         return extension;
     }
 
-    public HeaderStyle getHeaderStyle() {
+    HeaderStyle getHeaderStyle() {
         return headerStyle;
     }
 

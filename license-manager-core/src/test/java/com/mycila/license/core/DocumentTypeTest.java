@@ -1,6 +1,5 @@
-package com.mycila.license.core.doc;
+package com.mycila.license.core;
 
-import com.mycila.license.core.header.HeaderStyles;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -12,7 +11,7 @@ public final class DocumentTypeTest {
     @SuppressWarnings({"ObjectEqualsNull"})
     @Test
     public void test_create() throws Exception {
-        HeaderStyles headerStyles = HeaderStyles.newHeaderStyles();
+        HeaderStyles headerStyles = new HeaderStyles();
         headerStyles.loadDefaults();
 
         DocumentType type1 = new DocumentType("xml");

@@ -1,4 +1,4 @@
-package com.mycila.license.core.select;
+package com.mycila.license.core;
 
 import org.codehaus.plexus.util.DirectoryScanner;
 
@@ -65,23 +65,23 @@ final class FileSelection {
         }
     }
 
-    public File getBaseDirectory() {
+    File getBaseDirectory() {
         return baseDirectory;
     }
 
-    public Set<String> getIncludes() {
+    Set<String> getIncludes() {
         return includes;
     }
 
-    public Set<File> getSelectedFile() {
+    Set<File> getSelectedFile() {
         return selected;
     }
 
-    public Set<String> getExcludes() {
+    Set<String> getExcludes() {
         return excludes;
     }
 
-    public boolean isUseDefaultExcludes() {
+    boolean isUseDefaultExcludes() {
         return useDefaultExcludes;
     }
 

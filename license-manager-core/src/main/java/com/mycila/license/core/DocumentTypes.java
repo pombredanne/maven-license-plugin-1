@@ -1,9 +1,6 @@
-package com.mycila.license.core.doc;
+package com.mycila.license.core;
 
-import com.mycila.license.core.Configuration;
-import com.mycila.license.core.header.HeaderStyle;
-import com.mycila.license.core.header.HeaderStyles;
-import static com.mycila.license.core.util.Check.*;
+import static com.mycila.license.core.Check.*;
 import com.mycila.xmltool.CallBack;
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
@@ -17,15 +14,16 @@ import java.util.TreeSet;
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-public final class DocumentTypes {
+final class DocumentTypes {
 
-    private static final URL DEFAULT_DOCUMENT_TYPES = Configuration.class.getResource("/com/mycila/license/core/doc/default-document-types.xml");
-    private static final URL DOCUMENT_TYPES_SCHEMA = Configuration.class.getResource("/com/mycila/license/core/doc/document-types.xsd");
+    private static final URL DEFAULT_DOCUMENT_TYPES = LicenseManager.class.getResource("/com/mycila/license/core/default-document-types.xml");
+    private static final URL DOCUMENT_TYPES_SCHEMA = LicenseManager.class.getResource("/com/mycila/license/core/document-types.xsd");
 
     private final SortedSet<DocumentType> documentTypes = new TreeSet<DocumentType>();
     private final HeaderStyles headerStyles;
 
-    private DocumentTypes(HeaderStyles headerStyles) {
+    DocumentTypes(HeaderStyles headerStyles) {
+        notNull(headerStyles, "Header styles");
         this.headerStyles = headerStyles;
     }
 
@@ -33,12 +31,12 @@ public final class DocumentTypes {
         return add(DEFAULT_DOCUMENT_TYPES);
     }
 
-    public DocumentTypes add(URL mappingLocation) {
+    DocumentTypes add(URL mappingLocation) {
         notNull(mappingLocation, "Mapping location");
         XMLTag tag = XMLDoc.from(mappingLocation, false);
         ValidationResult res = tag.validate(DOCUMENT_TYPES_SCHEMA);
         if (res.hasError()) {
-            throw new IllegalArgumentException("Mapping definition at '" + mappingLocation + "' is not valid: " + res.getErrorMessages()[0]);
+            throw new LicenseManagerException("Mapping definition at '" + mappingLocation + "' is not valid: " + res.getErrorMessages()[0]);
         }
         tag.forEachChild(new CallBack() {
             public void execute(XMLTag doc) {
@@ -48,11 +46,11 @@ public final class DocumentTypes {
         return this;
     }
 
-    public SortedSet<DocumentType> getDocumentTypes() {
+    SortedSet<DocumentType> getDocumentTypes() {
         return Collections.unmodifiableSortedSet(documentTypes);
     }
 
-    public MappingBuilder map(String extension) {
+    MappingBuilder map(String extension) {
         notNull(extension, "Document extension");
         final DocumentType type = new DocumentType(extension.toLowerCase());
         documentTypes.remove(type);
@@ -66,7 +64,7 @@ public final class DocumentTypes {
         };
     }
 
-    public boolean isExtensionSupported(String extension) {
+    boolean isExtensionSupported(String extension) {
         if (extension != null) {
             for (DocumentType documentType : documentTypes) {
                 if (documentType.getExtension().equalsIgnoreCase(extension)) {
@@ -77,26 +75,21 @@ public final class DocumentTypes {
         return false;
     }
 
-    public DocumentType getByExtension(String extension) {
+    DocumentType getByExtension(String extension) {
         notNull(extension, "Document extension");
         for (DocumentType documentType : documentTypes) {
             if (documentType.getExtension().equalsIgnoreCase(extension)) {
                 return documentType;
             }
         }
-        throw new IllegalStateException("Unsupported document type: " + extension);
+        throw new LicenseManagerException("Unsupported document type: " + extension);
     }
 
-    public int size() {
+    int size() {
         return documentTypes.size();
     }
 
     static interface MappingBuilder {
         DocumentTypes to(HeaderStyle headerStyle);
-    }
-
-    public static DocumentTypes newDocumentTypes(HeaderStyles headerStyles) {
-        notNull(headerStyles, "Header styles");
-        return new DocumentTypes(headerStyles);
     }
 }

@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-public interface LicenseTaskFactory {
+public interface LicenseManagerTaskFactory {
     Set<Task> checkLicenseHeader();
     Set<Task> removeAnyLicenseHeader();
     Set<Task> updateLicenseHeader();

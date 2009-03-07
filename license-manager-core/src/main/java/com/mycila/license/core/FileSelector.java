@@ -1,6 +1,6 @@
-package com.mycila.license.core.select;
+package com.mycila.license.core;
 
-import static com.mycila.license.core.util.Check.*;
+import static com.mycila.license.core.Check.*;
 
 import java.io.File;
 import static java.util.Arrays.*;
@@ -10,48 +10,45 @@ import java.util.Set;
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-public final class FileSelector {
+final class FileSelector {
 
     private File baseDirectory = new File(".");
     private Set<String> includes = new HashSet<String>();
     private Set<String> excludes = new HashSet<String>();
     private boolean useDefaultExcludes = true;
 
-    private FileSelector() {}
+    FileSelector() {}
 
-    public FileSelector changeBaseDirectory(File baseDirectory) {
+    FileSelector changeBaseDirectory(File baseDirectory) {
         notNull(baseDirectory, "Base directory");
         this.baseDirectory = baseDirectory;
         return this;
     }
 
-    public FileSelector withDefaultExcludes() {
+    FileSelector withDefaultExcludes() {
         useDefaultExcludes = true;
         return this;
     }
 
-    public FileSelector withoutDefaultExcludes() {
+    FileSelector withoutDefaultExcludes() {
         useDefaultExcludes = false;
         return this;
     }
 
-    public FileSelector include(String... includes) {
+    FileSelector include(String... includes) {
         notNull(includes, "Includes");
         this.includes.addAll(asList(includes));
         return this;
     }
 
-    public FileSelector exclude(String... excludes) {
+    FileSelector exclude(String... excludes) {
         notNull(excludes, "Excludes");
         this.excludes.addAll(asList(excludes));
         return this;
     }
 
-    public FileSelection select() {
+    FileSelection select() {
         return new FileSelection(baseDirectory, useDefaultExcludes, includes, excludes);
     }
 
-    public static FileSelector newFileSelector() {
-        return new FileSelector();
-    }
 }

@@ -1,8 +1,5 @@
-package com.mycila.license.core.doc;
+package com.mycila.license.core;
 
-import static com.mycila.license.core.doc.DocumentTypes.*;
-import com.mycila.license.core.header.HeaderStyles;
-import static com.mycila.license.core.header.HeaderStyles.*;
 import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,13 +13,13 @@ public final class DocumentTypesTest {
 
     @BeforeClass
     public void setup() {
-        headerStyles = newHeaderStyles();
+        headerStyles = new HeaderStyles();
         headerStyles.loadDefaults();
     }
 
     @Test
     public void test_load_defaults() throws Exception {
-        DocumentTypes documentTypes = newDocumentTypes(headerStyles);
+        DocumentTypes documentTypes = new DocumentTypes(headerStyles);
         documentTypes.loadDefaults();
         assertEquals(documentTypes.size(), 50);
         for (DocumentType documentType : documentTypes.getDocumentTypes()) {
@@ -33,7 +30,7 @@ public final class DocumentTypesTest {
     @Test
     public void test_get_type() throws Exception {
         try {
-            newDocumentTypes(headerStyles).getByExtension("inexisting");
+            new DocumentTypes(headerStyles).getByExtension("inexisting");
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Unsupported document type: inexisting");
@@ -42,15 +39,15 @@ public final class DocumentTypesTest {
 
     @Test
     public void test_add_mapping_loc() throws Exception {
-        assertEquals(newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/doc/types.xml")).size(), 2);
+        assertEquals(new DocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/types.xml")).size(), 2);
         try {
-            newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/doc/types-invalid.xml"));
+            new DocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/types-invalid.xml"));
             fail();
         } catch (Exception e) {
             assertTrue(e.getMessage().contains("Mapping definition at"));
         }
         try {
-            newDocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/doc/types-inexisting-style.xml"));
+            new DocumentTypes(headerStyles).add(getClass().getResource("/com/mycila/license/core/types-inexisting-style.xml"));
             fail();
         } catch (Exception e) {
             assertTrue(e.getMessage().contains("Inexisting Header Style: inexisting"));
@@ -60,13 +57,13 @@ public final class DocumentTypesTest {
     @Test
     public void test_create_invalid_mapping() throws Exception {
         try {
-            newDocumentTypes(headerStyles).map(null);
+            new DocumentTypes(headerStyles).map(null);
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Document extension cannot be null");
         }
         try {
-            newDocumentTypes(headerStyles).map("aa").to(null);
+            new DocumentTypes(headerStyles).map("aa").to(null);
             fail();
         } catch (Exception e) {
             assertEquals(e.getMessage(), "Header style cannot be null");
@@ -76,7 +73,7 @@ public final class DocumentTypesTest {
 
     @Test
     public void test_isSupported() throws Exception {
-        DocumentTypes mappings = newDocumentTypes(headerStyles);
+        DocumentTypes mappings = new DocumentTypes(headerStyles);
         mappings.loadDefaults();
         assertTrue(mappings.isExtensionSupported("java"));
         assertFalse(mappings.isExtensionSupported(null));
@@ -86,7 +83,7 @@ public final class DocumentTypesTest {
 
     @Test
     public void test_create_mapping() throws Exception {
-        DocumentTypes mappings = newDocumentTypes(headerStyles);
+        DocumentTypes mappings = new DocumentTypes(headerStyles);
         assertEquals(mappings.size(), 0);
         mappings.map("java").to(headerStyles.getByName("javadoc"));
         assertEquals(mappings.size(), 1);
@@ -101,7 +98,7 @@ public final class DocumentTypesTest {
 
     @Test
     public void test_add_duplicate_mapping() throws Exception {
-        DocumentTypes mappings = newDocumentTypes(headerStyles);
+        DocumentTypes mappings = new DocumentTypes(headerStyles);
         mappings.map("java").to(headerStyles.getByName("xml"));
         DocumentType doc1 = mappings.getByExtension("java");
         assertNotNull(doc1);

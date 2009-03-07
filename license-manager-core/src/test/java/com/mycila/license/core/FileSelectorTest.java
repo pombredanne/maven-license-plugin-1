@@ -1,6 +1,5 @@
-package com.mycila.license.core.select;
+package com.mycila.license.core;
 
-import static com.mycila.license.core.select.FileSelector.*;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -13,7 +12,7 @@ public final class FileSelectorTest {
 
     @Test
     public void test_create_selection_with_def_excl() throws Exception {
-        FileSelection selection = newFileSelector()
+        FileSelection selection = new FileSelector()
                 .changeBaseDirectory(new File("src/test/resources"))
                 .withDefaultExcludes()
                 .include("**/*.xml")
@@ -28,7 +27,7 @@ public final class FileSelectorTest {
 
     @Test
     public void test_select_include() throws Exception {
-        FileSelection selection = newFileSelector()
+        FileSelection selection = new FileSelector()
                 .changeBaseDirectory(new File("src/test/resources"))
                 .withoutDefaultExcludes()
                 .include("**/*.xml")
@@ -42,7 +41,7 @@ public final class FileSelectorTest {
 
     @Test
     public void test_select_include_one_exclude_all() throws Exception {
-        FileSelection selection = newFileSelector()
+        FileSelection selection = new FileSelector()
                 .changeBaseDirectory(new File("src/test/resources"))
                 .withoutDefaultExcludes()
                 .include("**/*.xml")
@@ -57,7 +56,7 @@ public final class FileSelectorTest {
 
     @Test
     public void test_implicit_include_all() throws Exception {
-        FileSelection selection = newFileSelector()
+        FileSelection selection = new FileSelector()
                 .changeBaseDirectory(new File("src/test/resources"))
                 .withDefaultExcludes()
                 .exclude("**/types*")
@@ -66,6 +65,6 @@ public final class FileSelectorTest {
         assertTrue(selection.isUseDefaultExcludes());
         assertEquals(selection.getIncludes().size(), 0);
         assertEquals(selection.getExcludes().size(), 1);
-        assertEquals(selection.getSelectedFile().size(), 3);
+        assertEquals(selection.getSelectedFile().size(), 4);
     }
 }

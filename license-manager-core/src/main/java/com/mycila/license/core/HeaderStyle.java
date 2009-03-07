@@ -1,9 +1,9 @@
-package com.mycila.license.core.header;
+package com.mycila.license.core;
 
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-public final class HeaderStyle implements Comparable<HeaderStyle> {
+final class HeaderStyle implements Comparable<HeaderStyle> {
 
     private final String name;
     String description;
@@ -18,7 +18,7 @@ public final class HeaderStyle implements Comparable<HeaderStyle> {
         this.name = name;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 

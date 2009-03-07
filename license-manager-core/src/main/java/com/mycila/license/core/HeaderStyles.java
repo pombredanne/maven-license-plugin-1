@@ -1,7 +1,6 @@
-package com.mycila.license.core.header;
+package com.mycila.license.core;
 
-import com.mycila.license.core.Configuration;
-import static com.mycila.license.core.util.Check.*;
+import static com.mycila.license.core.Check.*;
 import com.mycila.xmltool.CallBack;
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
@@ -15,25 +14,25 @@ import java.util.TreeSet;
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-public final class HeaderStyles {
+final class HeaderStyles {
 
-    private static final URL DEFAULT_HEADER_STYLES = Configuration.class.getResource("/com/mycila/license/core/header/default-styles.xml");
-    private static final URL HEADER_STYLES_SCHEMA = Configuration.class.getResource("/com/mycila/license/core/header/header-style.xsd");
+    private static final URL DEFAULT_HEADER_STYLES = LicenseManager.class.getResource("/com/mycila/license/core/default-styles.xml");
+    private static final URL HEADER_STYLES_SCHEMA = LicenseManager.class.getResource("/com/mycila/license/core/header-style.xsd");
 
     private final SortedSet<HeaderStyle> headerStyles = new TreeSet<HeaderStyle>();
 
-    private HeaderStyles() {}
+    HeaderStyles() {}
 
-    public HeaderStyles loadDefaults() {
+    HeaderStyles loadDefaults() {
         return add(DEFAULT_HEADER_STYLES);
     }
 
-    public HeaderStyles add(URL styleLocation) {
+    HeaderStyles add(URL styleLocation) {
         notNull(styleLocation, "Style location");
         XMLTag tag = XMLDoc.from(styleLocation, false);
         ValidationResult res = tag.validate(HEADER_STYLES_SCHEMA);
         if (res.hasError()) {
-            throw new IllegalArgumentException("Style definition at '" + styleLocation + "' is not valid: " + res.getErrorMessages()[0]);
+            throw new LicenseManagerException("Style definition at '" + styleLocation + "' is not valid: " + res.getErrorMessages()[0]);
         }
         final String ns = tag.getPefix("http://mycila.com/license/styles/1.0");
         tag.forEachChild(new CallBack() {
@@ -55,7 +54,7 @@ public final class HeaderStyles {
         return this;
     }
 
-    public Builder add(String styleName) {
+    Builder add(String styleName) {
         notNull(styleName, "Style name");
         HeaderStyle style = new HeaderStyle(styleName.toLowerCase());
         headerStyles.remove(style);
@@ -63,7 +62,7 @@ public final class HeaderStyles {
         return Builder.of(style);
     }
 
-    public HeaderStyle getByName(String name) {
+    HeaderStyle getByName(String name) {
         notNull(name, "Style name");
         name = name.toLowerCase();
         for (HeaderStyle headerStyle : headerStyles) {
@@ -71,14 +70,14 @@ public final class HeaderStyles {
                 return headerStyle;
             }
         }
-        throw new IllegalStateException("Inexisting Header Style: " + name);
+        throw new LicenseManagerException("Inexisting Header Style: " + name);
     }
 
-    public SortedSet<HeaderStyle> getHeaderStyles() {
+    SortedSet<HeaderStyle> getHeaderStyles() {
         return Collections.unmodifiableSortedSet(headerStyles);
     }
 
-    public int size() {
+    int size() {
         return headerStyles.size();
     }
 
@@ -103,43 +102,40 @@ public final class HeaderStyles {
             return new Builder(headerStyle);
         }
 
-        public Builder defineBegining(String begining) {
+        Builder defineBegining(String begining) {
             headerStyle.defineBegining = begining;
             return this;
         }
 
-        public Builder defineStartLine(String startLine) {
+        Builder defineStartLine(String startLine) {
             headerStyle.defineStartLine = startLine;
             return this;
         }
 
-        public Builder defineEnding(String ending) {
+        Builder defineEnding(String ending) {
             headerStyle.defineEnding = ending;
             return this;
         }
 
-        public Builder detectSkip(String skip) {
+        Builder detectSkip(String skip) {
             headerStyle.detectSkip = skip;
             return this;
         }
 
-        public Builder detectBegining(String begining) {
+        Builder detectBegining(String begining) {
             headerStyle.detectBegining = begining;
             return this;
         }
 
-        public Builder detectEnding(String ending) {
+        Builder detectEnding(String ending) {
             headerStyle.detectEnding = ending;
             return this;
         }
 
-        public Builder description(String description) {
+        Builder description(String description) {
             headerStyle.description = description;
             return this;
         }
     }
 
-    public static HeaderStyles newHeaderStyles() {
-        return new HeaderStyles();
-    }
 }
