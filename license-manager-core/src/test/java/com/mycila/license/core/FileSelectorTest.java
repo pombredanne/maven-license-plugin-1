@@ -12,7 +12,7 @@ public final class FileSelectorTest {
 
     @Test
     public void test_create_selection_with_def_excl() throws Exception {
-        FileSelection selection = new FileSelector()
+        FileSelectionImpl selection = new FileSelector()
                 .changeBaseDirectory(new File("src/test/resources"))
                 .withDefaultExcludes()
                 .include("**/*.xml")
@@ -27,7 +27,7 @@ public final class FileSelectorTest {
 
     @Test
     public void test_select_include() throws Exception {
-        FileSelection selection = new FileSelector()
+        FileSelectionImpl selection = new FileSelector()
                 .changeBaseDirectory(new File("src/test/resources"))
                 .withoutDefaultExcludes()
                 .include("**/*.xml")
@@ -41,7 +41,7 @@ public final class FileSelectorTest {
 
     @Test
     public void test_select_include_one_exclude_all() throws Exception {
-        FileSelection selection = new FileSelector()
+        FileSelectionImpl selection = new FileSelector()
                 .changeBaseDirectory(new File("src/test/resources"))
                 .withoutDefaultExcludes()
                 .include("**/*.xml")
@@ -56,7 +56,7 @@ public final class FileSelectorTest {
 
     @Test
     public void test_implicit_include_all() throws Exception {
-        FileSelection selection = new FileSelector()
+        FileSelectionImpl selection = new FileSelector()
                 .changeBaseDirectory(new File("src/test/resources"))
                 .withDefaultExcludes()
                 .exclude("**/types*")

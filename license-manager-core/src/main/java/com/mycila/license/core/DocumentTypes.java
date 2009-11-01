@@ -6,15 +6,17 @@ import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
 import com.mycila.xmltool.util.ValidationResult;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-final class DocumentTypes {
+final class DocumentTypes implements Iterable<DocumentType> {
 
     private static final URL DEFAULT_DOCUMENT_TYPES = LicenseManager.class.getResource("/com/mycila/license/core/default-document-types.xml");
     private static final URL DOCUMENT_TYPES_SCHEMA = LicenseManager.class.getResource("/com/mycila/license/core/document-types.xsd");
@@ -27,7 +29,11 @@ final class DocumentTypes {
         this.headerStyles = headerStyles;
     }
 
-    public DocumentTypes loadDefaults() {
+    public Iterator<DocumentType> iterator() {
+        return documentTypes.iterator();
+    }
+
+    DocumentTypes loadDefaults() {
         return add(DEFAULT_DOCUMENT_TYPES);
     }
 
@@ -52,11 +58,11 @@ final class DocumentTypes {
 
     MappingBuilder map(String extension) {
         notNull(extension, "Document extension");
-        final DocumentType type = new DocumentType(extension.toLowerCase());
+        final DocumentTypeImpl type = new DocumentTypeImpl(extension.toLowerCase());
         documentTypes.remove(type);
         documentTypes.add(type);
         return new MappingBuilder() {
-            public DocumentTypes to(HeaderStyle headerStyle) {
+            public DocumentTypes to(HeaderStyleImpl headerStyle) {
                 notNull(headerStyle, "Header style");
                 type.headerStyle = headerStyle;
                 return DocumentTypes.this;
@@ -64,9 +70,18 @@ final class DocumentTypes {
         };
     }
 
+    boolean isSupported(File file) {
+        if(file == null) {
+            return false;
+        }
+        int pos = file.getName().lastIndexOf(".");
+        String ext = pos == -1 ? "" : file.getName().substring(pos + 1);
+        return isExtensionSupported(ext);
+    }
+
     boolean isExtensionSupported(String extension) {
         if (extension != null) {
-            for (DocumentType documentType : documentTypes) {
+            for (DocumentTypeImpl documentType : documentTypes) {
                 if (documentType.getExtension().equalsIgnoreCase(extension)) {
                     return true;
                 }
@@ -75,9 +90,9 @@ final class DocumentTypes {
         return false;
     }
 
-    DocumentType getByExtension(String extension) {
+    DocumentTypeImpl getByExtension(String extension) {
         notNull(extension, "Document extension");
-        for (DocumentType documentType : documentTypes) {
+        for (DocumentTypeImpl documentType : documentTypes) {
             if (documentType.getExtension().equalsIgnoreCase(extension)) {
                 return documentType;
             }
@@ -90,6 +105,6 @@ final class DocumentTypes {
     }
 
     static interface MappingBuilder {
-        DocumentTypes to(HeaderStyle headerStyle);
+        DocumentTypes to(HeaderStyleImpl headerStyle);
     }
 }

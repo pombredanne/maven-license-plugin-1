@@ -103,7 +103,7 @@ public final class HeaderStylesTest {
     public void test_add_style() throws Exception {
         HeaderStyles styles = new HeaderStyles();
         assertEquals(styles.size(), 0);
-        HeaderStyle style = styles.add("xml")
+        HeaderStyleImpl style = styles.add("xml")
                 .description("XML header style")
                 .defineBegining("<!--EOL")
                 .defineStartLine("    ")

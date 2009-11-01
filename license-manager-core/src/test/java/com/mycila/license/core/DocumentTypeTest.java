@@ -14,10 +14,10 @@ public final class DocumentTypeTest {
         HeaderStyles headerStyles = new HeaderStyles();
         headerStyles.loadDefaults();
 
-        DocumentType type1 = new DocumentType("xml");
-        DocumentType type2 = new DocumentType("xml");
+        DocumentTypeImpl type1 = new DocumentTypeImpl("xml");
+        DocumentTypeImpl type2 = new DocumentTypeImpl("xml");
         type2.headerStyle = headerStyles.getByName("xml");
-        DocumentType type3 = new DocumentType("java");
+        DocumentTypeImpl type3 = new DocumentTypeImpl("java");
         assertEquals(type1, type2);
         assertEquals(type1.hashCode(), type2.hashCode());
         assertTrue(type1.equals(type1));

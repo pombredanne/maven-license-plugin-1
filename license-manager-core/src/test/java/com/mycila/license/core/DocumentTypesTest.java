@@ -4,6 +4,8 @@ import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.File;
+
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
@@ -70,15 +72,23 @@ public final class DocumentTypesTest {
         }
     }
 
-
     @Test
     public void test_isSupported() throws Exception {
         DocumentTypes mappings = new DocumentTypes(headerStyles);
         mappings.loadDefaults();
+
+        assertTrue(mappings.isSupported(new File("a/b/b/d.java")));
         assertTrue(mappings.isExtensionSupported("java"));
+
         assertFalse(mappings.isExtensionSupported(null));
+        assertFalse(mappings.isSupported(null));
+
         assertFalse(mappings.isExtensionSupported(""));
+        assertFalse(mappings.isSupported(new File("")));
+        assertFalse(mappings.isSupported(new File(".")));
+
         assertFalse(mappings.isExtensionSupported("inexisting"));
+        assertFalse(mappings.isSupported(new File("inexisting")));
     }
 
     @Test
@@ -100,7 +110,7 @@ public final class DocumentTypesTest {
     public void test_add_duplicate_mapping() throws Exception {
         DocumentTypes mappings = new DocumentTypes(headerStyles);
         mappings.map("java").to(headerStyles.getByName("xml"));
-        DocumentType doc1 = mappings.getByExtension("java");
+        DocumentTypeImpl doc1 = mappings.getByExtension("java");
         assertNotNull(doc1);
         assertEquals(mappings.getByExtension("java").getHeaderStyle().getName(), "xml");
         mappings.map("java").to(headerStyles.getByName("javadoc"));

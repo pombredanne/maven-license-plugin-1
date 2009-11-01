@@ -11,7 +11,7 @@ public final class LicenseManager {
     private boolean failOnError = true;
     private int threadNumber = 1;
     private String encoding = System.getProperty("file.encoding");*/
-    private final Settings settings = new Settings();
+    private final Settings settings = new SettingsImpl();
 
     /*private File baseDirectory = new File(".");
     private Set<String> includes = new HashSet<String>();
@@ -21,7 +21,7 @@ public final class LicenseManager {
 
     /*private URL header;
     private Map<String, Object> headerPlaceholders = new HashMap<String, Object>();*/
-    private final LicenseHeader licenseHeader = LicenseHeader.newLicenseHeader(settings, getClass().getResource(""));
+    private final LicenseHeader licenseHeader = new LicenseHeaderImpl(settings, getClass().getResource(""));
 
     /*private Pattern headerDetectionPattern = Pattern.compile("(?is).*copyright.*");*/
     private final HeaderDetector headerDetector = new HeaderDetector();

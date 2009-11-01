@@ -47,8 +47,8 @@ final class FileSelector {
         return this;
     }
 
-    FileSelection select() {
-        return new FileSelection(baseDirectory, useDefaultExcludes, includes, excludes);
+    FileSelectionImpl select() {
+        return new FileSelectionImpl(baseDirectory, useDefaultExcludes, includes, excludes);
     }
 
 }

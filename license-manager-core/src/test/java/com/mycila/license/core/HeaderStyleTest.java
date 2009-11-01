@@ -11,10 +11,10 @@ public final class HeaderStyleTest {
     @SuppressWarnings({"ObjectEqualsNull"})
     @Test
     public void test_create() throws Exception {
-        HeaderStyle style1 = new HeaderStyle("xml");
-        HeaderStyle style2 = new HeaderStyle("xml");
+        HeaderStyleImpl style1 = new HeaderStyleImpl("xml");
+        HeaderStyleImpl style2 = new HeaderStyleImpl("xml");
         style2.description = "hello";
-        HeaderStyle style3 = new HeaderStyle("javadoc");
+        HeaderStyleImpl style3 = new HeaderStyleImpl("javadoc");
         assertEquals(style1, style2);
         assertEquals(style1.hashCode(), style2.hashCode());
         assertTrue(style1.equals(style1));

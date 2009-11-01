@@ -8,13 +8,14 @@ import com.mycila.xmltool.util.ValidationResult;
 
 import java.net.URL;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
  * @author Mathieu Carbou (mathieu.carbou@gmail.com)
  */
-final class HeaderStyles {
+final class HeaderStyles implements Iterable<HeaderStyle> {
 
     private static final URL DEFAULT_HEADER_STYLES = LicenseManager.class.getResource("/com/mycila/license/core/default-styles.xml");
     private static final URL HEADER_STYLES_SCHEMA = LicenseManager.class.getResource("/com/mycila/license/core/header-style.xsd");
@@ -22,6 +23,21 @@ final class HeaderStyles {
     private final SortedSet<HeaderStyle> headerStyles = new TreeSet<HeaderStyle>();
 
     HeaderStyles() {}
+
+    public Iterator<HeaderStyle> iterator() {
+        final Iterator<HeaderStyle> it = headerStyles.iterator();
+        return new Iterator<HeaderStyle>() {
+            public boolean hasNext() {
+                return it.hasNext();
+            }
+            public HeaderStyle next() {
+                return it.next();
+            }
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
 
     HeaderStyles loadDefaults() {
         return add(DEFAULT_HEADER_STYLES);
@@ -56,7 +72,7 @@ final class HeaderStyles {
 
     Builder add(String styleName) {
         notNull(styleName, "Style name");
-        HeaderStyle style = new HeaderStyle(styleName.toLowerCase());
+        HeaderStyleImpl style = new HeaderStyleImpl(styleName.toLowerCase());
         headerStyles.remove(style);
         headerStyles.add(style);
         return Builder.of(style);
@@ -83,9 +99,9 @@ final class HeaderStyles {
 
     static class Builder {
 
-        private final HeaderStyle headerStyle;
+        private final HeaderStyleImpl headerStyle;
 
-        Builder(HeaderStyle headerStyle) {
+        Builder(HeaderStyleImpl headerStyle) {
             this.headerStyle = headerStyle;
         }
 
@@ -98,7 +114,7 @@ final class HeaderStyles {
             return headerStyle;
         }
 
-        static Builder of(HeaderStyle headerStyle) {
+        static Builder of(HeaderStyleImpl headerStyle) {
             return new Builder(headerStyle);
         }
 
